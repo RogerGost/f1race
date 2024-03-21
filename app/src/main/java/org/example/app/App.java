@@ -3,8 +3,6 @@
  */
 package org.example.app;
 
-import org.example.list.LinkedList;
-
 import static org.example.utilities.StringUtils.join;
 import static org.example.utilities.StringUtils.split;
 import static org.example.app.MessageUtils.getMessage;

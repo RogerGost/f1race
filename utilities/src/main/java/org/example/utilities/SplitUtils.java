@@ -3,8 +3,6 @@
  */
 package org.example.utilities;
 
-import org.example.list.LinkedList;
-
 class SplitUtils {
     public static LinkedList split(String source) {
         int lastFind = 0;

@@ -3,8 +3,6 @@
  */
 package org.example.utilities;
 
-import org.example.list.LinkedList;
-
 class JoinUtils {
     public static String join(LinkedList source) {
         StringBuilder result = new StringBuilder();

@@ -11,4 +11,4 @@ plugins {
 }
 
 rootProject.name = "f1race"
-include("app", "list", "utilities")
+include("app", "domain", "utilities")
