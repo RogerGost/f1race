@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class TeamRepositoryTest {
 
     @Test
-    void save() {
+    void saveNewTeam() {
 
         var repository = new TeamRepository();
 
@@ -32,6 +32,10 @@ class TeamRepositoryTest {
         assertNotNull(repository.get(ferrari.getId()));
 
 
+
+    }
+
+    void updateTeam(){
 
     }
 }

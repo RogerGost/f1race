@@ -11,6 +11,8 @@ public class TeamRepository implements cat.uvic.teknos.f1race.repositories.TeamR
 
     private static Map<Integer, Team>team = new HashMap<>();
 
+
+
     public static void load(){
         var currentDirectory = System.getProperty("user.dir") + "/src/main/resources/";
 
@@ -40,18 +42,16 @@ public class TeamRepository implements cat.uvic.teknos.f1race.repositories.TeamR
     }
     @Override
     public void save(Team model) {
-        if(model.getId() <=0) {
+        if (model.getId() <= 0){
             //get new id
-            var newId = team.keySet().stream().mapToInt(k -> k).max().orElse(0) + 1;
+            var newId=team.keySet().stream().mapToInt(k -> k).max().orElse(0)+1;
             team.put(newId, model);
-
         }else{
-            team.put(model.getId(),model);
+            team.put(model.getId(), model);
         }
-
         write();
 
-        }
+    }
     public static void update(){
         var currentDirectory = System.getProperty("user.dir") + "/src/main/resources/";
         try (var outputStream = new ObjectOutputStream(new FileOutputStream(currentDirectory + "team.ser"))) {
@@ -76,6 +76,6 @@ public class TeamRepository implements cat.uvic.teknos.f1race.repositories.TeamR
 
     @Override
     public Set<Team> getAll() {
-        return null;
+        return Set.copyOf(team.values());
     }
 }
