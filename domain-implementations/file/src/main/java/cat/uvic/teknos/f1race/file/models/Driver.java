@@ -3,63 +3,76 @@ package cat.uvic.teknos.f1race.file.models;
 import java.time.LocalDate;
 
 public class Driver implements cat.uvic.teknos.f1race.models.Driver{
+
+    private int id;
+    private String name;
+    private String nationality;
+    private LocalDate date;
+    private int number;
+    private int teamId;
     @Override
     public int getId() {
-        return 0;
+        return id;
     }
 
     @Override
     public void setId(int id) {
+        this.id=id;
 
     }
 
     @Override
     public String getName() {
-        return null;
+        return name;
     }
 
     @Override
     public void setName(String name) {
+        this.name=name;
 
     }
 
     @Override
     public String getNationality() {
-        return null;
+        return nationality;
     }
 
     @Override
     public void setNationality(String nationality) {
+        this.nationality=nationality;
 
     }
 
     @Override
     public LocalDate getDate() {
-        return null;
+        return date;
     }
 
     @Override
     public void setDate(LocalDate date) {
+        this.date=date;
 
     }
 
     @Override
     public int getNumber() {
-        return 0;
+        return number;
     }
 
     @Override
     public void setNumber(int number) {
+        this.number=number;
 
     }
 
     @Override
     public int getTeamId() {
-        return 0;
+        return teamId;
     }
 
     @Override
     public void setTeamId(int teamId) {
+        this.teamId=teamId;
 
     }
 }

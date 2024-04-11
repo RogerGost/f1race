@@ -12,8 +12,10 @@ public class TeamRepository implements cat.uvic.teknos.f1race.repositories.TeamR
     private static Map<Integer, Team>team = new HashMap<>();
 
     public static void load(){
+        var currentDirectory = System.getProperty("user.dir") + "/src/main/resources/";
 
-        try(var inputStream = new ObjectInputStream(new FileInputStream(""))) {
+
+        try(var inputStream = new ObjectInputStream(new FileInputStream(currentDirectory+ "team.ser"))) {
             team = (Map<Integer, Team>) inputStream.readObject();
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
@@ -26,7 +28,9 @@ public class TeamRepository implements cat.uvic.teknos.f1race.repositories.TeamR
     }
 
     public static void write(){
-        try(var outputStream = new ObjectOutputStream(new FileOutputStream(""))) {
+        var currentDirectory = System.getProperty("user.dir") + "/src/main/resources/";
+
+        try(var outputStream = new ObjectOutputStream(new FileOutputStream(currentDirectory + "team.ser"))) {
             outputStream.writeObject(team);
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
@@ -45,7 +49,18 @@ public class TeamRepository implements cat.uvic.teknos.f1race.repositories.TeamR
             team.put(model.getId(),model);
         }
 
+        write();
+
+        }
+    public static void update(){
+        var currentDirectory = System.getProperty("user.dir") + "/src/main/resources/";
+        try (var outputStream = new ObjectOutputStream(new FileOutputStream(currentDirectory + "team.ser"))) {
+            outputStream.writeObject(team);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
+
 
     @Override
     public void delete(Team model) {
@@ -56,7 +71,7 @@ public class TeamRepository implements cat.uvic.teknos.f1race.repositories.TeamR
 
     @Override
     public Team get(Integer id) {
-        return null;
+        return team.get(id);
     }
 
     @Override

@@ -10,6 +10,13 @@ public class  Team implements cat.uvic.teknos.f1race.models.Team{
 
     private int id;
     private String name;
+    private String principalName;
+    private String headquarters;
+
+    private String sponsor;
+    private Set<Sponsorship> sponsorships;
+    private Set<Driver> drivers;
+    private Set<Car> cars;
     @Override
     public int getId() {
         return id;
@@ -27,53 +34,74 @@ public class  Team implements cat.uvic.teknos.f1race.models.Team{
     }
 
     @Override
-    public void setTeamName(String teamName) {
+    public void setTeamName(String name) {
         this.name= name;
 
     }
 
     @Override
     public String getPrincipalName() {
-        return null;
+        return principalName;
     }
 
     @Override
     public void setPrincipalName(String principalName) {
+        this.principalName = principalName;
 
     }
 
     @Override
     public String getHeadquarters() {
-        return null;
+        return headquarters;
     }
 
     @Override
     public void setHeadquarters(String headquarters) {
+        this.headquarters = headquarters;
 
     }
 
     @Override
     public String getSponsor() {
-        return null;
+        return sponsor;
+    }
+    public void setSponsor(String sponsor) {
+        this.sponsor = sponsor;
     }
 
     @Override
     public void setSponsorships(Set<Sponsorship> sponsorships) {
+        this.sponsorships = sponsorships;
 
     }
 
     @Override
     public Set<Sponsorship> getSponsorships() {
-        return null;
+        return sponsorships;
     }
 
     @Override
-    public Set<Driver> driver() {
-        return null;
+    public Set<Driver> getDriver() {
+        return drivers;
     }
 
     @Override
-    public Set<Car> car() {
-        return null;
+    public void setDriver(Driver driver) {
+
+    }
+
+    @Override
+    public Set<Car> getcar() {
+        return cars;
+    }
+
+    @Override
+    public void setCar(Car car) {
+
+    }
+
+    @Override
+    public Set<Car> getCar() {
+        return cars;
     }
 }

@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 
 import javax.naming.Name;
 
+import java.util.jar.Attributes;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class TeamRepositoryTest {
@@ -15,7 +17,21 @@ class TeamRepositoryTest {
 
         var repository = new TeamRepository();
 
-        var redbull = new Team();
-        redbull.setId(1);
+        var ferrari = new Team();
+        ferrari.setId(1);
+        ferrari.setTeamName("Ferrari");
+        ferrari.setHeadquarters("Maranello");
+        ferrari.setPrincipalName("Binotto");
+        ferrari.setSponsor("Santander");
+
+        repository.save(ferrari);
+        assertTrue(ferrari.getId() > 0);
+        assertNotNull(repository.get(ferrari.getId()));
+
+        TeamRepository.load();
+        assertNotNull(repository.get(ferrari.getId()));
+
+
+
     }
 }

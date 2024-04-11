@@ -19,14 +19,21 @@ public interface Team {
     void setHeadquarters(String headquarters);
 
     String getSponsor();
+    void setSponsor(String sponsor);
 
     void setSponsorships(Set<Sponsorship> sponsorships);
 
     Set<Sponsorship> getSponsorships();
 
-    Set<Driver> driver();
 
-    Set<Car> car();
+    Set<Driver> getDriver();
 
+    void setDriver (Driver driver);
+
+    Set<Car> getcar();
+
+    void setCar(Car car);
+
+    Set<Car> getCar();
 }
 
