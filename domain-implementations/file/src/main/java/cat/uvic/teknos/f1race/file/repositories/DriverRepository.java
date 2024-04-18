@@ -5,6 +5,7 @@ import cat.uvic.teknos.f1race.models.Team;
 
 import java.io.*;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
@@ -14,7 +15,9 @@ public class DriverRepository implements cat.uvic.teknos.f1race.repositories.Dri
 
     public static void load() {
 
-        try (var inputStream = new ObjectInputStream(new FileInputStream(""))) {
+        var currentDirectory = System.getProperty("user.dir") + "/src/main/resources/";
+
+        try (var inputStream = new ObjectInputStream(new FileInputStream(currentDirectory+ "driver.ser"))) {
             driver = (Map<Integer, Driver>) inputStream.readObject();
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
@@ -27,7 +30,9 @@ public class DriverRepository implements cat.uvic.teknos.f1race.repositories.Dri
     }
 
     public static void write() {
-        try (var outputStream = new ObjectOutputStream(new FileOutputStream(""))) {
+        var currentDirectory = System.getProperty("user.dir") + "/src/main/resources/";
+
+        try (var outputStream = new ObjectOutputStream(new FileOutputStream(currentDirectory + "driver.ser"))) {
             outputStream.writeObject(driver);
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
@@ -46,24 +51,48 @@ public class DriverRepository implements cat.uvic.teknos.f1race.repositories.Dri
         } else {
             driver.put(model.getId(), model);
         }
+        write();
+    }
 
+    public static void update(){
+        var currentDirectory = System.getProperty("user.dir") + "/src/main/resources/";
+        try (var outputStream = new ObjectOutputStream(new FileOutputStream(currentDirectory + "driver.ser"))) {
+            outputStream.writeObject(driver);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public void delete(Driver model) {
 
-        driver.remove(model.getId());
+        var currentDirectory = System.getProperty("user.dir") + "/src/main/resources/";
 
+        try (var outputStream = new ObjectOutputStream(new FileOutputStream(currentDirectory + "driver.ser"))) {
+            for (Iterator<Map.Entry<Integer, Driver>> iterator = driver.entrySet().iterator(); iterator.hasNext(); ) {
+                Map.Entry<Integer, Driver> entry = iterator.next();
+                if (entry.getValue().equals(model)) {
+                    iterator.remove();
+                    break;
+                }
+            }
+
+            outputStream.writeObject(driver);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public Driver get(Integer id) {
-        return null;
+        return driver.get(id);
     }
 
     @Override
     public Set<Driver> getAll() {
-        return null;
+        return Set.copyOf(driver.values());
     }
 }
 

@@ -4,14 +4,13 @@ import cat.uvic.teknos.f1race.models.Team;
 
 import java.io.*;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
 public class TeamRepository implements cat.uvic.teknos.f1race.repositories.TeamRepository{
 
     private static Map<Integer, Team>team = new HashMap<>();
-
-
 
     public static void load(){
         var currentDirectory = System.getProperty("user.dir") + "/src/main/resources/";
@@ -65,8 +64,24 @@ public class TeamRepository implements cat.uvic.teknos.f1race.repositories.TeamR
     @Override
     public void delete(Team model) {
 
-        team.remove(model.getId());
+        var currentDirectory = System.getProperty("user.dir") + "/src/main/resources/";
 
+        try (var outputStream = new ObjectOutputStream(new FileOutputStream(currentDirectory + "team.ser"))) {
+
+            for (Iterator<Map.Entry<Integer, Team>> iterator = team.entrySet().iterator(); iterator.hasNext(); ) {
+                Map.Entry<Integer, Team> entry = iterator.next();
+                if (entry.getValue().equals(model)) {
+                    iterator.remove();
+                    break;
+                }
+            }
+
+            outputStream.writeObject(team);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

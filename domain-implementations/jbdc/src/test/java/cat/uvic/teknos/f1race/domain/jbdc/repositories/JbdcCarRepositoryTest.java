@@ -14,7 +14,7 @@ class JbdcCarRepositoryTest {
 
     @Test
     @DisplayName("Given a new Car (id = 0), when save, then a new record is added to the CAR table")
-    /*void shouldInsertNewCarTest() throws SQLException {
+    void shouldInsertNewCarTest() throws SQLException {
 
         try(var connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/formula1", "root", "2004")) {
 
@@ -28,7 +28,7 @@ class JbdcCarRepositoryTest {
 
             assertTrue(mercedes.getId() >0);
         }
-    }*/
+    }
 
 
     void shouldUpdateNewCarTest() throws SQLException {
@@ -51,14 +51,14 @@ class JbdcCarRepositoryTest {
         }
     }
 
-    /*@Test
+    @Test
     void delete() throws SQLException {
         try(var connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/formula1", "root", "2004")) {
             Car mercedes = new Car();
             mercedes.setId(1);
             delete();
         }
-        }*/
+        }
 
     @Test
     void get() {

@@ -1,8 +1,10 @@
 package cat.uvic.teknos.f1race.file.models;
 
 import java.time.LocalDate;
+import java.io.Serializable;
 
-public class Driver implements cat.uvic.teknos.f1race.models.Driver{
+
+public class Driver implements cat.uvic.teknos.f1race.models.Driver, Serializable{
 
     private int id;
     private String name;
