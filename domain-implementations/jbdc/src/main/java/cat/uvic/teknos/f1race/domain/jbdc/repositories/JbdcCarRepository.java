@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashSet;
 import java.util.Set;
 
 public class JbdcCarRepository implements CarRepository {
@@ -80,11 +81,42 @@ public class JbdcCarRepository implements CarRepository {
 
     @Override
     public Car get(Integer id) {
-        return null;
+        try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM CAR WHERE ID = ?")) {
+            Car merceders = null;
+
+            statement.setInt(1, id);
+
+            var resultSet= statement.executeQuery();
+            if (resultSet.next()) {
+                merceders = new cat.uvic.teknos.f1race.domain.jbdc.models.Car();
+                merceders.setId(resultSet.getInt("ID"));
+                merceders.setEngine(resultSet.getString("ENGINE"));
+                merceders.setChassis(resultSet.getString("CHASSIS"));
+                merceders.setModel(resultSet.getString("MODEL"));
+            }
+            return merceders;
+        } catch (SQLException e) {
+            throw new RuntimeException("Error", e);
+        }
     }
 
     @Override
     public Set<Car> getAll() {
-        return Set.of();
+        try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM CAR")) {
+            var cars = new HashSet<Car>();
+
+
+            var resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                var mercedes = new cat.uvic.teknos.f1race.domain.jbdc.models.Car();
+                mercedes.setId(resultSet.getInt("ID"));
+                mercedes.setModel(resultSet.getString("MODEL"));
+
+                cars.add(mercedes);
+            }
+            return cars;
+        } catch (SQLException e) {
+            throw new RuntimeException("Error", e);
+        }
     }
 }

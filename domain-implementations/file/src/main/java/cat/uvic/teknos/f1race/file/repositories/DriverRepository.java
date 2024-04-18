@@ -76,7 +76,6 @@ public class DriverRepository implements cat.uvic.teknos.f1race.repositories.Dri
                     break;
                 }
             }
-
             outputStream.writeObject(driver);
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);

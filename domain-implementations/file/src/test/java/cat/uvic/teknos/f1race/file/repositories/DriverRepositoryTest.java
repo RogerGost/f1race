@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class DriverRepositoryTest {
 
     @Test
-    /*void saveNewDriver() {
+    void saveNewDriver() {
 
         var repository = new DriverRepository();
 
@@ -33,9 +33,9 @@ class DriverRepositoryTest {
 
 
 
-    }*/
+    }
 
-    /*void updateDriver(){
+    void updateDriver(){
         var path = System.getProperty("user.dir") + "/src/main/resources/driver.ser/";
         var repository = new DriverRepository();
 
@@ -48,12 +48,12 @@ class DriverRepositoryTest {
 
         assertEquals(1, updateDrive.getId());
 
-    }*/
+    }
 
     void deleteDriver(){
         var repository = new DriverRepository();
 
-        // Crear un equipo y guardarlo en el repositorio
+
         var leclerc = new Driver();
         leclerc.setId(1);
         leclerc.setName("Leclerc");
@@ -63,14 +63,14 @@ class DriverRepositoryTest {
         leclerc.setNumber(16);
         repository.save(leclerc);
 
-        // Verificar que el equipo se haya guardado correctamente
+
         assertTrue(leclerc.getId() > 0);
         assertNotNull(repository.get(leclerc.getId()));
 
-        // Eliminar el equipo del repositorio
+
         repository.delete(leclerc);
 
-        // Verificar que el equipo se haya eliminado correctamente
+
         assertNull(repository.get(leclerc.getId()));
 
     }
