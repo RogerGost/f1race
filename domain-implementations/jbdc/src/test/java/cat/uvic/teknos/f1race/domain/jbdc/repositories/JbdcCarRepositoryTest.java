@@ -19,7 +19,7 @@ class JbdcCarRepositoryTest {
         try(var connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/formula1", "root", "2004")) {
 
             Car mercedes = new Car();
-            mercedes.setModel("mc2024");
+            mercedes.setModel("mc204");
             mercedes.setEngine("mercedes1");
             mercedes.setChassis("C1mercedes");
 
@@ -37,7 +37,7 @@ class JbdcCarRepositoryTest {
 
             Car mercedes = new Car();
 
-            mercedes.setModel("444");
+            mercedes.setModel("494");
             mercedes.setEngine("mercedes2");
             mercedes.setChassis("C2mercedes");
             mercedes.setTeamId(1);
@@ -55,10 +55,12 @@ class JbdcCarRepositoryTest {
     void delete() throws SQLException {
         try(var connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/formula1", "root", "2004")) {
             Car mercedes = new Car();
-            mercedes.setId(1);
-            delete();
+            mercedes.setId(6);
+
+            var repository = new JbdcCarRepository(connection);
+            repository.delete(mercedes);
         }
-        }
+    }
 
     @Test
     void get() {

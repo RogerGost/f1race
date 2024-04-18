@@ -15,8 +15,10 @@ class TeamRepositoryTest {
 
     @Test
     void saveNewTeam() {
+        var path = System.getProperty("user.dir") + "/src/main/resources/team.ser/";
 
-        var repository = new TeamRepository();
+
+        var employRepository = new TeamRepository(path);
 
         var ferrari = new Team();
         ferrari.setId(1);
@@ -27,20 +29,22 @@ class TeamRepositoryTest {
 
 
 
-        repository.save(ferrari);
+        employRepository.save(ferrari);
         assertTrue(ferrari.getId() > 0);
-        assertNotNull(repository.get(ferrari.getId()));
+        assertNotNull(employRepository.get(ferrari.getId()));
 
-        TeamRepository.load();
-        assertNotNull(repository.get(ferrari.getId()));
+        employRepository.load();
+        assertNotNull(employRepository.get(ferrari.getId()));
 
 
 
     }
 
    void updateTeam(){
-        var path = System.getProperty("user.dir") + "/src/main/resources/team.ser/";
-        var repository = new TeamRepository();
+
+
+       var path = System.getProperty("user.dir") + "/src/main/resources/team.ser/";
+        var repository = new TeamRepository(path);
 
         var ferrari = new Team();
         ferrari.setId(1);
@@ -54,11 +58,17 @@ class TeamRepositoryTest {
     }
 
     void deleteTeam(){
-        var repository = new TeamRepository();
+        var path = System.getProperty("user.dir") + "/src/main/resources/team.ser/";
+
+        var repository = new TeamRepository(path);
 
         var ferrari = new Team();
         repository.delete(ferrari);
         assertNull(repository.get(ferrari.getId()));
 
     }
-    }
+
+
+
+
+}

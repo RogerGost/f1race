@@ -28,12 +28,12 @@ public class JbdcCarRepository implements CarRepository {
     }
 
     private void insert(Car model) {
-        try (PreparedStatement statement = connection.prepareStatement("INSERT INTO CAR ( MODEL, ENGINE, CHASSIS, TEAM_ID) VALUES (?,?,?,?)", Statement.RETURN_GENERATED_KEYS)){
+        try (PreparedStatement statement = connection.prepareStatement("INSERT INTO CAR ( MODEL, ENGINE, CHASSIS) VALUES (?,?,?)", Statement.RETURN_GENERATED_KEYS)){
 
             statement.setString(1, model.getModel());
             statement.setString(2, model.getEngine());
             statement.setString(3, model.getChassis());
-            statement.setInt(4, model.getTeamId());
+
 
             statement.executeUpdate();
 
@@ -66,7 +66,7 @@ public class JbdcCarRepository implements CarRepository {
 
     @Override
     public void delete(Car model) {
-        try (PreparedStatement statement = connection.prepareStatement("DELETE FROM CAR WHERE ID = ?")) {
+        try (PreparedStatement statement = connection.prepareStatement("DELETE FROM CAR WHERE CAR_ID = ?")) {
             statement.setInt(1, model.getId());
             int rowsAffected = statement.executeUpdate();
             if (rowsAffected == 0) {

@@ -13,7 +13,10 @@ class DriverRepositoryTest {
     @Test
     void saveNewDriver() {
 
-        var repository = new DriverRepository();
+        var path = System.getProperty("user.dir") + "/src/main/resources/driver.ser/";
+
+
+        var employRepository = new DriverRepository(path);
 
         var leclerc = new Driver();
         leclerc.setId(2);
@@ -23,13 +26,13 @@ class DriverRepositoryTest {
         leclerc.setDate(LocalDate.of(1997, 10, 16));
         leclerc.setNumber(16);
 
-        repository.save(leclerc);
+        employRepository.save(leclerc);
         assertTrue(leclerc.getId() > 0);
         //posa que el id esta null pero no ho esta
-        assertNotNull(repository.get(leclerc.getId()));
+        assertNotNull(employRepository.get(leclerc.getId()));
 
-        DriverRepository.load();
-        assertNotNull(repository.get(leclerc.getId()));
+        employRepository.load();
+        assertNotNull(employRepository.get(leclerc.getId()));
 
 
 
@@ -37,7 +40,7 @@ class DriverRepositoryTest {
 
     void updateDriver(){
         var path = System.getProperty("user.dir") + "/src/main/resources/driver.ser/";
-        var repository = new DriverRepository();
+        var repository = new DriverRepository(path);
 
         var leclerc = new Driver();
         leclerc.setId(1);
@@ -51,7 +54,9 @@ class DriverRepositoryTest {
     }
 
     void deleteDriver(){
-        var repository = new DriverRepository();
+        var path = System.getProperty("user.dir") + "/src/main/resources/driver.ser/";
+
+        var repository = new DriverRepository(path);
 
 
         var leclerc = new Driver();

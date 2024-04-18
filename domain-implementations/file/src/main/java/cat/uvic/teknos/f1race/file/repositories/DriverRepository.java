@@ -4,6 +4,8 @@ import cat.uvic.teknos.f1race.models.Driver;
 import cat.uvic.teknos.f1race.models.Team;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -13,26 +15,34 @@ public class DriverRepository implements cat.uvic.teknos.f1race.repositories.Dri
 
     private static Map<Integer, Driver> driver = new HashMap<>();
 
-    public static void load() {
+    private String path;
 
-        var currentDirectory = System.getProperty("user.dir") + "/src/main/resources/";
+    public DriverRepository (String path){
+        this.path=path;
+    }
 
-        try (var inputStream = new ObjectInputStream(new FileInputStream(currentDirectory+ "driver.ser"))) {
-            driver = (Map<Integer, Driver>) inputStream.readObject();
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
+    void load() {
+
+        //var currentDirectory = System.getProperty("user.dir") + "/src/main/resources/";
+
+        if (Files.exists(Path.of(path))) {
+            try (var inputStream = new ObjectInputStream(new FileInputStream(path))) {
+                driver = (Map<Integer, Driver>) inputStream.readObject();
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
         }
 
     }
 
-    public static void write() {
-        var currentDirectory = System.getProperty("user.dir") + "/src/main/resources/";
+    void write() {
+        //var currentDirectory = System.getProperty("user.dir") + "/src/main/resources/";
 
-        try (var outputStream = new ObjectOutputStream(new FileOutputStream(currentDirectory + "driver.ser"))) {
+        try (var outputStream = new ObjectOutputStream(new FileOutputStream(path))) {
             outputStream.writeObject(driver);
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
@@ -54,9 +64,9 @@ public class DriverRepository implements cat.uvic.teknos.f1race.repositories.Dri
         write();
     }
 
-    public static void update(){
+    public void update(){
         var currentDirectory = System.getProperty("user.dir") + "/src/main/resources/";
-        try (var outputStream = new ObjectOutputStream(new FileOutputStream(currentDirectory + "driver.ser"))) {
+        try (var outputStream = new ObjectOutputStream(new FileOutputStream(path))) {
             outputStream.writeObject(driver);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -68,7 +78,7 @@ public class DriverRepository implements cat.uvic.teknos.f1race.repositories.Dri
 
         var currentDirectory = System.getProperty("user.dir") + "/src/main/resources/";
 
-        try (var outputStream = new ObjectOutputStream(new FileOutputStream(currentDirectory + "driver.ser"))) {
+        try (var outputStream = new ObjectOutputStream(new FileOutputStream(path))) {
             for (Iterator<Map.Entry<Integer, Driver>> iterator = driver.entrySet().iterator(); iterator.hasNext(); ) {
                 Map.Entry<Integer, Driver> entry = iterator.next();
                 if (entry.getValue().equals(model)) {

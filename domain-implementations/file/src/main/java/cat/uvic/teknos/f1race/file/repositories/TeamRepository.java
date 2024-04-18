@@ -3,6 +3,8 @@ package cat.uvic.teknos.f1race.file.repositories;
 import cat.uvic.teknos.f1race.models.Team;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -12,26 +14,33 @@ public class TeamRepository implements cat.uvic.teknos.f1race.repositories.TeamR
 
     private static Map<Integer, Team>team = new HashMap<>();
 
-    public static void load(){
-        var currentDirectory = System.getProperty("user.dir") + "/src/main/resources/";
+    private String path;
 
+    public TeamRepository (String path){
+        this.path=path;
+    }
 
-        try(var inputStream = new ObjectInputStream(new FileInputStream(currentDirectory+ "team.ser"))) {
-            team = (Map<Integer, Team>) inputStream.readObject();
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e){
-            throw new RuntimeException(e);
+    void load(){
+        //var currentDirectory = System.getProperty("user.dir") + "/src/main/resources/";
+
+        if (Files.exists(Path.of(path))) {
+            try (var inputStream = new ObjectInputStream(new FileInputStream(path))) {
+                team = (Map<Integer, Team>) inputStream.readObject();
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
         }
 
     }
 
-    public static void write(){
-        var currentDirectory = System.getProperty("user.dir") + "/src/main/resources/";
+    void write(){
+        //var currentDirectory = System.getProperty("user.dir") + "/src/main/resources/";
 
-        try(var outputStream = new ObjectOutputStream(new FileOutputStream(currentDirectory + "team.ser"))) {
+        try(var outputStream = new ObjectOutputStream(new FileOutputStream(path))) {
             outputStream.writeObject(team);
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
@@ -51,9 +60,9 @@ public class TeamRepository implements cat.uvic.teknos.f1race.repositories.TeamR
         write();
 
     }
-    public static void update(){
-        var currentDirectory = System.getProperty("user.dir") + "/src/main/resources/";
-        try (var outputStream = new ObjectOutputStream(new FileOutputStream(currentDirectory + "team.ser"))) {
+    public void update(){
+        //var currentDirectory = System.getProperty("user.dir") + "/src/main/resources/";
+        try (var outputStream = new ObjectOutputStream(new FileOutputStream(path))) {
             outputStream.writeObject(team);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -64,9 +73,9 @@ public class TeamRepository implements cat.uvic.teknos.f1race.repositories.TeamR
     @Override
     public void delete(Team model) {
 
-        var currentDirectory = System.getProperty("user.dir") + "/src/main/resources/";
+        //var currentDirectory = System.getProperty("user.dir") + "/src/main/resources/";
 
-        try (var outputStream = new ObjectOutputStream(new FileOutputStream(currentDirectory + "team.ser"))) {
+        try (var outputStream = new ObjectOutputStream(new FileOutputStream(path))) {
 
             for (Iterator<Map.Entry<Integer, Team>> iterator = team.entrySet().iterator(); iterator.hasNext(); ) {
                 Map.Entry<Integer, Team> entry = iterator.next();
@@ -86,6 +95,7 @@ public class TeamRepository implements cat.uvic.teknos.f1race.repositories.TeamR
 
     @Override
     public Team get(Integer id) {
+        load();
         return team.get(id);
     }
 
