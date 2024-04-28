@@ -21,6 +21,6 @@ public interface Sponsor {
 
     void setTeam(Set<Team> Team);
 
-    Set<Team> getTeam();
+    Set<Team> getTeams();
 
 }

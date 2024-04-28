@@ -2,6 +2,7 @@ package cat.uvic.teknos.f1race.domain.jbdc.models;
 
 import cat.uvic.teknos.f1race.models.Team;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public class Sponsor implements cat.uvic.teknos.f1race.models.Sponsor{
@@ -12,10 +13,14 @@ public class Sponsor implements cat.uvic.teknos.f1race.models.Sponsor{
     private String country;
     private int phone;
     private String sponsorType;
+    private Set <Team> teams = new HashSet();
+
+
     @Override
     public int getId() {
         return id;
     }
+
 
     @Override
     public void setId(int id) {
@@ -68,12 +73,12 @@ public class Sponsor implements cat.uvic.teknos.f1race.models.Sponsor{
     }
 
     @Override
-    public void setTeam(Set<Team> Team) {
-
+    public void setTeam(Set<Team> teams) {
+        this.teams = teams;
     }
 
     @Override
-    public Set<Team> getTeam() {
-        return null;
+    public Set<Team> getTeams() {
+        return teams;
     }
 }

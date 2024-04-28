@@ -81,7 +81,7 @@ public class JbdcCarRepository implements CarRepository {
 
     @Override
     public Car get(Integer id) {
-        try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM CAR WHERE ID = ?")) {
+        try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM CAR WHERE CAR_ID = ?")) {
             Car merceders = null;
 
             statement.setInt(1, id);
@@ -89,7 +89,7 @@ public class JbdcCarRepository implements CarRepository {
             var resultSet= statement.executeQuery();
             if (resultSet.next()) {
                 merceders = new cat.uvic.teknos.f1race.domain.jbdc.models.Car();
-                merceders.setId(resultSet.getInt("ID"));
+                merceders.setId(resultSet.getInt("CAR_ID"));
                 merceders.setEngine(resultSet.getString("ENGINE"));
                 merceders.setChassis(resultSet.getString("CHASSIS"));
                 merceders.setModel(resultSet.getString("MODEL"));
@@ -109,7 +109,7 @@ public class JbdcCarRepository implements CarRepository {
             var resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 var mercedes = new cat.uvic.teknos.f1race.domain.jbdc.models.Car();
-                mercedes.setId(resultSet.getInt("ID"));
+                mercedes.setId(resultSet.getInt("CAR_ID"));
                 mercedes.setModel(resultSet.getString("MODEL"));
 
                 cars.add(mercedes);

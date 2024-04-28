@@ -1,7 +1,6 @@
 package cat.uvic.teknos.f1race.domain.jbdc.repositories;
 
 import cat.uvic.teknos.f1race.models.Sponsor;
-import cat.uvic.teknos.f1race.models.Team;
 import cat.uvic.teknos.f1race.repositories.SponsorRepository;
 
 import java.sql.*;
@@ -11,8 +10,8 @@ import java.util.Set;
 public class JbdcSponsorRepository implements SponsorRepository {
 
 
-    private static final String  INSERT_SPONSOR = "INSERT INTO CAR (SPONSOR_NAME, COUNTRY, NUMBER, SPONSOR_TYPE) VALUES (?,?,?,?)";
-    private static final String  UPDATE_SPONSOR = "UPDATE CAR SET SPONSOR_NAME = ?, COUNTRY = ?,NUMBER = ?, SPONSOR_TYPE = ? WHERE ID = ?";
+    private static final String  INSERT_SPONSOR = "INSERT INTO SPONSOR (SPONSOR_NAME, COUNTRY, NUMBER, SPONSOR_TYPE) VALUES (?,?,?,?)";
+    private static final String  UPDATE_SPONSOR = "UPDATE SPONSOR SET SPONSOR_NAME = ?, COUNTRY = ?,NUMBER = ?, SPONSOR_TYPE = ? WHERE ID = ?";
     private final Connection connection;
 
     public JbdcSponsorRepository(Connection connection){
@@ -23,20 +22,25 @@ public class JbdcSponsorRepository implements SponsorRepository {
         try(
 
                 var preparedStatement = connection.prepareStatement(INSERT_SPONSOR, Statement.RETURN_GENERATED_KEYS);
-                var teamSponsorStatment = connection.prepareStatement(INSERT_SPONSOR, Statement.RETURN_GENERATED_KEYS))
+                var teamSponsorStatement = connection.prepareStatement(UPDATE_SPONSOR, Statement.RETURN_GENERATED_KEYS))
         {
             connection.setAutoCommit(false);
-            preparedStatement.executeUpdate();
+            /*preparedStatement.setString(1, model.getName());
+            preparedStatement.setString(2, model.getCountry());
+            preparedStatement.setInt(3, model.getPhone());
+            preparedStatement.setString(4, model.getSponsorType());
+            preparedStatement.executeUpdate();*/
             var keys = preparedStatement.getGeneratedKeys();
             if (keys.next()){
                 model.setId(keys.getInt(1));
             }
 
-            for (var team : model.getTeam()){
-                teamSponsorStatment.setInt(1, model.getId());
-                teamSponsorStatment.setInt(2, team.getId());
 
-                teamSponsorStatment.executeUpdate();
+            for (var team : model.getTeams()){
+                teamSponsorStatement.setInt(1, model.getId());
+                teamSponsorStatement.setInt(2, team.getId());
+
+                teamSponsorStatement.executeUpdate();
             }
             connection.commit();
 
@@ -45,6 +49,7 @@ public class JbdcSponsorRepository implements SponsorRepository {
         }
 
     }
+
 
     public void update(Sponsor model) {
         try (var preparedStatement = connection.prepareStatement(UPDATE_SPONSOR)) {
@@ -66,10 +71,12 @@ public class JbdcSponsorRepository implements SponsorRepository {
             preparedStatement.setInt(1,model.getId());
             preparedStatement.executeUpdate();
 
-            for(var team : model.getTeam()){
+            for(var team : model.getTeams()){
                 teamStatement.setString(1,team.getSponsor());
+                preparedStatement.setInt(1, team.getId());
 
                 teamStatement.executeUpdate();
+                preparedStatement.executeUpdate();
             }
             preparedStatement.executeUpdate();
             connection.commit();

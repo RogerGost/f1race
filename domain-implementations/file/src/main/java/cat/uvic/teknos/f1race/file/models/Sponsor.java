@@ -73,7 +73,7 @@ public class Sponsor implements cat.uvic.teknos.f1race.models.Sponsor{
     }
 
     @Override
-    public Set<Team> getTeam() {
+    public Set<Team> getTeams() {
         return null;
     }
 }
