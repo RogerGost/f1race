@@ -1,5 +1,6 @@
 package cat.uvic.teknos.f1race.file.repositories;
 
+import cat.uvic.teknos.f1race.models.Car;
 import cat.uvic.teknos.f1race.models.Driver;
 import cat.uvic.teknos.f1race.models.Team;
 
@@ -102,6 +103,11 @@ public class DriverRepository implements cat.uvic.teknos.f1race.repositories.Dri
     @Override
     public Set<Driver> getAll() {
         return Set.copyOf(driver.values());
+    }
+
+    @Override
+    public void save(Car model) {
+
     }
 }
 

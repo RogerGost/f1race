@@ -1,5 +1,6 @@
 package cat.uvic.teknos.f1race.domain.jbdc.repositories;
 
+import cat.uvic.teknos.f1race.models.Driver;
 import cat.uvic.teknos.f1race.models.Sponsor;
 import cat.uvic.teknos.f1race.repositories.SponsorRepository;
 
@@ -10,8 +11,6 @@ import java.util.Set;
 public class JbdcSponsorRepository implements SponsorRepository {
 
 
-    private static final String  INSERT_SPONSOR = "INSERT INTO SPONSOR (SPONSOR_NAME, COUNTRY, NUMBER, SPONSOR_TYPE) VALUES (?,?,?,?)";
-    private static final String  UPDATE_SPONSOR = "UPDATE SPONSOR SET SPONSOR_NAME = ?, COUNTRY = ?,NUMBER = ?, SPONSOR_TYPE = ? WHERE ID = ?";
     private final Connection connection;
 
     public JbdcSponsorRepository(Connection connection){
@@ -19,47 +18,57 @@ public class JbdcSponsorRepository implements SponsorRepository {
     }
     @Override
     public void save(Sponsor model) {
-        try(
-
-                var preparedStatement = connection.prepareStatement(INSERT_SPONSOR, Statement.RETURN_GENERATED_KEYS);
-                var teamSponsorStatement = connection.prepareStatement(UPDATE_SPONSOR, Statement.RETURN_GENERATED_KEYS))
-        {
-            connection.setAutoCommit(false);
-            /*preparedStatement.setString(1, model.getName());
-            preparedStatement.setString(2, model.getCountry());
-            preparedStatement.setInt(3, model.getPhone());
-            preparedStatement.setString(4, model.getSponsorType());
-            preparedStatement.executeUpdate();*/
-            var keys = preparedStatement.getGeneratedKeys();
-            if (keys.next()){
-                model.setId(keys.getInt(1));
-            }
-
-
-            for (var team : model.getTeams()){
-                teamSponsorStatement.setInt(1, model.getId());
-                teamSponsorStatement.setInt(2, team.getId());
-
-                teamSponsorStatement.executeUpdate();
-            }
-            connection.commit();
-
-        }catch (SQLException e){
-            throw new RuntimeException(e);
+        if (model.getId() <= 0){
+            insert(model);
+        } else {
+            update(model);
         }
+    }
 
+    private void insert(Sponsor model) {
+        try (PreparedStatement statement = connection.prepareStatement(
+                "INSERT INTO SPONSOR (SPONSOR_NAME, COUNTRY, NUMBER, SPONSOR_TYPE, SPONSORSHIP_ID) VALUES (?,?,?,?,?)",
+                Statement.RETURN_GENERATED_KEYS)){
+
+            statement.setString(1, model.getName());
+            statement.setString(2, model.getCountry());
+            statement.setInt(3, model.getPhone());
+            statement.setString(4, model.getSponsorType());
+            //statement.setInt(5, model.getSponsorshipId()); // Asumiendo que tienes un método para obtener el ID de sponsorship
+
+            int rowsAffected = statement.executeUpdate();
+            if (rowsAffected == 0) {
+                throw new SQLException("Failed to insert sponsor");
+            }
+
+            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    model.setId(generatedKeys.getInt(1));
+                } else {
+                    throw new SQLException("Failed to get inserted sponsor ID");
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error inserting sponsor", e);
+        }
     }
 
 
     public void update(Sponsor model) {
-        try (var preparedStatement = connection.prepareStatement(UPDATE_SPONSOR)) {
-            preparedStatement.setString(1, model.getName());
-            preparedStatement.setInt(5, model.getId());
-            preparedStatement.executeUpdate();
+        try (PreparedStatement statement = connection.prepareStatement("UPDATE SPONSOR SET SPONSOR_NAME=?, COUNTRY=?, NUMBER=?, SPONSOR_TYPE=? WHERE SPONSOR_ID=?", Statement.RETURN_GENERATED_KEYS)){
 
+            statement.setString(1, model.getName());
+            statement.setString(2, model.getCountry());
+            statement.setInt(3, model.getPhone());
+            statement.setString(4, model.getSponsorType());
+            statement.setInt(5, model.getId());
 
+            int rowsAffected = statement.executeUpdate();
+            if (rowsAffected == 0) {
+                throw new SQLException("No items to update");
+            }
         } catch (SQLException e) {
-            throw new RuntimeException("Error al actualizar el patrocinador en la base de datos", e);
+            throw new RuntimeException(e);
         }
 
     }

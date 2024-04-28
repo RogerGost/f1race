@@ -35,6 +35,7 @@ class JbdcCarRepositoryTest {
             mercedes.setModel("mc204");
             mercedes.setEngine("mercedes1");
             mercedes.setChassis("C1mercedes");
+            mercedes.setTeamId(1);
 
             var repository = new JbdcCarRepository(connection);
 
@@ -51,7 +52,7 @@ class JbdcCarRepositoryTest {
 
     }
 
-
+    @Test
     void shouldUpdateNewCarTest() throws SQLException {
 
 
@@ -61,7 +62,7 @@ class JbdcCarRepositoryTest {
             mercedes.setEngine("mercedes2");
             mercedes.setChassis("C2mercedes");
             mercedes.setTeamId(1);
-            mercedes.setId(1);
+            mercedes.setId(3);
 
 
             var repository = new JbdcCarRepository(connection);
@@ -74,7 +75,7 @@ class JbdcCarRepositoryTest {
     @Test
     void delete() throws SQLException {
             Car mercedes = new Car();
-            mercedes.setId(4);
+            mercedes.setId(3);
 
             var repository = new JbdcCarRepository(connection);
             repository.delete(mercedes);

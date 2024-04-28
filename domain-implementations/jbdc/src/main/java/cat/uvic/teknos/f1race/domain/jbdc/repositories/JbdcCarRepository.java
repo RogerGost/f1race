@@ -28,11 +28,12 @@ public class JbdcCarRepository implements CarRepository {
     }
 
     private void insert(Car model) {
-        try (PreparedStatement statement = connection.prepareStatement("INSERT INTO CAR ( MODEL, ENGINE, CHASSIS) VALUES (?,?,?)", Statement.RETURN_GENERATED_KEYS)){
+        try (PreparedStatement statement = connection.prepareStatement("INSERT INTO CAR ( MODEL, ENGINE, CHASSIS, TEAM_ID) VALUES (?,?,?,?)", Statement.RETURN_GENERATED_KEYS)){
 
             statement.setString(1, model.getModel());
             statement.setString(2, model.getEngine());
             statement.setString(3, model.getChassis());
+            statement.setInt(4,model.getTeamId());
 
 
             statement.executeUpdate();
@@ -118,5 +119,6 @@ public class JbdcCarRepository implements CarRepository {
         } catch (SQLException e) {
             throw new RuntimeException("Error", e);
         }
+
     }
 }
