@@ -55,7 +55,7 @@ class JbdcSponsorRepositoryTest {
     }
 
 
-    void shouldUpdateNewCarTest() throws SQLException {
+    void shouldUpdateNewSponsorTest() throws SQLException {
 
 
         Sponsor santander = new Sponsor();
