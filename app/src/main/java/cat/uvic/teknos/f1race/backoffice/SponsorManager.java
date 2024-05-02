@@ -61,7 +61,22 @@ public class SponsorManager {
     private void insert() {
         var sponsor = modelFactory.createSponsor();
 
-        sponsorRepository.save(null);
+        out.println("Name");
+        sponsor.setName(readLine(in));
+
+        out.println("Country");
+        sponsor.setCountry(readLine(in));
+
+        out.println("Phone");
+        sponsor.setPhone(Integer.valueOf(readLine(in)));
+
+        out.println("SponsorType");
+        sponsor.setSponsorType(readLine(in));
+
+
+        sponsorRepository.save(sponsor);
+
+        out.println("Insert OK");
     }
 
     private void showSponsorMenu() {

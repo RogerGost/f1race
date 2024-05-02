@@ -59,7 +59,21 @@ public class RaceResultManager {
     private void insert() {
         var raceResult = modelFactory.createRaceResult();
 
-        raceResultRepository.save(null);
+        out.println("RaceID");
+        raceResult.setRaceId(Integer.valueOf(readLine(in)));
+
+        out.println("DriverID");
+        raceResult.setDriverId(Integer.valueOf(readLine(in)));
+
+        out.println("Position");
+        raceResult.setPosition(Integer.valueOf(readLine(in)));
+
+        out.println("Points");
+        raceResult.setPoints(Integer.valueOf(readLine(in)));
+
+        raceResultRepository.save(raceResult);
+
+        out.println("Insert OK");
     }
 
     private void showRaceResultMenu() {

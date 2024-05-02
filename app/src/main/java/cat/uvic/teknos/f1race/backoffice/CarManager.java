@@ -61,7 +61,21 @@ public class CarManager {
     private void insert() {
         var car = modelFactory.createCar();
 
-        carRepository.save(null);
+        out.println("TeamID");
+        car.setTeamId(Integer.parseInt(readLine(in)));
+
+        out.println("Model");
+        car.setModel(readLine(in));
+
+        out.println("Engine");
+        car.setEngine(readLine(in));
+
+        out.println("Chassis");
+        car.setChassis(readLine(in));
+
+        carRepository.save(car);
+
+        out.println("Insert OK");
     }
 
     private void showCarMenu() {

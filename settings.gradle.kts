@@ -11,4 +11,4 @@ plugins {
 }
 
 rootProject.name = "f1race"
-include("app", "domain", "utilities", ":domain-implementations:file",":domain-implementations:jbdc")
+include("app", "domain", "utilities", ":domain-implementations:file",":domain-implementations:jbdc", ":domain-implementations:jpa")

@@ -26,26 +26,21 @@ public class JbdcSponsorRepository implements SponsorRepository {
     }
 
     private void insert(Sponsor model) {
-        try (PreparedStatement statement = connection.prepareStatement(
-                "INSERT INTO SPONSOR (SPONSOR_NAME, COUNTRY, NUMBER, SPONSOR_TYPE, SPONSORSHIP_ID) VALUES (?,?,?,?,?)",
-                Statement.RETURN_GENERATED_KEYS)){
-
+        String sql = "INSERT INTO SPONSOR (SPONSOR_NAME, COUNTRY, NUMBER, SPONSOR_TYPE) VALUES (?, ?, ?, ?)";
+        try (PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, model.getName());
             statement.setString(2, model.getCountry());
             statement.setInt(3, model.getPhone());
             statement.setString(4, model.getSponsorType());
-            //statement.setInt(5, model.getSponsorshipId()); // Asumiendo que tienes un método para obtener el ID de sponsorship
-
             int rowsAffected = statement.executeUpdate();
             if (rowsAffected == 0) {
-                throw new SQLException("Failed to insert sponsor");
+                throw new SQLException("Inserting sponsor failed, no rows affected.");
             }
-
             try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     model.setId(generatedKeys.getInt(1));
                 } else {
-                    throw new SQLException("Failed to get inserted sponsor ID");
+                    throw new SQLException("Inserting sponsor failed, no ID obtained.");
                 }
             }
         } catch (SQLException e) {
@@ -88,8 +83,8 @@ public class JbdcSponsorRepository implements SponsorRepository {
                 preparedStatement.executeUpdate();
             }
             preparedStatement.executeUpdate();
-            connection.commit();
 
+            connection.commit();
         } catch (SQLException e){
 
             throw  new RuntimeException(e);

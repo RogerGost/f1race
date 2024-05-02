@@ -85,5 +85,12 @@ class JbdcTeamRepositoryTest {
 
     @Test
     void getAll() {
+
+        var repository = new JbdcTeamRepository(connection);
+
+        var inventories = repository.getAll();
+
+        assertNotNull(inventories);
+        assertFalse(inventories.isEmpty());
     }
 }

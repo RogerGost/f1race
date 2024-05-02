@@ -56,6 +56,9 @@ public class JbdcDriverRepository implements DriverRepository {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+
+
     }
 
     private void update(Driver model) {
@@ -74,6 +77,7 @@ public class JbdcDriverRepository implements DriverRepository {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
     }
 
     @Override
@@ -96,6 +100,7 @@ public class JbdcDriverRepository implements DriverRepository {
         } catch (SQLException e) {
             throw new RuntimeException("Error", e);
         }
+
 
     }
 

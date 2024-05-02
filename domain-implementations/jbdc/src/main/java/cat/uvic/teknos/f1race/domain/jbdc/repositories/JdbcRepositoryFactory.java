@@ -31,21 +31,21 @@ public class JdbcRepositoryFactory implements RepositoryFactory {
 
     @Override
     public CarRepository getCarRepository() {
-        return null;
+        return new JbdcCarRepository(connection);
     }
 
     @Override
     public DriverRepository getDriverRepository() {
-        return null;
+        return new JbdcDriverRepository(connection);
     }
 
     @Override
     public SponsorRepository getSponsorRepository() {
-        return null;
+        return new JbdcSponsorRepository(connection);
     }
 
     @Override
     public RaceResultRepository getRaceResultRepository() {
-        return null;
+        return new JbdcRaceResultRepository(connection);
     }
 }

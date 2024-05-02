@@ -10,6 +10,7 @@ import cat.uvic.teknos.f1race.models.ModelFactory;
 import cat.uvic.teknos.f1race.repositories.RepositoryFactory;
 
 public class App {
+
     public static void main(String[] args) {
         RepositoryFactory repositoryFactory = new JdbcRepositoryFactory();
         ModelFactory modelFactory = new JdbcModelFactory();

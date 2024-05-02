@@ -59,7 +59,19 @@ public class DriverManager {
     private void insert() {
         var driver = modelFactory.createDriver();
 
-        driverRepository.save((Car) null);
+        out.println("Name");
+        driver.setName(readLine(in));
+
+        out.println("Nationality");
+        driver.setNationality(readLine(in));
+
+        out.println("Number");
+        driver.setNumber(Integer.parseInt(readLine(in)));
+
+
+        driverRepository.save(driver);
+
+        out.println("Insert OK");
     }
 
     private void showDriverMenu() {

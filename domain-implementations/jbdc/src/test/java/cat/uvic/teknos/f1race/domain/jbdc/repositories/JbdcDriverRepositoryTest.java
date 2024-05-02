@@ -17,7 +17,14 @@ import static org.junit.jupiter.api.Assertions.*;
 class JbdcDriverRepositoryTest {
 
     private final Connection connection;
+
     JbdcDriverRepositoryTest(Connection connection) {
+        try {
+            // Desactivar el autocommit
+            connection.setAutoCommit(false);
+        } catch (SQLException e) {
+            throw new RuntimeException("Error setting autocommit to false", e);
+        }
         this.connection = connection;
     }
 
@@ -41,8 +48,14 @@ class JbdcDriverRepositoryTest {
                     .table("CAR")
                     .where("CAR_ID = ?", mercedes.getId())
                     .hasOneLine();*/
+        try {
+            connection.commit();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
+    @Test
     void shouldUpdateNewDriverTest() throws SQLException {
 
 
@@ -59,6 +72,11 @@ class JbdcDriverRepositoryTest {
         repository.save(driver);
 
         assertTrue(true);
+        try {
+            connection.commit();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
@@ -66,21 +84,31 @@ class JbdcDriverRepositoryTest {
     void delete() {
 
         Driver driver = new Driver();
-        driver.setId(1);
+        driver.setId(4);
 
         var repository = new JbdcDriverRepository(connection);
         repository.delete(driver);
 
         //assertNull(repository.get(1));
+        try {
+            connection.commit();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Test
     void get() {
         var repository = new JbdcDriverRepository(connection);
+
+        int existingId=1;
+        Driver driver = (Driver) repository.get(existingId);
         assertNotNull(repository.get(1));
     }
 
     @Test
     void getAll() {
+        var repository = new JbdcDriverRepository(connection);
+        assertNotNull(repository.get(1));
     }
 }

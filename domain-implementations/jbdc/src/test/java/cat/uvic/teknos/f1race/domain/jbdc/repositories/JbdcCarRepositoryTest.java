@@ -93,5 +93,12 @@ class JbdcCarRepositoryTest {
 
     @Test
     void getAll() {
+
+        var repository = new JbdcCarRepository(connection);
+
+        var inventories = repository.getAll();
+
+        assertNotNull(inventories);
+        assertFalse(inventories.isEmpty());
     }
 }
