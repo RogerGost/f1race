@@ -20,6 +20,8 @@ public class Sponsor implements cat.uvic.teknos.f1race.models.Sponsor{
     private Set <Team> teams = new HashSet();
 
 
+
+
     @Override
     public int getId() {
         return id;

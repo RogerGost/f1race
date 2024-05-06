@@ -1,11 +1,10 @@
 package cat.uvic.teknos.f1race.domain.models;
-
-import cat.uvic.teknos.f1race.models.Car;
 import cat.uvic.teknos.f1race.models.Driver;
 import cat.uvic.teknos.f1race.models.Sponsorship;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -30,8 +29,10 @@ public class  Team implements cat.uvic.teknos.f1race.models.Team, Serializable{
     private Set<Sponsorship> sponsorships;
     @Transient
     private Set<Driver> drivers;
-    @Transient
-    private Set<Car> cars;
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "TEAM_ID")
+    private Set<Car> cars = new HashSet<>();
+
     @Override
     public int getId() {
         return id;
@@ -41,6 +42,11 @@ public class  Team implements cat.uvic.teknos.f1race.models.Team, Serializable{
     public void setId(int id) {
         this.id= id;
 
+    }
+    public Team() {
+        this.sponsorships = new HashSet<>();
+        this.drivers = new HashSet<>();
+        this.cars = new HashSet<>();
     }
 
     @Override
@@ -106,17 +112,12 @@ public class  Team implements cat.uvic.teknos.f1race.models.Team, Serializable{
     }
 
     @Override
-    public Set<Car> getcar() {
+    public Set<Car> getCars() {
         return cars;
     }
 
     @Override
-    public void setCar(Car car) {
+    public void setCars(Set<? extends cat.uvic.teknos.f1race.models.Car> cars) {
 
-    }
-
-    @Override
-    public Set<Car> getCar() {
-        return cars;
     }
 }

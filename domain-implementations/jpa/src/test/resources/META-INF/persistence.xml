@@ -7,6 +7,11 @@
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
         <class>cat.uvic.teknos.f1race.domain.models.Team</class>
+        <class>cat.uvic.teknos.f1race.domain.models.Car</class>
+        <class>cat.uvic.teknos.f1race.domain.models.Driver</class>
+        <class>cat.uvic.teknos.f1race.domain.models.RaceResult</class>
+        <class>cat.uvic.teknos.f1race.domain.models.Sponsor</class>
+        <class>cat.uvic.teknos.f1race.domain.models.SponsorShip</class>
         <properties>
             <property name="hibernate.archive.autodetection" value="class, hbm"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
@@ -17,6 +22,7 @@
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
             <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
+            <property name="jakarta.persistence.sql-load-script-source" value="/data.sql"/>
         </properties>
     </persistence-unit>
 </persistence>

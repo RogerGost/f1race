@@ -9,6 +9,8 @@ import de.vandermeer.skb.interfaces.transformers.textformat.TextAlignment;
 
 import java.io.BufferedReader;
 import java.io.PrintStream;
+import java.util.Set;
+
 import static cat.uvic.teknos.f1race.backoffice.IOUtilis.*;
 
 import static cat.uvic.teknos.f1race.backoffice.IOUtilis.readLine;
@@ -52,24 +54,69 @@ public class TeamManager {
 
     private void getAll() {
 
-        var asciiTable = new AsciiTable();
-        asciiTable.addRule();
-        asciiTable.addRow("ID","NAME", "PRINCIPAL", "HEADQUARTERS","SPONSOR");
-        asciiTable.addRule();
-
-        for (var team : teamRepository.getAll()){
-            asciiTable.addRow(team.getId(), team.getTeamName(), team.getPrincipalName(), team.getHeadquarters(), team.getSponsor());
+        try {
+            var asciiTable = new AsciiTable();
+            asciiTable.addRule();
+            asciiTable.addRow("ID", "NAME", "PRINCIPAL", "HEADQUARTERS", "SPONSOR");
             asciiTable.addRule();
 
+            Set<Team> teams = teamRepository.getAll();
+
+            if (teams.isEmpty()) {
+                out.println("No teams found.");
+            } else {
+                for (Team team : teams) {
+                    asciiTable.addRow(team.getId(), team.getTeamName(), team.getPrincipalName(), team.getHeadquarters(), team.getSponsor());
+                    asciiTable.addRule();
+                }
+            }
+
+            asciiTable.setTextAlignment(TextAlignment.CENTER);
+            out.println(asciiTable.render());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
-        asciiTable.setTextAlignment(TextAlignment.CENTER);
 
     }
 
     private void delete() {
+        var team = modelFactory.createTeam();
+
+        out.println("Enter the ID of the team to delete:");
+        int id = Integer.parseInt(readLine(in));
+        team.setId(id);
+
+        teamRepository.delete(team);
     }
 
     private void update() {
+        try {
+            var team = modelFactory.createTeam();
+
+            out.println("Enter the ID of the team to update:");
+            int id = Integer.parseInt(readLine(in));
+            team.setId(id);
+
+            out.println("Name");
+            team.setTeamName(readLine(in));
+
+            out.println("Principal");
+            team.setPrincipalName(readLine(in));
+
+            out.println("Headquarters");
+            team.setHeadquarters(readLine(in));
+
+            out.println("Sponsor");
+            team.setSponsor(readLine(in));
+
+            teamRepository.save(team);
+
+            out.println("Update successful");
+        } catch (NumberFormatException e) {
+            out.println("Invalid team ID. Please enter a valid integer ID.");
+        } catch (Exception e) {
+            out.println("An error occurred while updating the team: " + e.getMessage());
+        }
     }
 
     private void insert() {

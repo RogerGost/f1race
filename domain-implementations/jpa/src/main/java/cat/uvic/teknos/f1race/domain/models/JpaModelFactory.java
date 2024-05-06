@@ -7,7 +7,7 @@ import cat.uvic.teknos.f1race.models.Sponsor;
 import cat.uvic.teknos.f1race.models.Team;
 import cat.uvic.teknos.f1race.models.*;
 
-public class JdbcModelFactory implements ModelFactory {
+public class JpaModelFactory implements ModelFactory {
 
 
     @Override
@@ -27,16 +27,16 @@ public class JdbcModelFactory implements ModelFactory {
 
     @Override
     public Sponsor createSponsor() {
-        return null;
+        return new cat.uvic.teknos.f1race.domain.models.Sponsor();
     }
 
     @Override
     public RaceResult createRaceResult() {
-        return null;
+        return new cat.uvic.teknos.f1race.domain.models.RaceResult();
     }
 
     @Override
     public Sponsorship createSponsorShip() {
-        return null;
+        return new cat.uvic.teknos.f1race.domain.models.SponsorShip();
     }
 }

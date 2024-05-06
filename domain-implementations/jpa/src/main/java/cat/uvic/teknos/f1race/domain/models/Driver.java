@@ -1,21 +1,44 @@
 package cat.uvic.teknos.f1race.domain.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Set;
 
 @Entity
 public class Driver implements cat.uvic.teknos.f1race.models.Driver, Serializable{
     @Id
-
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
     private int id;
+
+    @Column(name = "NAME")
     private String name;
+
+    @Column(name = "NATIONALITY")
     private String nationality;
+
+    @Column(name = "DATE")
     private LocalDate date;
+
+    @Column(name = "NUMBER")
     private int number;
+
+    @Column(name = "TEAM_ID")
     private int teamId;
+
+    @OneToMany( cascade = CascadeType.ALL)
+    private Set<RaceResult> raceResults;
+
+    public Set<RaceResult> getRaceResults() {
+        return raceResults;
+    }
+
+    public void setRaceResults(Set<RaceResult> raceResults) {
+        this.raceResults = raceResults;
+    }
+
     @Override
     public int getId() {
         return id;

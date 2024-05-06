@@ -53,9 +53,43 @@ public class CarManager {
     }
 
     private void delete() {
+        var car = modelFactory.createCar();
+
+        out.println("Enter the ID of the car to delete:");
+        int id = Integer.parseInt(readLine(in));
+        car.setId(id);
+
+        carRepository.delete(car);
     }
 
     private void update() {
+        try {
+            var car = modelFactory.createCar();
+
+            out.println("Enter the ID of the car to update:");
+            int id = Integer.parseInt(readLine(in));
+            car.setId(id);
+
+            out.println("Model");
+            car.setModel(readLine(in));
+
+            out.println("Engine");
+            car.setEngine(readLine(in));
+
+            out.println("Chassis");
+            car.setChassis(readLine(in));
+
+            out.println("Team ID");
+            car.setTeamId(Integer.parseInt(readLine(in)));
+
+            carRepository.save(car);
+
+            out.println("Update successful");
+        } catch (NumberFormatException e) {
+            out.println("Invalid team ID. Please enter a valid integer ID.");
+        } catch (Exception e) {
+            out.println("An error occurred while updating the team: " + e.getMessage());
+        }
     }
 
     private void insert() {

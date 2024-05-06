@@ -30,10 +30,9 @@ public interface Team {
 
     void setDriver (Driver driver);
 
-    Set<Car> getcar();
+    Set<? extends Car> getCars();
 
-    void setCar(Car car);
+    void setCars(Set<? extends Car> cars);
 
-    Set<Car> getCar();
 }
 

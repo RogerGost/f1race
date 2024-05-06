@@ -56,6 +56,33 @@ public class SponsorManager {
     }
 
     private void update() {
+        try {
+            var sponsor = modelFactory.createSponsor();
+
+            out.println("Enter the ID of the sponsor to update:");
+            int id = Integer.parseInt(readLine(in));
+            sponsor.setId(id);
+
+            out.println("Name");
+            sponsor.setName(readLine(in));
+
+            out.println("Country");
+            sponsor.setCountry(readLine(in));
+
+            out.println("Phone");
+            sponsor.setPhone(Integer.parseInt(readLine(in)));
+
+            out.println("Sponsor Type");
+            sponsor.setSponsorType(readLine(in));
+
+            sponsorRepository.save(sponsor);
+
+            out.println("Update successful");
+        } catch (NumberFormatException e) {
+            out.println("Invalid team ID. Please enter a valid integer ID.");
+        } catch (Exception e) {
+            out.println("An error occurred while updating the team: " + e.getMessage());
+        }
     }
 
     private void insert() {

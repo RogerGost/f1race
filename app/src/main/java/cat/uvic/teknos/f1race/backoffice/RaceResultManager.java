@@ -51,25 +51,59 @@ public class RaceResultManager {
     }
 
     private void delete() {
+        var race = modelFactory.createRaceResult();
+
+        out.println("Enter the ID of the race to delete:");
+        int id = Integer.parseInt(readLine(in));
+        race.setId(id);
+
+        raceResultRepository.delete(race);
     }
 
     private void update() {
+        try {
+            var race = modelFactory.createRaceResult();
+
+            out.println("Enter the ID of the RaceResult to update:");
+            int id = Integer.parseInt(readLine(in));
+            race.setId(id);
+
+            out.println("RaceID");
+            race.setRaceId(Integer.parseInt(readLine(in)));
+
+            out.println("DriverID");
+            race.setDriverId(Integer.parseInt(readLine(in)));
+
+            out.println("Position");
+            race.setPosition(Integer.parseInt(readLine(in)));
+
+            out.println("Points");
+            race.setPoints(Integer.parseInt(readLine(in)));
+
+            raceResultRepository.save(race);
+
+            out.println("Update successful");
+        } catch (NumberFormatException e) {
+            out.println("Invalid team ID. Please enter a valid integer ID.");
+        } catch (Exception e) {
+            out.println("An error occurred while updating the team: " + e.getMessage());
+        }
     }
 
     private void insert() {
         var raceResult = modelFactory.createRaceResult();
 
         out.println("RaceID");
-        raceResult.setRaceId(Integer.valueOf(readLine(in)));
+        raceResult.setRaceId(Integer.parseInt(readLine(in)));
 
         out.println("DriverID");
-        raceResult.setDriverId(Integer.valueOf(readLine(in)));
+        raceResult.setDriverId(Integer.parseInt(readLine(in)));
 
         out.println("Position");
-        raceResult.setPosition(Integer.valueOf(readLine(in)));
+        raceResult.setPosition(Integer.parseInt(readLine(in)));
 
         out.println("Points");
-        raceResult.setPoints(Integer.valueOf(readLine(in)));
+        raceResult.setPoints(Integer.parseInt(readLine(in)));
 
         raceResultRepository.save(raceResult);
 

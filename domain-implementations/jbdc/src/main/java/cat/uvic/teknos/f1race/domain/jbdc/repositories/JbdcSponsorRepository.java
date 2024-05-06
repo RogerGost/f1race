@@ -3,19 +3,20 @@ package cat.uvic.teknos.f1race.domain.jbdc.repositories;
 import cat.uvic.teknos.f1race.models.Driver;
 import cat.uvic.teknos.f1race.models.Sponsor;
 import cat.uvic.teknos.f1race.repositories.SponsorRepository;
+import cat.uvic.teknos.f1race.repositories.SponsorShipRepository;
 
 import java.sql.*;
 import java.util.HashSet;
 import java.util.Set;
 
-public class JbdcSponsorRepository implements SponsorRepository {
-
+public class JbdcSponsorRepository implements SponsorRepository{
 
     private final Connection connection;
 
     public JbdcSponsorRepository(Connection connection){
         this.connection = connection;
     }
+
     @Override
     public void save(Sponsor model) {
         if (model.getId() <= 0){
@@ -26,28 +27,51 @@ public class JbdcSponsorRepository implements SponsorRepository {
     }
 
     private void insert(Sponsor model) {
-        String sql = "INSERT INTO SPONSOR (SPONSOR_NAME, COUNTRY, NUMBER, SPONSOR_TYPE) VALUES (?, ?, ?, ?)";
-        try (PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+        try {
+            connection.setAutoCommit(false);
+
+            //insertIntoSponsorship(model);
+
+            insertIntoSponsor(model);
+
+            connection.commit();
+        } catch (SQLException e) {
+            try {
+                connection.rollback();
+            } catch (SQLException rollbackException) {
+                rollbackException.printStackTrace();
+            }
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                connection.setAutoCommit(true);
+            } catch (SQLException rollbackException) {
+                rollbackException.printStackTrace();
+            }
+        }
+    }
+
+    /*public void insertIntoSponsorship(Sponsor model) throws SQLException {
+        try (PreparedStatement statement = connection.prepareStatement("INSERT INTO SPONSORSHIP (SPONSOR_NAME, CONTRACT_START_DATE, CONTRACT_END_DATE, TEAM_ID) VALUES (?,?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
+            statement.setString(1, model.getName());
+            statement.setDate(2, model.get());
+            statement.setDate(3, model.getEndDate());
+            statement.setInt(4, model.get());
+
+            statement.executeUpdate();
+        }
+    }*/
+
+    private void insertIntoSponsor(Sponsor model) throws SQLException {
+        try (PreparedStatement statement = connection.prepareStatement("INSERT INTO SPONSOR (SPONSOR_NAME, COUNTRY, NUMBER, SPONSOR_TYPE) VALUES (?,?,?,?)")) {
             statement.setString(1, model.getName());
             statement.setString(2, model.getCountry());
             statement.setInt(3, model.getPhone());
             statement.setString(4, model.getSponsorType());
-            int rowsAffected = statement.executeUpdate();
-            if (rowsAffected == 0) {
-                throw new SQLException("Inserting sponsor failed, no rows affected.");
-            }
-            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
-                    model.setId(generatedKeys.getInt(1));
-                } else {
-                    throw new SQLException("Inserting sponsor failed, no ID obtained.");
-                }
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException("Error inserting sponsor", e);
+
+            statement.executeUpdate();
         }
     }
-
 
     public void update(Sponsor model) {
         try (PreparedStatement statement = connection.prepareStatement("UPDATE SPONSOR SET SPONSOR_NAME=?, COUNTRY=?, NUMBER=?, SPONSOR_TYPE=? WHERE SPONSOR_ID=?", Statement.RETURN_GENERATED_KEYS)){
@@ -70,23 +94,10 @@ public class JbdcSponsorRepository implements SponsorRepository {
 
     @Override
     public void delete(Sponsor model) {
-        try (PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM SPONSOR WHERE SPONSOR_ID = ?");
-            PreparedStatement teamStatement = connection.prepareStatement("DELETE FROM TEAM WHERE SPONSOR = ?")){
+        try (PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM SPONSOR WHERE SPONSOR_ID = ?")) {
             preparedStatement.setInt(1,model.getId());
             preparedStatement.executeUpdate();
-
-            for(var team : model.getTeams()){
-                teamStatement.setString(1,team.getSponsor());
-                preparedStatement.setInt(1, team.getId());
-
-                teamStatement.executeUpdate();
-                preparedStatement.executeUpdate();
-            }
-            preparedStatement.executeUpdate();
-
-            connection.commit();
         } catch (SQLException e){
-
             throw  new RuntimeException(e);
         }
     }
@@ -100,19 +111,16 @@ public class JbdcSponsorRepository implements SponsorRepository {
 
             try (ResultSet resultSet=statement.executeQuery()){
                 if(resultSet.next()){
-                    Sponsor sponsor = new cat.uvic.teknos.f1race.domain.jbdc.models.Sponsor(); {
-                        sponsor.setId(resultSet.getInt("ID"));
-                        sponsor.setName(resultSet.getString("NAME"));
-                        sponsor.setCountry(resultSet.getString("COUNTRY"));
-                        sponsor.setPhone(resultSet.getInt("PHONE"));
-
-                        return sponsor;
-                    }
+                    Sponsor sponsor = new cat.uvic.teknos.f1race.domain.jbdc.models.Sponsor();
+                    sponsor.setId(resultSet.getInt("ID"));
+                    sponsor.setName(resultSet.getString("NAME"));
+                    sponsor.setCountry(resultSet.getString("COUNTRY"));
+                    sponsor.setPhone(resultSet.getInt("NUMBER"));
+                    sponsor.setSponsorType(resultSet.getString("SPONSOR_TYPE"));
+                    return sponsor;
                 }
-
             }
         } catch (SQLException e){
-
             throw  new RuntimeException(e);
         }
 
@@ -122,21 +130,19 @@ public class JbdcSponsorRepository implements SponsorRepository {
     @Override
     public Set<Sponsor> getAll() {
         try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM SPONSOR")){
-            preparedStatement.executeQuery();
-
             ResultSet resultSet = preparedStatement.executeQuery();
-            Set<Sponsor>sponsors = new HashSet<>();
+            Set<Sponsor> sponsors = new HashSet<>();
             while (resultSet.next()){
                 Sponsor sponsor = new cat.uvic.teknos.f1race.domain.jbdc.models.Sponsor();
                 sponsor.setId(resultSet.getInt("ID"));
-                sponsor.setSponsorType(resultSet.getString("SPONSOR_TYPE"));
                 sponsor.setName(resultSet.getString("NAME"));
                 sponsor.setCountry(resultSet.getString("COUNTRY"));
-                sponsor.setPhone(resultSet.getInt("PHONE"));
+                sponsor.setPhone(resultSet.getInt("NUMBER"));
+                sponsor.setSponsorType(resultSet.getString("SPONSOR_TYPE"));
+                sponsors.add(sponsor);
             }
             return sponsors;
-
-        }catch (SQLException e){
+        } catch (SQLException e){
             throw  new RuntimeException(e);
         }
     }

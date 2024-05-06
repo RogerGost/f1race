@@ -27,16 +27,16 @@ public class JdbcModelFactory implements ModelFactory {
 
     @Override
     public Sponsor createSponsor() {
-        return null;
+        return new cat.uvic.teknos.f1race.domain.jbdc.models.Sponsor();
     }
 
     @Override
     public RaceResult createRaceResult() {
-        return null;
+        return new cat.uvic.teknos.f1race.domain.jbdc.models.RaceResult();
     }
 
     @Override
     public Sponsorship createSponsorShip() {
-        return null;
+        return new cat.uvic.teknos.f1race.domain.jbdc.models.SponsorShip();
     }
 }

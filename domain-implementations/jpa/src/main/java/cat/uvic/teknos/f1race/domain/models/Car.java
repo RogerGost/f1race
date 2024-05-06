@@ -1,16 +1,30 @@
 package cat.uvic.teknos.f1race.domain.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
+@Table(name = "CAR")
 public class Car implements cat.uvic.teknos.f1race.models.Car{
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
     private int id;
+
+    @Column(name = "NAME")
     private String model;
+
+    @Column(name = "ENGINE")
     private String engine;
+
+    @Column(name = "CHASSIS")
     private String chassis;
+
+    @Column(name = "TEAM_ID", insertable = false, updatable = false)
     private int teamId;
+
+    @ManyToOne
+    @JoinColumn(name = "TEAM_ID")
+    private Team team;
 
     @Override
     public int getId() {

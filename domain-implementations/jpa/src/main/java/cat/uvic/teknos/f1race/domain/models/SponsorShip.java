@@ -1,17 +1,26 @@
 package cat.uvic.teknos.f1race.domain.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.Set;
+
 @Entity
 public class SponsorShip implements cat.uvic.teknos.f1race.models.Sponsorship{
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
     private int id;
+    @Column(name = "NAME")
     private String name;
+    @Column(name = "START_DATE")
     private LocalDate startDate;
+    @Column(name = "END_DATE")
     private LocalDate endDate;
+    @Column(name = "TEAM_ID")
     private int teamId;
+
+
 
     @Override
     public int getId() {

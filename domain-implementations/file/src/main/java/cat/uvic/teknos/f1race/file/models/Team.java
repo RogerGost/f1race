@@ -101,7 +101,7 @@ public class  Team implements cat.uvic.teknos.f1race.models.Team, Serializable {
     }
 
     @Override
-    public Set<Car> getCar() {
+    public Set<Car> getCars() {
         return cars;
     }
 }

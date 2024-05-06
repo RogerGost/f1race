@@ -51,9 +51,43 @@ public class DriverManager {
     }
 
     private void delete() {
+        var driver = modelFactory.createDriver();
+
+        out.println("Enter the ID of the driver to delete:");
+        int id = Integer.parseInt(readLine(in));
+        driver.setId(id);
+
+        driverRepository.delete(driver);
     }
 
     private void update() {
+        try {
+            var driver = modelFactory.createDriver();
+
+            out.println("Enter the ID of the driver to update:");
+            int id = Integer.parseInt(readLine(in));
+            driver.setId(id);
+
+            out.println("Name");
+            driver.setName(readLine(in));
+
+            out.println("Nationality");
+            driver.setNationality(readLine(in));
+
+            out.println("Number");
+            driver.setNumber(Integer.parseInt(readLine(in)));
+
+            out.println("Team ID");
+            driver.setTeamId(Integer.parseInt(readLine(in)));
+
+            driverRepository.save(driver);
+
+            out.println("Update successful");
+        } catch (NumberFormatException e) {
+            out.println("Invalid team ID. Please enter a valid integer ID.");
+        } catch (Exception e) {
+            out.println("An error occurred while updating the team: " + e.getMessage());
+        }
     }
 
     private void insert() {
@@ -67,6 +101,9 @@ public class DriverManager {
 
         out.println("Number");
         driver.setNumber(Integer.parseInt(readLine(in)));
+
+        out.println("TeamID");
+        driver.setTeamId(Integer.parseInt(readLine(in)));
 
 
         driverRepository.save(driver);
