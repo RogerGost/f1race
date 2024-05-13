@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 public interface SponsorShip {
 
-    int getId();
+    SponsorShipId getId();
     void setId(SponsorShipId id);
 
     String getName();

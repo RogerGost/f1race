@@ -26,7 +26,7 @@ public class SponsorShip implements cat.uvic.teknos.f1race.models.SponsorShip {
 
 
     @Override
-    public int getId() {
+    public  cat.uvic.teknos.f1race.models.SponsorShipId getId() {
         return id;
     }
 

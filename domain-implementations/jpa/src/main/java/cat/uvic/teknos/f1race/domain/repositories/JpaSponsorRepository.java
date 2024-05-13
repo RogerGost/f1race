@@ -1,39 +1,38 @@
 package cat.uvic.teknos.f1race.domain.repositories;
 
-import cat.uvic.teknos.f1race.models.Team;
-import cat.uvic.teknos.f1race.repositories.TeamRepository;
-import jakarta.persistence.EntityManager;
+import cat.uvic.teknos.f1race.models.Sponsor;
+import cat.uvic.teknos.f1race.repositories.SponsorRepository;
 import jakarta.persistence.EntityManagerFactory;
 
-import javax.swing.text.html.parser.Entity;
 import java.util.Set;
 
-public class JpaTeamRepository implements TeamRepository {
+public class JpaSponsorRepository implements SponsorRepository {
     private final EntityManagerFactory entitymanagerFactory;
 
-    public JpaTeamRepository(EntityManagerFactory entityManagerFactory){
+    public JpaSponsorRepository(EntityManagerFactory entityManagerFactory){
         this.entitymanagerFactory = entityManagerFactory;
     }
     @Override
-    public void save(Team model) {
+    public void save(Sponsor model) {
         var entityManager= entitymanagerFactory.createEntityManager();
         entityManager.getTransaction().begin();
         entityManager.persist(model);
         entityManager.getTransaction().commit();
-    }
-
-    @Override
-    public void delete(Team model) {
 
     }
 
     @Override
-    public Team get(Integer id) {
+    public void delete(Sponsor model) {
+
+    }
+
+    @Override
+    public Sponsor get(Integer id) {
         return null;
     }
 
     @Override
-    public Set<Team> getAll() {
+    public Set<Sponsor> getAll() {
         return null;
     }
 }

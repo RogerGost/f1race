@@ -1,39 +1,44 @@
 package cat.uvic.teknos.f1race.domain.repositories;
 
-import cat.uvic.teknos.f1race.models.Team;
-import cat.uvic.teknos.f1race.repositories.TeamRepository;
-import jakarta.persistence.EntityManager;
+import cat.uvic.teknos.f1race.models.Car;
+import cat.uvic.teknos.f1race.models.Driver;
+import cat.uvic.teknos.f1race.repositories.DriverRepository;
 import jakarta.persistence.EntityManagerFactory;
 
-import javax.swing.text.html.parser.Entity;
 import java.util.Set;
 
-public class JpaTeamRepository implements TeamRepository {
+public class JpaDriverRepository implements DriverRepository {
     private final EntityManagerFactory entitymanagerFactory;
 
-    public JpaTeamRepository(EntityManagerFactory entityManagerFactory){
+    public JpaDriverRepository(EntityManagerFactory entityManagerFactory){
         this.entitymanagerFactory = entityManagerFactory;
     }
     @Override
-    public void save(Team model) {
+    public void save(Car model) {
         var entityManager= entitymanagerFactory.createEntityManager();
         entityManager.getTransaction().begin();
         entityManager.persist(model);
         entityManager.getTransaction().commit();
-    }
-
-    @Override
-    public void delete(Team model) {
 
     }
 
     @Override
-    public Team get(Integer id) {
+    public void save(Driver model) {
+
+    }
+
+    @Override
+    public void delete(Driver model) {
+
+    }
+
+    @Override
+    public Driver get(Integer id) {
         return null;
     }
 
     @Override
-    public Set<Team> getAll() {
+    public Set<Driver> getAll() {
         return null;
     }
 }

@@ -12,26 +12,26 @@ public class JpaRepositoryFactory implements RepositoryFactory {
     }
     @Override
     public TeamRepository getTeamRepository() {
-        return null;
+        return new JpaTeamRepository(entityManagerFactory);
     }
 
     @Override
     public CarRepository getCarRepository() {
-        return null;
+        return new JpaCarRepository(entityManagerFactory);
     }
 
     @Override
     public DriverRepository getDriverRepository() {
-        return null;
+        return new JpaDriverRepository(entityManagerFactory);
     }
 
     @Override
     public SponsorRepository getSponsorRepository() {
-        return null;
+        return new JpaSponsorRepository(entityManagerFactory);
     }
 
     @Override
     public RaceResultRepository getRaceResultRepository() {
-        return null;
+        return new JpaRaceResultRepository(entityManagerFactory);
     }
 }

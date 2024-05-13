@@ -12,7 +12,7 @@ public class SponsorShip implements cat.uvic.teknos.f1race.models.SponsorShip{
     private int teamId;
 
 
-    public int getId() {
+    public cat.uvic.teknos.f1race.domain.models.SponsorShipId getId() {
         return id;
     }
 

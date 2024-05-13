@@ -6,9 +6,10 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
-class CarTest {
+class DriverTest {
+
     private static EntityManagerFactory entityManagerFactory;
     @BeforeAll
     static void setUp() {
@@ -27,22 +28,24 @@ class CarTest {
         try {
             entityManager.getTransaction().begin();
 
-            var team = entityManager.find(Team.class,1);
+            var driver = entityManager.find(Team.class,1);
 
-            Car car = new Car();
-            car.setModel("rb18");
-            car.setEngine("Honda");
-            car.setChassis("Mrc1");
-            car.setTeamId(1);
+            Driver driver1 = new Driver();
+            driver1.setName("Leclerc");
+            driver1.setNationality("Monaco");
+            driver1.setDate(1997);
+            driver1.setNumber(16);
+            driver1.setTeamId(1);
 
 
-            entityManager.persist(car);
+            entityManager.persist(driver1);
 
-            assertTrue(car.getId()>0);
+            assertTrue(driver1.getId()>0);
 
             entityManager.getTransaction().commit();
         }catch (Exception e){
             entityManager.getTransaction().rollback();
         }
     }
+
 }
