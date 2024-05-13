@@ -138,7 +138,10 @@ public class JbdcDriverRepository implements DriverRepository {
                 var driver = new cat.uvic.teknos.f1race.domain.jbdc.models.Driver();
                 driver.setId(resultSet.getInt("DRIVER_ID"));
                 driver.setName(resultSet.getString("NAME"));
+                driver.setNationality(resultSet.getString("NATIONALITY"));
+                driver.setDate(resultSet.getInt("DATE_OF_BIRTH"));
                 driver.setNumber(resultSet.getInt("NUMBER"));
+                driver.setTeamId(resultSet.getInt("TEAM_ID"));
 
                 drivers.add(driver);
             }

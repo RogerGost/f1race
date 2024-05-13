@@ -5,10 +5,14 @@ package cat.uvic.teknos.f1race.backoffice;
 
 import org.junit.jupiter.api.Test;
 
+import java.io.InvalidClassException;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class MessageUtilsTest {
     @Test void testGetMessage() {
+        InvalidClassException MessageUtils = null;
+
         assertEquals("Hello      World!", MessageUtils.getMessage());
     }
 }

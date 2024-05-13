@@ -4,6 +4,8 @@ import cat.uvic.teknos.f1race.models.Car;
 import cat.uvic.teknos.f1race.models.ModelFactory;
 import cat.uvic.teknos.f1race.repositories.CarRepository;
 import cat.uvic.teknos.f1race.repositories.DriverRepository;
+import de.vandermeer.asciitable.AsciiTable;
+import de.vandermeer.skb.interfaces.transformers.textformat.TextAlignment;
 
 import java.io.BufferedReader;
 import java.io.PrintStream;
@@ -48,6 +50,22 @@ public class DriverManager {
     }
 
     private void getAll() {
+        out.println("\n List of Driver \n");
+
+        var asciiTable = new AsciiTable();
+        asciiTable.addRule();
+        asciiTable.addRow("ID", "NAME", "NATIONALITY", "DATE", "NUMBER","TEAM_ID");
+        asciiTable.addRule();
+
+        for (var driver : driverRepository.getAll()) {
+            asciiTable.addRow(driver.getId(), driver.getName(), driver.getNationality(), driver.getDate(), driver.getNumber(), driver.getTeamId());
+            asciiTable.addRule();
+        }
+
+        asciiTable.setTextAlignment(TextAlignment.CENTER);
+
+        String render = asciiTable.render();
+        out.println(render);
     }
 
     private void delete() {

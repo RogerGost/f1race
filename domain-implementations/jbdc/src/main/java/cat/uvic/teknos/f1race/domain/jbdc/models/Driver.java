@@ -9,7 +9,7 @@ public class Driver implements cat.uvic.teknos.f1race.models.Driver, Serializabl
     private int id;
     private String name;
     private String nationality;
-    private LocalDate date;
+    private int date;
     private int number;
     private int teamId;
     @Override
@@ -46,12 +46,12 @@ public class Driver implements cat.uvic.teknos.f1race.models.Driver, Serializabl
     }
 
     @Override
-    public LocalDate getDate() {
+    public int getDate() {
         return date;
     }
 
     @Override
-    public void setDate(LocalDate date) {
+    public void setDate(int date) {
         this.date=date;
 
     }

@@ -3,6 +3,8 @@ package cat.uvic.teknos.f1race.backoffice;
 import cat.uvic.teknos.f1race.models.ModelFactory;
 import cat.uvic.teknos.f1race.repositories.RaceResultRepository;
 import cat.uvic.teknos.f1race.repositories.SponsorRepository;
+import de.vandermeer.asciitable.AsciiTable;
+import de.vandermeer.skb.interfaces.transformers.textformat.TextAlignment;
 
 import java.io.BufferedReader;
 import java.io.PrintStream;
@@ -50,9 +52,32 @@ public class SponsorManager {
     }
 
     private void getAll() {
+        out.println("\n List of Sponsors \n");
+
+        var asciiTable = new AsciiTable();
+        asciiTable.addRule();
+        asciiTable.addRow("ID", "NAME", "COUNTRY", "PHONE", "TYPE");
+        asciiTable.addRule();
+
+        for (var sponsor : sponsorRepository.getAll()) {
+            asciiTable.addRow(sponsor.getId(), sponsor.getName(), sponsor.getCountry()  , sponsor.getPhone(), sponsor.getSponsorType());
+            asciiTable.addRule();
+        }
+
+        asciiTable.setTextAlignment(TextAlignment.CENTER);
+
+        String render = asciiTable.render();
+        out.println(render);
     }
 
     private void delete() {
+        var sponsor = modelFactory.createSponsor();
+
+        out.println("Enter the ID of the sponsor to delete:");
+        int id = Integer.parseInt(readLine(in));
+        sponsor.setId(id);
+
+        sponsorRepository.delete(sponsor);
     }
 
     private void update() {

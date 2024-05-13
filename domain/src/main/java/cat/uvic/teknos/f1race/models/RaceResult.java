@@ -16,8 +16,8 @@ public interface RaceResult {
     int getPosition();
     void setPosition(int position);
 
-    Time getFastestLap();
-    void setFastestLap(Time fastestLap);
+    String getFastestLap();
+    void setFastestLap(String fastestLap);
 
     int getPoints();
     void setPoints(int points);

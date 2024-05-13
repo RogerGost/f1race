@@ -137,6 +137,11 @@ public class JbdcTeamRepository implements TeamRepository {
                 var mercedes = new cat.uvic.teknos.f1race.domain.jbdc.models.Team();
                 mercedes.setId(resultSet.getInt("TEAM_ID"));
                 mercedes.setTeamName(resultSet.getString("TEAM_NAME"));
+                mercedes.setPrincipalName(resultSet.getString("PRINCIPAL_NAME"));
+                mercedes.setHeadquarters(resultSet.getString("HEADQUARTERS"));
+                mercedes.setSponsor(resultSet.getString("SPONSOR"));
+
+
 
                 teams.add(mercedes);
             }

@@ -36,7 +36,7 @@ public class JpaModelFactory implements ModelFactory {
     }
 
     @Override
-    public Sponsorship createSponsorShip() {
+    public cat.uvic.teknos.f1race.models.SponsorShip createSponsorShip() {
         return new cat.uvic.teknos.f1race.domain.models.SponsorShip();
     }
 }

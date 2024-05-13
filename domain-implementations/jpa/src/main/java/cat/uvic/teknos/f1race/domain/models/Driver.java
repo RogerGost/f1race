@@ -20,7 +20,7 @@ public class Driver implements cat.uvic.teknos.f1race.models.Driver, Serializabl
     private String nationality;
 
     @Column(name = "DATE")
-    private LocalDate date;
+    private int date;
 
     @Column(name = "NUMBER")
     private int number;
@@ -73,12 +73,12 @@ public class Driver implements cat.uvic.teknos.f1race.models.Driver, Serializabl
     }
 
     @Override
-    public LocalDate getDate() {
+    public int getDate() {
         return date;
     }
 
     @Override
-    public void setDate(LocalDate date) {
+    public void setDate(int date) {
         this.date=date;
 
     }

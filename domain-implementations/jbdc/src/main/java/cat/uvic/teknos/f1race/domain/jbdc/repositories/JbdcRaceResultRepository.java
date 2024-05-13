@@ -34,7 +34,7 @@ public class JbdcRaceResultRepository implements RaceResultRepository {
             statement.setInt(1, model.getRaceId());
             statement.setInt(2, model.getDriverId());
             statement.setInt(3, model.getPosition());
-            statement.setTime(4, model.getFastestLap());
+            statement.setString(4, model.getFastestLap());
             statement.setInt(4, model.getPoints());
 
 
@@ -99,7 +99,7 @@ public class JbdcRaceResultRepository implements RaceResultRepository {
                 race.setRaceId(resultSet.getInt("RACE_ID"));
                 race.setDriverId(resultSet.getInt("DRIVER_ID"));
                 race.setPosition(resultSet.getInt("POSITION"));
-                race.setFastestLap(resultSet.getTime("FASTEST_LAP_TIME"));
+                race.setFastestLap(resultSet.getString("FASTEST_LAP_TIME"));
                 race.setPoints(resultSet.getInt("POINTS_EARNED"));
 
 
@@ -119,8 +119,12 @@ public class JbdcRaceResultRepository implements RaceResultRepository {
             var resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 var race = new cat.uvic.teknos.f1race.domain.jbdc.models.RaceResult();
-                race.setId(resultSet.getInt("CAR_ID"));
+                race.setId(resultSet.getInt("RESULT_ID"));
                 race.setRaceId(resultSet.getInt("RACE_ID"));
+                race.setDriverId(resultSet.getInt("DRIVER_ID"));
+                race.setPosition(resultSet.getInt("POSITION"));
+                race.setFastestLap(resultSet.getString("FASTEST_LAP_TIME"));
+                race.setPoints(resultSet.getInt("POINTS_EARNED"));
 
                 races.add(race);
             }

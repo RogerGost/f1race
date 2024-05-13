@@ -3,12 +3,14 @@ package cat.uvic.teknos.f1race.domain.models;
 import cat.uvic.teknos.f1race.models.Team;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Transient;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 @Entity
-public class Sponsor implements cat.uvic.teknos.f1race.models.Sponsor{
+public class Sponsor implements cat.uvic.teknos.f1race.models.Sponsor, Serializable {
 
     @Id
     private int id;
@@ -18,6 +20,9 @@ public class Sponsor implements cat.uvic.teknos.f1race.models.Sponsor{
     private String sponsorType;
     @Transient
     private Set <Team> teams = new HashSet();
+
+    @OneToMany(mappedBy = "sponsor")
+    private Set<SponsorShip> sponsorships;
 
 
 
@@ -86,5 +91,16 @@ public class Sponsor implements cat.uvic.teknos.f1race.models.Sponsor{
     @Override
     public Set<Team> getTeams() {
         return teams;
+    }
+
+    public void setSponsorships(Set<cat.uvic.teknos.f1race.models.SponsorShip> sponsorships) {
+        this.sponsorships.clear();
+        sponsorships.forEach(sponsorShip -> {this.sponsorships.add((SponsorShip)sponsorShip);});
+
+    }
+
+
+    public Set<cat.uvic.teknos.f1race.models.SponsorShip> getSponsorships() {
+        return new HashSet<>(sponsorships);
     }
 }

@@ -7,6 +7,7 @@ import de.vandermeer.asciitable.AsciiTable;
 import de.vandermeer.skb.interfaces.document.TableRowStyle;
 import de.vandermeer.skb.interfaces.transformers.textformat.TextAlignment;
 
+
 import java.io.BufferedReader;
 import java.io.PrintStream;
 import java.util.Set;
@@ -53,30 +54,22 @@ public class TeamManager {
     }
 
     private void getAll() {
+        out.println("\n List of Teams \n");
 
-        try {
-            var asciiTable = new AsciiTable();
+        var asciiTable = new AsciiTable();
+        asciiTable.addRule();
+        asciiTable.addRow("ID", "NAME", "PRINCIPAL", "HEADQUARTERS", "SPONSOR");
+        asciiTable.addRule();
+
+        for (var team : teamRepository.getAll()) {
+            asciiTable.addRow(team.getId(), team.getTeamName(), team.getPrincipalName(), team.getHeadquarters(), team.getSponsor());
             asciiTable.addRule();
-            asciiTable.addRow("ID", "NAME", "PRINCIPAL", "HEADQUARTERS", "SPONSOR");
-            asciiTable.addRule();
-
-            Set<Team> teams = teamRepository.getAll();
-
-            if (teams.isEmpty()) {
-                out.println("No teams found.");
-            } else {
-                for (Team team : teams) {
-                    asciiTable.addRow(team.getId(), team.getTeamName(), team.getPrincipalName(), team.getHeadquarters(), team.getSponsor());
-                    asciiTable.addRule();
-                }
-            }
-
-            asciiTable.setTextAlignment(TextAlignment.CENTER);
-            out.println(asciiTable.render());
-        } catch (Exception e) {
-            throw new RuntimeException(e);
         }
 
+        asciiTable.setTextAlignment(TextAlignment.CENTER);
+
+        String render = asciiTable.render();
+        out.println(render);
     }
 
     private void delete() {

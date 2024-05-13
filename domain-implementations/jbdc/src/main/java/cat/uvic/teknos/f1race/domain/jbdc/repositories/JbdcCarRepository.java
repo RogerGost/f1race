@@ -112,6 +112,9 @@ public class JbdcCarRepository implements CarRepository {
                 var mercedes = new cat.uvic.teknos.f1race.domain.jbdc.models.Car();
                 mercedes.setId(resultSet.getInt("CAR_ID"));
                 mercedes.setModel(resultSet.getString("MODEL"));
+                mercedes.setEngine(resultSet.getString("ENGINE"));
+                mercedes.setChassis(resultSet.getString("CHASSIS"));
+                mercedes.setTeamId(resultSet.getInt("TEAM_ID"));
 
                 cars.add(mercedes);
             }

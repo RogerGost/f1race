@@ -9,7 +9,7 @@ public class RaceResult implements cat.uvic.teknos.f1race.models.RaceResult{
     private int raceId;
     private int driverId;
     private int position;
-    private Time fastestlap;
+    private String fastestlap;
     private int points;
     @Override
     public int getId() {
@@ -56,12 +56,12 @@ public class RaceResult implements cat.uvic.teknos.f1race.models.RaceResult{
     }
 
     @Override
-    public Time getFastestLap() {
+    public String getFastestLap() {
         return fastestlap;
     }
 
     @Override
-    public void setFastestLap(Time fastestLap) {
+    public void setFastestLap(String fastestLap) {
         this.fastestlap=fastestLap;
 
     }

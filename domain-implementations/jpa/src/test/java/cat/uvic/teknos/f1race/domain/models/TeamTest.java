@@ -32,6 +32,9 @@ class TeamTest {
             team.setHeadquarters("London");
             team.setSponsor("Duracell");
 
+
+
+
             entityManager.persist(team);
 
             assertTrue(team.getId()>0);

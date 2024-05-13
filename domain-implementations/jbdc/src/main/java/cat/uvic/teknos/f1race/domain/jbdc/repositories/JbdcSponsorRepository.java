@@ -134,8 +134,8 @@ public class JbdcSponsorRepository implements SponsorRepository{
             Set<Sponsor> sponsors = new HashSet<>();
             while (resultSet.next()){
                 Sponsor sponsor = new cat.uvic.teknos.f1race.domain.jbdc.models.Sponsor();
-                sponsor.setId(resultSet.getInt("ID"));
-                sponsor.setName(resultSet.getString("NAME"));
+                sponsor.setId(resultSet.getInt("SPONSOR_ID"));
+                sponsor.setName(resultSet.getString("SPONSOR_NAME"));
                 sponsor.setCountry(resultSet.getString("COUNTRY"));
                 sponsor.setPhone(resultSet.getInt("NUMBER"));
                 sponsor.setSponsorType(resultSet.getString("SPONSOR_TYPE"));

@@ -23,7 +23,6 @@
             <option value="$PROJECT_DIR$/buildSrc" />
             <option value="$PROJECT_DIR$/domain" />
             <option value="$PROJECT_DIR$/domain-implementations" />
-            <option value="$PROJECT_DIR$/domain-implementations/file" />
             <option value="$PROJECT_DIR$/domain-implementations/jbdc" />
             <option value="$PROJECT_DIR$/domain-implementations/jpa" />
             <option value="$PROJECT_DIR$/utilities" />

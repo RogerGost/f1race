@@ -14,8 +14,8 @@ public interface Driver {
     String getNationality();
     void setNationality(String nationality);
 
-    LocalDate getDate();
-    void setDate(LocalDate date);
+    int getDate();
+    void setDate(int date);
 
     int getNumber();
     void setNumber(int number);

@@ -3,6 +3,8 @@ package cat.uvic.teknos.f1race.backoffice;
 import cat.uvic.teknos.f1race.models.ModelFactory;
 import cat.uvic.teknos.f1race.repositories.CarRepository;
 import cat.uvic.teknos.f1race.repositories.RaceResultRepository;
+import de.vandermeer.asciitable.AsciiTable;
+import de.vandermeer.skb.interfaces.transformers.textformat.TextAlignment;
 
 import java.io.BufferedReader;
 import java.io.PrintStream;
@@ -50,6 +52,22 @@ public class CarManager {
     }
 
     private void getAll() {
+        out.println("\n List of Cars \n");
+
+        var asciiTable = new AsciiTable();
+        asciiTable.addRule();
+        asciiTable.addRow("ID", "MODEL", "ENGINE", "CHASSIS", "TEAM_ID");
+        asciiTable.addRule();
+
+        for (var car : carRepository.getAll()) {
+            asciiTable.addRow(car.getId(), car.getModel(), car.getEngine(), car.getChassis(), car.getTeamId());
+            asciiTable.addRule();
+        }
+
+        asciiTable.setTextAlignment(TextAlignment.CENTER);
+
+        String render = asciiTable.render();
+        out.println(render);
     }
 
     private void delete() {

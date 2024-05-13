@@ -2,7 +2,7 @@ package cat.uvic.teknos.f1race.domain.jbdc.models;
 
 import cat.uvic.teknos.f1race.models.Car;
 import cat.uvic.teknos.f1race.models.Driver;
-import cat.uvic.teknos.f1race.models.Sponsorship;
+import cat.uvic.teknos.f1race.models.SponsorShip;
 
 import java.io.Serializable;
 import java.util.Set;
@@ -15,7 +15,7 @@ public class  Team implements cat.uvic.teknos.f1race.models.Team, Serializable{
     private String headquarters;
 
     private String sponsor;
-    private Set<Sponsorship> sponsorships;
+    private Set<SponsorShip> sponsorships;
     private Set<Driver> drivers;
     private Set<Car> cars;
     @Override
@@ -71,13 +71,13 @@ public class  Team implements cat.uvic.teknos.f1race.models.Team, Serializable{
     }
 
     @Override
-    public void setSponsorships(Set<Sponsorship> sponsorships) {
+    public void setSponsorships(Set<SponsorShip> sponsorships) {
         this.sponsorships = sponsorships;
 
     }
 
     @Override
-    public Set<Sponsorship> getSponsorships() {
+    public Set<SponsorShip> getSponsorships() {
         return sponsorships;
     }
 
@@ -91,12 +91,12 @@ public class  Team implements cat.uvic.teknos.f1race.models.Team, Serializable{
 
     }
 
-    @Override
+
     public Set<Car> getcar() {
         return cars;
     }
 
-    @Override
+
     public void setCar(Car car) {
 
     }
@@ -104,5 +104,10 @@ public class  Team implements cat.uvic.teknos.f1race.models.Team, Serializable{
     @Override
     public Set<Car> getCars() {
         return cars;
+    }
+
+    @Override
+    public void setCars(Set<? extends Car> cars) {
+
     }
 }

@@ -21,9 +21,9 @@ public interface Team {
     String getSponsor();
     void setSponsor(String sponsor);
 
-    void setSponsorships(Set<Sponsorship> sponsorships);
+    void setSponsorships(Set<SponsorShip> sponsorships);
 
-    Set<Sponsorship> getSponsorships();
+    Set<SponsorShip> getSponsorships();
 
 
     Set<Driver> getDriver();

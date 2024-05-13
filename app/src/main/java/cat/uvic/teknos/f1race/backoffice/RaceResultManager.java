@@ -3,6 +3,8 @@ package cat.uvic.teknos.f1race.backoffice;
 import cat.uvic.teknos.f1race.models.ModelFactory;
 import cat.uvic.teknos.f1race.repositories.RaceResultRepository;
 import cat.uvic.teknos.f1race.repositories.TeamRepository;
+import de.vandermeer.asciitable.AsciiTable;
+import de.vandermeer.skb.interfaces.transformers.textformat.TextAlignment;
 
 import java.io.BufferedReader;
 import java.io.PrintStream;
@@ -48,6 +50,22 @@ public class RaceResultManager {
     }
 
     private void getAll() {
+        out.println("\n List of Results \n");
+
+        var asciiTable = new AsciiTable();
+        asciiTable.addRule();
+        asciiTable.addRow("ID", "RACE_ID", "DRIVER_ID", "POSITION","FAST_LAP", "POINTS");
+        asciiTable.addRule();
+
+        for (var race : raceResultRepository.getAll()) {
+            asciiTable.addRow(race.getId(), race.getRaceId(), race.getDriverId(), race.getPosition(), race.getFastestLap(), race.getPoints());
+            asciiTable.addRule();
+        }
+
+        asciiTable.setTextAlignment(TextAlignment.CENTER);
+
+        String render = asciiTable.render();
+        out.println(render);
     }
 
     private void delete() {

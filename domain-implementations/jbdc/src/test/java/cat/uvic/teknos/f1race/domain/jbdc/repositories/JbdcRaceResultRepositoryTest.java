@@ -32,8 +32,7 @@ class JbdcRaceResultRepositoryTest {
         race.setRaceId(12);
         race.setDriverId(1);
         race.setPosition(14);
-        Time fastestLapTime = Time.valueOf("01:23:59");
-        race.setFastestLap(fastestLapTime);
+        race.setFastestLap("1:23:21");
         race.setPoints(24);
 
         var repository = new JbdcRaceResultRepository(connection);
@@ -59,7 +58,7 @@ class JbdcRaceResultRepositoryTest {
         race.setRaceId(12);
         race.setDriverId(1);
         race.setPosition(4);
-        race.setFastestLap(Time.valueOf(LocalTime.of(01,23,59)));
+        race.setFastestLap("1:23:21");
         race.setPoints(24);
         race.setId(1);
 

@@ -3,14 +3,17 @@ package cat.uvic.teknos.f1race.domain.models;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
-import java.util.Set;
 
 @Entity
-public class SponsorShip implements cat.uvic.teknos.f1race.models.Sponsorship{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
-    private int id;
+public class SponsorShip implements cat.uvic.teknos.f1race.models.SponsorShip {
+   @EmbeddedId()
+    private SponsorShipId id;
+   @ManyToOne
+   @MapsId
+   private Team team;
+   @MapsId
+   @ManyToOne
+   private Sponsor sponsor;
     @Column(name = "NAME")
     private String name;
     @Column(name = "START_DATE")
@@ -28,9 +31,11 @@ public class SponsorShip implements cat.uvic.teknos.f1race.models.Sponsorship{
     }
 
     @Override
-    public void setId(int id) {
-        this.id = id;
+    public void setId(cat.uvic.teknos.f1race.models.SponsorShipId id) {
+        this.id=(SponsorShipId) id;
     }
+
+
 
     @Override
     public String getName() {

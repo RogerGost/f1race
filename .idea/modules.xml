@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/domain-implementations/file/f1race.domain-implementations.file.test.iml" filepath="$PROJECT_DIR$/.idea/modules/domain-implementations/file/f1race.domain-implementations.file.test.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/domain-implementations/jpa/f1race.domain-implementations.jpa.test.iml" filepath="$PROJECT_DIR$/.idea/modules/domain-implementations/jpa/f1race.domain-implementations.jpa.test.iml" />
     </modules>
   </component>

@@ -1,12 +1,11 @@
 package cat.uvic.teknos.f1race.models;
 
-import java.sql.Date;
 import java.time.LocalDate;
 
-public interface Sponsorship {
+public interface SponsorShip {
 
     int getId();
-    void setId(int id);
+    void setId(SponsorShipId id);
 
     String getName();
     void setName(String name);

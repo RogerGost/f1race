@@ -36,7 +36,7 @@ public class JdbcModelFactory implements ModelFactory {
     }
 
     @Override
-    public Sponsorship createSponsorShip() {
+    public SponsorShip createSponsorShip() {
         return new cat.uvic.teknos.f1race.domain.jbdc.models.SponsorShip();
     }
 }

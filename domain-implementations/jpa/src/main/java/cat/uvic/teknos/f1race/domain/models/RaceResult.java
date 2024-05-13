@@ -17,7 +17,7 @@ public class RaceResult implements cat.uvic.teknos.f1race.models.RaceResult{
     @Column(name = "POSITION")
     private int position;
     @Column(name = "FASTEST_LAP")
-    private Time fastestlap;
+    private String fastestlap;
     @Column(name = "POINTS")
     private int points;
 
@@ -78,12 +78,12 @@ public class RaceResult implements cat.uvic.teknos.f1race.models.RaceResult{
     }
 
     @Override
-    public Time getFastestLap() {
+    public String getFastestLap() {
         return fastestlap;
     }
 
     @Override
-    public void setFastestLap(Time fastestLap) {
+    public void setFastestLap(String fastestLap) {
         this.fastestlap=fastestLap;
 
     }
