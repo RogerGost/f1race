@@ -2,6 +2,7 @@ package cat.uvic.teknos.f1race.domain.jbdc.repositories;
 
 import cat.uvic.teknos.f1race.domain.jbdc.models.Car;
 import cat.uvic.teknos.f1race.domain.jbdc.models.Driver;
+import cat.uvic.teknos.f1race.domain.jbdc.models.Team;
 import com.fcardara.dbtestutils.junit.CreateSchemaExtension;
 import com.fcardara.dbtestutils.junit.GetConnectionExtension;
 import org.junit.jupiter.api.Test;
@@ -30,11 +31,15 @@ class JbdcDriverRepositoryTest {
 
     @Test
     void save() {
+        Team team1 = new Team();
+        team1.setId(2);
+
         Driver driver = new Driver();
         driver.setName("Leclerc");
         driver.setNationality("Monaco");
+        driver.setDate(1997);
         driver.setNumber(16);
-        driver.setTeamId(2);
+        driver.setTeam(team1);
 
         var repository = new JbdcDriverRepository(connection);
 
@@ -57,14 +62,15 @@ class JbdcDriverRepositoryTest {
 
     @Test
     void shouldUpdateNewDriverTest() throws SQLException {
-
+        Team team1 = new Team();
+        team1.setId(2);
 
         Driver driver = new Driver();
 
         driver.setName("Charles Leclerc");
         driver.setNationality("Monaco");
         driver.setNumber(16);
-        driver.setTeamId(1);
+        driver.setTeam(team1);
         driver.setId(1);
 
 

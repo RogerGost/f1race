@@ -1,5 +1,6 @@
 package cat.uvic.teknos.f1race.domain.models;
 import cat.uvic.teknos.f1race.models.Driver;
+import cat.uvic.teknos.f1race.models.Sponsor;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -22,10 +23,10 @@ public class  Team implements cat.uvic.teknos.f1race.models.Team, Serializable{
     private String headquarters;
 
     @Column(name = "SPONSOR")
-    private String sponsor;
+    private String sponsorName;
 
-    @OneToMany(mappedBy = "team")
-    private Set<SponsorShip> sponsorships;
+    @ManyToMany(mappedBy = "team")
+    private Set<Sponsor> sponsor;
 
 
 
@@ -51,7 +52,6 @@ public class  Team implements cat.uvic.teknos.f1race.models.Team, Serializable{
 
     }
     public Team() {
-        this.sponsorships = new HashSet<>();
         this.drivers = new HashSet<>();
         this.cars = new HashSet<>();
     }
@@ -90,24 +90,13 @@ public class  Team implements cat.uvic.teknos.f1race.models.Team, Serializable{
     }
 
     @Override
-    public String getSponsor() {
-        return sponsor;
+    public String getSponsorName() {
+        return sponsorName;
     }
-    public void setSponsor(String sponsor) {
-        this.sponsor = sponsor;
-    }
-
-    @Override
-    public void setSponsorships(Set<cat.uvic.teknos.f1race.models.SponsorShip> sponsorships) {
-        this.sponsorships.clear();
-        sponsorships.forEach(sponsorShip -> {this.sponsorships.add((SponsorShip)sponsorShip);});
-
+    public void setSponsorName(String sponsor) {
+        this.sponsorName = sponsorName;
     }
 
-    @Override
-    public Set<cat.uvic.teknos.f1race.models.SponsorShip> getSponsorships() {
-        return new HashSet<>(sponsorships);
-    }
 
     @Override
     public Set<Driver> getDriver() {
@@ -128,4 +117,15 @@ public class  Team implements cat.uvic.teknos.f1race.models.Team, Serializable{
     public void setCars(Set<? extends cat.uvic.teknos.f1race.models.Car> cars) {
         //falta codi
     }
+
+    @Override
+    public Set<Sponsor> getSponsor() {
+        return sponsor;
+    }
+
+    @Override
+    public void setSponsor(Set<Sponsor> sponsor) {
+
+    }
 }
+

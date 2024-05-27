@@ -120,6 +120,9 @@ public class RaceResultManager {
         out.println("Position");
         raceResult.setPosition(Integer.parseInt(readLine(in)));
 
+        out.println("FastLap");
+        raceResult.setFastestLap(readLine(in));
+
         out.println("Points");
         raceResult.setPoints(Integer.parseInt(readLine(in)));
 

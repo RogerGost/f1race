@@ -1,6 +1,5 @@
 package cat.uvic.teknos.f1race.domain.jbdc.models;
-
-import java.sql.Time;
+import cat.uvic.teknos.f1race.models.Driver;
 
 public class RaceResult implements cat.uvic.teknos.f1race.models.RaceResult{
 
@@ -11,6 +10,7 @@ public class RaceResult implements cat.uvic.teknos.f1race.models.RaceResult{
     private int position;
     private String fastestlap;
     private int points;
+    private Driver driver;
     @Override
     public int getId() {
         return id;
@@ -76,4 +76,18 @@ public class RaceResult implements cat.uvic.teknos.f1race.models.RaceResult{
         this.points=points;
 
     }
+
+    @Override
+    public Driver getDriver() {
+        return driver;
+    }
+
+
+    @Override
+    public void setDriver(Driver driver) {
+        this.driver=driver;
+
+    }
+
+
 }

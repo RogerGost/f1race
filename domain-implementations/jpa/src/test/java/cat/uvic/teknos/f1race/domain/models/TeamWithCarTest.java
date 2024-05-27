@@ -1,5 +1,7 @@
 package cat.uvic.teknos.f1race.domain.models;
 
+import cat.uvic.teknos.f1race.domain.repositories.JpaCarRepository;
+import cat.uvic.teknos.f1race.domain.repositories.JpaTeamRepository;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import org.junit.jupiter.api.AfterAll;
@@ -8,8 +10,9 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class TeamWithCarTest {
+public class TeamWithCarTest {
     private static EntityManagerFactory entityManagerFactory;
+
     @BeforeAll
     static void setUp() {
         entityManagerFactory = Persistence.createEntityManagerFactory("formula1jpa");
@@ -19,13 +22,20 @@ class TeamWithCarTest {
     static void tearDown() {
         entityManagerFactory.close();
     }
+
     @Test
-    void insertTaste(){
-        // EntityManager
+    void insertTest() {
+
+        var teamRepository = new JpaTeamRepository(entityManagerFactory);
+        var carRepository = new JpaCarRepository(entityManagerFactory);
+
+
         var entityManager = entityManagerFactory.createEntityManager();
 
         try {
+
             entityManager.getTransaction().begin();
+
 
             var team = new Team();
             team.setTeamName("Williams");
@@ -33,18 +43,30 @@ class TeamWithCarTest {
             team.setHeadquarters("London");
             team.setSponsor("Duracell");
 
+
+            teamRepository.save(team);
+
+            assertTrue(team.getId() > 0);
+
+
             var car = new Car();
+            car.setModel("AP19");
             car.setEngine("Honda");
-            car.setTeamId(2);
+            car.setChassis("AP19");
+            car.setTeamId(team.getId());
 
-            entityManager.persist(team);
-            entityManager.persist(car);
 
-            assertTrue(team.getId()>0);
+            carRepository.save(car);
+
 
             entityManager.getTransaction().commit();
-        }catch (Exception e){
+        } catch (Exception e) {
+
             entityManager.getTransaction().rollback();
+            e.printStackTrace();
+        } finally {
+
+            entityManager.close();
         }
     }
 }

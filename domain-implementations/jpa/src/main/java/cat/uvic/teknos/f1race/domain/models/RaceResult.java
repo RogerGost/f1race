@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.sql.Time;
 @Entity
+@Table(name = "RACE_RESULT")
 public class RaceResult implements cat.uvic.teknos.f1race.models.RaceResult{
 
     @Id

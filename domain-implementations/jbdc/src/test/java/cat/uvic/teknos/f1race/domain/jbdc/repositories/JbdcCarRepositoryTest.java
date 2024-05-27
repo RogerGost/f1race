@@ -1,6 +1,7 @@
 package cat.uvic.teknos.f1race.domain.jbdc.repositories;
 
 import cat.uvic.teknos.f1race.domain.jbdc.models.Car;
+import cat.uvic.teknos.f1race.domain.jbdc.models.Team;
 import com.fcardara.dbtestutils.junit.CreateSchemaExtension;
 import com.fcardara.dbtestutils.junit.DbAssertions;
 import com.fcardara.dbtestutils.junit.GetConnectionExtension;
@@ -30,12 +31,14 @@ class JbdcCarRepositoryTest {
     @DisplayName("Given a new Car (id = 0), when save, then a new record is added to the CAR table")
     void shouldInsertNewCarTest() throws SQLException {
 
+        Team team1 = new Team();
+        team1.setId(1);
 
             Car mercedes = new Car();
             mercedes.setModel("mc204");
             mercedes.setEngine("mercedes1");
             mercedes.setChassis("C1mercedes");
-            mercedes.setTeamId(1);
+            mercedes.setTeam(team1);
 
             var repository = new JbdcCarRepository(connection);
 
@@ -55,13 +58,15 @@ class JbdcCarRepositoryTest {
     @Test
     void shouldUpdateNewCarTest() throws SQLException {
 
+            Team team1 = new Team();
+            team1.setId(1);
 
             Car mercedes = new Car();
 
             mercedes.setModel("494");
             mercedes.setEngine("mercedes2");
             mercedes.setChassis("C2mercedes");
-            mercedes.setTeamId(1);
+            mercedes.setTeam(team1);
             mercedes.setId(3);
 
 

@@ -17,5 +17,7 @@ public interface Car {
     int getTeamId();
     void setTeamId(int teamId);
 
+    Team getTeam();
 
+    void setTeam(Team team);
 }

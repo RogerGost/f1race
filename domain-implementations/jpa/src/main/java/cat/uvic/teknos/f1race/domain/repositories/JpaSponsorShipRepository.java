@@ -1,13 +1,11 @@
 package cat.uvic.teknos.f1race.domain.repositories;
 
-import cat.uvic.teknos.f1race.models.SponsorShip;
-import cat.uvic.teknos.f1race.models.SponsorShipId;
-import cat.uvic.teknos.f1race.repositories.SponsorShipRepository;
+import cat.uvic.teknos.f1race.repositories.Repository;
 import jakarta.persistence.EntityManagerFactory;
 
 import java.util.Set;
 
-public class JpaSponsorShipRepository implements SponsorShipRepository {
+public class JpaSponsorShipRepository implements Repository<SponsorShipId, SponsorShip> {
     private final EntityManagerFactory entitymanagerFactory;
 
     public JpaSponsorShipRepository(EntityManagerFactory entityManagerFactory){

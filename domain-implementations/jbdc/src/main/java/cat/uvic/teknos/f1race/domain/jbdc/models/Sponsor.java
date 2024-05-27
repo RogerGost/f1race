@@ -13,6 +13,17 @@ public class Sponsor implements cat.uvic.teknos.f1race.models.Sponsor{
     private String country;
     private int phone;
     private String sponsorType;
+    private int sponsorshipId;
+
+    public int getSponsorshipId() {
+        return sponsorshipId;
+    }
+
+    public void setSponsorshipId(int sponsorshipId) {
+        this.sponsorshipId = sponsorshipId;
+    }
+
+
     private Set <Team> teams = new HashSet();
 
 

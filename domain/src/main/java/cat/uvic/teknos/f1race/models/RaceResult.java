@@ -22,4 +22,6 @@ public interface RaceResult {
     int getPoints();
     void setPoints(int points);
 
+    Driver getDriver();
+    void setDriver(Driver driver);
 }

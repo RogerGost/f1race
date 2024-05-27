@@ -36,6 +36,7 @@ class JbdcSponsorRepositoryTest {
         santander.setCountry("España");
         santander.setPhone(1234567);
         santander.setSponsorType("Bank");
+        santander.setSponsorshipId(1);
 
 
 

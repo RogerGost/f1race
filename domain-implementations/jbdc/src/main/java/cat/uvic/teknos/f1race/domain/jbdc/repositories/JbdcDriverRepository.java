@@ -22,7 +22,6 @@ public class JbdcDriverRepository implements DriverRepository {
     @Override
 
     //Em fa un methode saave de car, pero quant el trec de CarRepository em dona error
-    //Preguntar com es fa per posar local Date
     public void save(Car model) {
 
     }
@@ -43,7 +42,7 @@ public class JbdcDriverRepository implements DriverRepository {
             statement.setString(1, model.getName());
             statement.setString(2, model.getNationality());
             statement.setInt(3, model.getNumber());
-            statement.setInt(4, model.getTeamId());
+            statement.setInt(4, model.getTeam().getId());
 
 
 
@@ -67,7 +66,7 @@ public class JbdcDriverRepository implements DriverRepository {
             statement.setString(1, model.getName());
             statement.setString(2, model.getNationality());
             statement.setInt(3, model.getNumber());
-            statement.setInt(4, model.getTeamId());
+            statement.setInt(4, model.getTeam().getId());
             statement.setInt(5, model.getId());
 
             int rowsAffected = statement.executeUpdate();

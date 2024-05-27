@@ -1,7 +1,7 @@
 package cat.uvic.teknos.f1race.domain.jbdc.repositories;
 
-import cat.uvic.teknos.f1race.models.Car;
 import cat.uvic.teknos.f1race.models.RaceResult;
+import cat.uvic.teknos.f1race.models.Team;
 import cat.uvic.teknos.f1race.repositories.RaceResultRepository;
 
 import java.sql.Connection;
@@ -31,8 +31,9 @@ public class JbdcRaceResultRepository implements RaceResultRepository {
     private void insert(RaceResult model) {
         try (PreparedStatement statement = connection.prepareStatement("INSERT INTO RACE_RESULT ( RACE_ID, DRIVER_ID, POSITION, POINTS_EARNED) VALUES (?,?,?,?)", Statement.RETURN_GENERATED_KEYS)){
 
+
             statement.setInt(1, model.getRaceId());
-            statement.setInt(2, model.getDriverId());
+            statement.setInt(2, model.getDriver().getId());
             statement.setInt(3, model.getPosition());
             statement.setString(4, model.getFastestLap());
             statement.setInt(4, model.getPoints());

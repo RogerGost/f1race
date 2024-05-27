@@ -1,5 +1,7 @@
 package cat.uvic.teknos.f1race.domain.jbdc.models;
 
+import cat.uvic.teknos.f1race.models.Team;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 
@@ -12,6 +14,7 @@ public class Driver implements cat.uvic.teknos.f1race.models.Driver, Serializabl
     private int date;
     private int number;
     private int teamId;
+    private Team team;
     @Override
     public int getId() {
         return id;
@@ -75,6 +78,17 @@ public class Driver implements cat.uvic.teknos.f1race.models.Driver, Serializabl
     @Override
     public void setTeamId(int teamId) {
         this.teamId=teamId;
+
+    }
+
+    @Override
+    public Team getTeam() {
+        return team;
+    }
+
+    @Override
+    public void setTeam(Team team) {
+        this.team=team;
 
     }
 }

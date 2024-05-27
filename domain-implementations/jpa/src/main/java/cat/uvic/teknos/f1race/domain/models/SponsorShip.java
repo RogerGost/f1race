@@ -6,20 +6,20 @@ import java.time.LocalDate;
 
 @Entity
 public class SponsorShip implements cat.uvic.teknos.f1race.models.SponsorShip {
-   @EmbeddedId()
+    @EmbeddedId()
     private SponsorShipId id;
-   @ManyToOne
-   @MapsId
-   private Team team;
-   @MapsId
-   @ManyToOne
-   private Sponsor sponsor;
+    @ManyToOne
+    @MapsId
+    private Team team;
+    @MapsId
+    @ManyToOne
+    private Sponsor sponsor;
     @Column(name = "NAME")
     private String name;
     @Column(name = "START_DATE")
-    private LocalDate startDate;
+    private int startDate;
     @Column(name = "END_DATE")
-    private LocalDate endDate;
+    private int endDate;
     @Column(name = "TEAM_ID")
     private int teamId;
 
@@ -48,22 +48,22 @@ public class SponsorShip implements cat.uvic.teknos.f1race.models.SponsorShip {
     }
 
     @Override
-    public LocalDate getStartDate() {
+    public int getStartDate() {
         return startDate;
     }
 
     @Override
-    public void setStartDate(LocalDate startDate) {
+    public void setStartDate(int startDate) {
         this.startDate = startDate;
     }
 
     @Override
-    public LocalDate getEndDate() {
+    public int getEndDate() {
         return endDate;
     }
 
     @Override
-    public void setEndDate(LocalDate endDate) {
+    public void setEndDate(int endDate) {
         this.endDate = endDate;
     }
 

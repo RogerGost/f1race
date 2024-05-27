@@ -1,7 +1,9 @@
 package cat.uvic.teknos.f1race.domain.jbdc.repositories;
 
 import cat.uvic.teknos.f1race.domain.jbdc.models.Car;
+import cat.uvic.teknos.f1race.domain.jbdc.models.Driver;
 import cat.uvic.teknos.f1race.domain.jbdc.models.RaceResult;
+import cat.uvic.teknos.f1race.domain.jbdc.models.Team;
 import com.fcardara.dbtestutils.junit.CreateSchemaExtension;
 import com.fcardara.dbtestutils.junit.GetConnectionExtension;
 import org.junit.jupiter.api.Test;
@@ -28,9 +30,13 @@ class JbdcRaceResultRepositoryTest {
     @Test
     void save() {
 
+        Driver driver1 = new Driver();
+        driver1.setId(2);
+
+
         RaceResult race = new RaceResult();
         race.setRaceId(12);
-        race.setDriverId(1);
+        race.setDriver(driver1);
         race.setPosition(14);
         race.setFastestLap("1:23:21");
         race.setPoints(24);
@@ -51,12 +57,13 @@ class JbdcRaceResultRepositoryTest {
 
     @Test
     void shouldUpdateNewRaceTest() throws SQLException {
-
+        Driver driver1 = new Driver();
+        driver1.setId(2);
 
         RaceResult race = new RaceResult();
 
         race.setRaceId(12);
-        race.setDriverId(1);
+        race.setDriver(driver1);
         race.setPosition(4);
         race.setFastestLap("1:23:21");
         race.setPoints(24);

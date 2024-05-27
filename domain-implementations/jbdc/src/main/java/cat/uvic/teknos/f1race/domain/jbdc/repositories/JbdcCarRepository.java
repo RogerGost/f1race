@@ -33,7 +33,7 @@ public class JbdcCarRepository implements CarRepository {
             statement.setString(1, model.getModel());
             statement.setString(2, model.getEngine());
             statement.setString(3, model.getChassis());
-            statement.setInt(4,model.getTeamId());
+            statement.setInt(4,model.getTeam().getId());
 
 
             statement.executeUpdate();
@@ -53,7 +53,7 @@ public class JbdcCarRepository implements CarRepository {
             statement.setString(1, model.getModel());
             statement.setString(2, model.getEngine());
             statement.setString(3, model.getChassis());
-            statement.setInt(4, model.getTeamId());
+            statement.setInt(4, model.getTeam().getId());
             statement.setInt(5, model.getId());
 
             int rowsAffected = statement.executeUpdate();

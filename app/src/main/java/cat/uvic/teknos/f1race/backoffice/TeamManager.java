@@ -100,7 +100,7 @@ public class TeamManager {
             team.setHeadquarters(readLine(in));
 
             out.println("Sponsor");
-            team.setSponsor(readLine(in));
+            team.setSponsorName(readLine(in));
 
             teamRepository.save(team);
 
@@ -125,7 +125,7 @@ public class TeamManager {
         team.setHeadquarters(readLine(in));
 
         out.println("Sponsor");
-        team.setSponsor(readLine(in));
+        team.setSponsorName(readLine(in));
 
         teamRepository.save(team);
 

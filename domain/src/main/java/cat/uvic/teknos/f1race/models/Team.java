@@ -18,12 +18,8 @@ public interface Team {
 
     void setHeadquarters(String headquarters);
 
-    String getSponsor();
-    void setSponsor(String sponsor);
-
-    void setSponsorships(Set<SponsorShip> sponsorships);
-
-    Set<SponsorShip> getSponsorships();
+    String getSponsorName();
+    void setSponsorName(String sponsor);
 
 
     Set<Driver> getDriver();
@@ -34,5 +30,10 @@ public interface Team {
 
     void setCars(Set<? extends Car> cars);
 
+    Set<Sponsor> getSponsor();
+
+    void setSponsor(Set<Sponsor> sponsor);
 }
+
+
 

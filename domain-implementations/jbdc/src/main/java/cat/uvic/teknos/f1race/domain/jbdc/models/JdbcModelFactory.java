@@ -35,8 +35,4 @@ public class JdbcModelFactory implements ModelFactory {
         return new cat.uvic.teknos.f1race.domain.jbdc.models.RaceResult();
     }
 
-    @Override
-    public SponsorShip createSponsorShip() {
-        return new cat.uvic.teknos.f1race.domain.jbdc.models.SponsorShip();
-    }
 }

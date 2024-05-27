@@ -56,11 +56,11 @@ public class SponsorManager {
 
         var asciiTable = new AsciiTable();
         asciiTable.addRule();
-        asciiTable.addRow("ID", "NAME", "COUNTRY", "PHONE", "TYPE");
+        asciiTable.addRow("ID", "NAME", "COUNTRY", "PHONE", "TYPE","SPONSORSHIP_ID");
         asciiTable.addRule();
 
         for (var sponsor : sponsorRepository.getAll()) {
-            asciiTable.addRow(sponsor.getId(), sponsor.getName(), sponsor.getCountry()  , sponsor.getPhone(), sponsor.getSponsorType());
+            asciiTable.addRow(sponsor.getId(), sponsor.getName(), sponsor.getCountry()  , sponsor.getPhone(), sponsor.getSponsorType(), sponsor.getSponsorshipId());
             asciiTable.addRule();
         }
 
@@ -100,6 +100,7 @@ public class SponsorManager {
             out.println("Sponsor Type");
             sponsor.setSponsorType(readLine(in));
 
+
             sponsorRepository.save(sponsor);
 
             out.println("Update successful");
@@ -120,7 +121,7 @@ public class SponsorManager {
         sponsor.setCountry(readLine(in));
 
         out.println("Phone");
-        sponsor.setPhone(Integer.valueOf(readLine(in)));
+        sponsor.setPhone(Integer.parseInt(readLine(in)));
 
         out.println("SponsorType");
         sponsor.setSponsorType(readLine(in));

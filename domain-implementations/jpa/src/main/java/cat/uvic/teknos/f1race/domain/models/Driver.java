@@ -25,9 +25,12 @@ public class Driver implements cat.uvic.teknos.f1race.models.Driver, Serializabl
     @Column(name = "NUMBER")
     private int number;
 
-    @Column(name = "TEAM_ID")
-    private int teamId;
 
+
+
+    @ManyToOne
+    @JoinColumn(name = "TEAM_ID")
+    private Team team;
     @OneToMany( cascade = CascadeType.ALL)
     private Set<RaceResult> raceResults;
 
@@ -96,12 +99,14 @@ public class Driver implements cat.uvic.teknos.f1race.models.Driver, Serializabl
 
     @Override
     public int getTeamId() {
-        return teamId;
+        return team != null ? team.getId() : 0;
     }
 
     @Override
     public void setTeamId(int teamId) {
-        this.teamId=teamId;
-
+        if (this.team == null) {
+            this.team = new Team();
+        }
+        this.team.setId(teamId);
     }
 }

@@ -14,14 +14,16 @@ public interface Driver {
     String getNationality();
     void setNationality(String nationality);
 
-    int getDate();
-    void setDate(int date);
+    int getDate(); // Cambiado de int a LocalDate
+    void setDate(int date); // Cambiado de int a LocalDate
 
     int getNumber();
     void setNumber(int number);
 
-    int getTeamId();
-    void setTeamId(int teamId);
+    int getTeamId(); // Este método puede ser removido si solo utilizas la relación ManyToOne
+    void setTeamId(int teamId); // Este método puede ser removido si solo utilizas la relación ManyToOne
 
+    Team getTeam();
 
+    void setTeam(Team team);
 }

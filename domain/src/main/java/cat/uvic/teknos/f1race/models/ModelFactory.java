@@ -6,5 +6,5 @@ public interface ModelFactory {
     Driver createDriver();
     Sponsor createSponsor();
     RaceResult createRaceResult();
-    SponsorShip createSponsorShip();
+
 }

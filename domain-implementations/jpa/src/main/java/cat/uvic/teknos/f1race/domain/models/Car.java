@@ -19,9 +19,6 @@ public class Car implements cat.uvic.teknos.f1race.models.Car{
     @Column(name = "CHASSIS")
     private String chassis;
 
-    @Column(name = "TEAM_ID", insertable = false, updatable = false)
-    private int teamId;
-
     @ManyToOne
     @JoinColumn(name = "TEAM_ID")
     private Team team;
@@ -72,12 +69,14 @@ public class Car implements cat.uvic.teknos.f1race.models.Car{
 
     @Override
     public int getTeamId() {
-        return teamId;
+        return team != null ? team.getId() : 0; // Devuelve el ID del equipo
     }
 
     @Override
     public void setTeamId(int teamId) {
-        this.teamId=teamId;
-
+        if (this.team == null) {
+            this.team = new Team();
+        }
+        this.team.setId(teamId); // Configura el ID del equipo en el objeto Team
     }
 }

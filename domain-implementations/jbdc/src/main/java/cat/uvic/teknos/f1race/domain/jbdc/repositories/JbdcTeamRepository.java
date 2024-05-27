@@ -34,7 +34,7 @@ public class JbdcTeamRepository implements TeamRepository {
             statement.setString(1, model.getTeamName());
             statement.setString(2, model.getPrincipalName());
             statement.setString(3, model.getHeadquarters());
-            statement.setString(4, model.getSponsor());
+            statement.setString(4, model.getSponsorName());
 
 
 
@@ -55,7 +55,7 @@ public class JbdcTeamRepository implements TeamRepository {
             statement.setString(1, model.getTeamName());
             statement.setString(2, model.getPrincipalName());
             statement.setString(3, model.getHeadquarters());
-            statement.setString(4, model.getSponsor());
+            statement.setString(4, model.getSponsorName());
             statement.setInt(5, model.getId());
 
             int rowsAffected = statement.executeUpdate();
@@ -70,7 +70,6 @@ public class JbdcTeamRepository implements TeamRepository {
     @Override
     public void delete(Team model) {
         try (PreparedStatement deleteSponsorStatement = connection.prepareStatement("DELETE FROM sponsor WHERE SPONSOR_ID IN (SELECT SPONSOR_ID FROM sponsorship WHERE TEAM_ID = ?)");
-             PreparedStatement deleteSponsorshipStatement = connection.prepareStatement("DELETE FROM sponsorship WHERE TEAM_ID = ?");
              PreparedStatement deleteCarsStatement = connection.prepareStatement("DELETE FROM car WHERE TEAM_ID = ?");
              PreparedStatement deleteRaceResultsStatement = connection.prepareStatement("DELETE FROM race_result WHERE DRIVER_ID IN (SELECT DRIVER_ID FROM driver WHERE TEAM_ID = ?)");
              PreparedStatement deleteDriversStatement = connection.prepareStatement("DELETE FROM driver WHERE TEAM_ID = ?");
@@ -79,8 +78,6 @@ public class JbdcTeamRepository implements TeamRepository {
             deleteSponsorStatement.setInt(1, model.getId());
             deleteSponsorStatement.executeUpdate();
 
-            deleteSponsorshipStatement.setInt(1, model.getId());
-            deleteSponsorshipStatement.executeUpdate();
 
             deleteCarsStatement.setInt(1, model.getId());
             deleteCarsStatement.executeUpdate();
@@ -117,7 +114,7 @@ public class JbdcTeamRepository implements TeamRepository {
                 merceders.setTeamName(resultSet.getString("TEAM_NAME"));
                 merceders.setPrincipalName(resultSet.getString("PRINCIPAL_NAME"));
                 merceders.setHeadquarters(resultSet.getString("HEADQUARTERS"));
-                merceders.setSponsor(resultSet.getString("SPONSOR"));
+                merceders.setSponsorName(resultSet.getString("SPONSOR_NAME"));
 
             }
             return merceders;
@@ -139,7 +136,7 @@ public class JbdcTeamRepository implements TeamRepository {
                 mercedes.setTeamName(resultSet.getString("TEAM_NAME"));
                 mercedes.setPrincipalName(resultSet.getString("PRINCIPAL_NAME"));
                 mercedes.setHeadquarters(resultSet.getString("HEADQUARTERS"));
-                mercedes.setSponsor(resultSet.getString("SPONSOR"));
+                mercedes.setSponsorName(resultSet.getString("SPONSOR_NAME"));
 
 
 

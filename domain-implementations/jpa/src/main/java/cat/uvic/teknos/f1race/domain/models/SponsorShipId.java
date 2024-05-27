@@ -7,22 +7,26 @@ import java.io.Serializable;
 @Embeddable
 public class SponsorShipId implements Serializable, cat.uvic.teknos.f1race.models.SponsorShipId {
 
-    public int getSponorId() {
-        return sponorId;
+    private int sponsorId; // Corrected field name
+    private int teamId;
+
+    @Override
+    public int getSponsorId() {
+        return sponsorId;
     }
 
-    public void setSponorId(int sponorId) {
-        this.sponorId = sponorId;
+    @Override
+    public void setSponsorId(int sponsorId) {
+        this.sponsorId = sponsorId;
     }
 
+    @Override
     public int getTeamId() {
         return teamId;
     }
 
+    @Override
     public void setTeamId(int teamId) {
         this.teamId = teamId;
     }
-
-    private int sponorId;
-    private int teamId;
 }

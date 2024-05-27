@@ -1,12 +1,13 @@
 package cat.uvic.teknos.f1race.domain.models;
 
+import cat.uvic.teknos.f1race.domain.repositories.JpaCarRepository;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class CarTest {
     private static EntityManagerFactory entityManagerFactory;
@@ -19,30 +20,39 @@ class CarTest {
     static void tearDown() {
         entityManagerFactory.close();
     }
+
     @Test
-    void insertTaste(){
+    void insertTaste() {
         // EntityManager
         var entityManager = entityManagerFactory.createEntityManager();
 
         try {
             entityManager.getTransaction().begin();
 
-            var team = entityManager.find(Team.class,1);
+            // Buscar un equipo existente en la base de datos
+            var team = entityManager.find(Team.class, 1);
 
+            // Crear un nuevo automóvil
             Car car = new Car();
-            car.setModel("rb18");
+            car.setModel("AP19");
             car.setEngine("Honda");
-            car.setChassis("Mrc1");
-            car.setTeamId(1);
+            car.setChassis("AP19");
+            car.setTeamId(team.getId());
 
 
+
+            // Persistir el automóvil en la base de datos
             entityManager.persist(car);
 
-            assertTrue(car.getId()>0);
+            // Verificar que se haya generado el ID del automóvil
+            assertTrue(car.getId() > 0);
 
             entityManager.getTransaction().commit();
-        }catch (Exception e){
+        } catch (Exception e) {
             entityManager.getTransaction().rollback();
         }
     }
+
+
+
 }

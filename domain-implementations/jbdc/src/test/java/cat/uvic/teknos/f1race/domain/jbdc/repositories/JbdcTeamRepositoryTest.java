@@ -30,7 +30,7 @@ class JbdcTeamRepositoryTest {
         team.setTeamName("Alpha tauri");
         team.setPrincipalName("yuki");
         team.setHeadquarters("Italy");
-        team.setSponsor("Visa");
+        team.setSponsorName("Visa");
 
         var repository = new JbdcTeamRepository(connection);
 
@@ -54,7 +54,7 @@ class JbdcTeamRepositoryTest {
         team.setTeamName("Williams");
         team.setPrincipalName("Russell");
         team.setHeadquarters("London");
-        team.setSponsor("Duracell");
+        team.setSponsorName("Duracell");
         team.setId(1);
 
 
