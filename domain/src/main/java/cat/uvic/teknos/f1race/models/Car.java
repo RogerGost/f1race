@@ -14,9 +14,6 @@ public interface Car {
     String getChassis();
     void setChassis(String chassis);
 
-    int getTeamId();
-    void setTeamId(int teamId);
-
     Team getTeam();
 
     void setTeam(Team team);

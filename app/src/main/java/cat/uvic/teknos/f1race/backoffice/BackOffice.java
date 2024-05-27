@@ -84,6 +84,5 @@ public class BackOffice {
         out.println("3. Driver");
         out.println("4. Sponsor");
         out.println("5. RaceResult");
-        out.println("6. SponsorShip");
     }
 }

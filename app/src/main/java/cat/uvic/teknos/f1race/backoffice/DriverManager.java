@@ -2,6 +2,7 @@ package cat.uvic.teknos.f1race.backoffice;
 
 import cat.uvic.teknos.f1race.models.Car;
 import cat.uvic.teknos.f1race.models.ModelFactory;
+import cat.uvic.teknos.f1race.models.Team;
 import cat.uvic.teknos.f1race.repositories.CarRepository;
 import cat.uvic.teknos.f1race.repositories.DriverRepository;
 import de.vandermeer.asciitable.AsciiTable;
@@ -96,7 +97,10 @@ public class DriverManager {
             driver.setNumber(Integer.parseInt(readLine(in)));
 
             out.println("Team ID");
-            driver.setTeamId(Integer.parseInt(readLine(in)));
+            int teamId = Integer.parseInt(readLine(in));
+            Team team = new cat.uvic.teknos.f1race.domain.jbdc.models.Team();
+            team.setId(teamId);
+            driver.setTeam(team);
 
             driverRepository.save(driver);
 
@@ -121,7 +125,10 @@ public class DriverManager {
         driver.setNumber(Integer.parseInt(readLine(in)));
 
         out.println("TeamID");
-        driver.setTeamId(Integer.parseInt(readLine(in)));
+        int teamId = Integer.parseInt(readLine(in));
+        Team team = new cat.uvic.teknos.f1race.domain.jbdc.models.Team();
+        team.setId(teamId);
+        driver.setTeam(team);
 
 
         driverRepository.save(driver);

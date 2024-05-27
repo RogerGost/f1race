@@ -7,7 +7,7 @@ public class Car implements cat.uvic.teknos.f1race.models.Car {
     private String model;
     private String engine;
     private String chassis;
-    private int teamId;
+
     private Team team;
 
     @Override
@@ -52,16 +52,6 @@ public class Car implements cat.uvic.teknos.f1race.models.Car {
     public void setChassis(String chassis) {
         this.chassis=chassis;
 
-    }
-
-    @Override
-    public int getTeamId() {
-        return teamId;
-    }
-
-    @Override
-    public void setTeamId(int teamId) {
-        this.teamId=teamId;
     }
 
     @Override

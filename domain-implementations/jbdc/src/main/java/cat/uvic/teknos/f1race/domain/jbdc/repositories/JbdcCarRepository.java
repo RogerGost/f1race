@@ -1,6 +1,7 @@
 package cat.uvic.teknos.f1race.domain.jbdc.repositories;
 
 import cat.uvic.teknos.f1race.models.Car;
+import cat.uvic.teknos.f1race.models.Team;
 import cat.uvic.teknos.f1race.repositories.CarRepository;
 
 import java.sql.Connection;
@@ -94,6 +95,12 @@ public class JbdcCarRepository implements CarRepository {
                 merceders.setEngine(resultSet.getString("ENGINE"));
                 merceders.setChassis(resultSet.getString("CHASSIS"));
                 merceders.setModel(resultSet.getString("MODEL"));
+                Team team = new cat.uvic.teknos.f1race.domain.jbdc.models.Team();
+
+                int teamId=(resultSet.getInt("TEAM_ID"));
+                team.setId(teamId);
+                merceders.setTeam(team);
+
             }
             return merceders;
         } catch (SQLException e) {
@@ -114,7 +121,10 @@ public class JbdcCarRepository implements CarRepository {
                 mercedes.setModel(resultSet.getString("MODEL"));
                 mercedes.setEngine(resultSet.getString("ENGINE"));
                 mercedes.setChassis(resultSet.getString("CHASSIS"));
-                mercedes.setTeamId(resultSet.getInt("TEAM_ID"));
+                Team team = new cat.uvic.teknos.f1race.domain.jbdc.models.Team();
+                int teamId=(resultSet.getInt("TEAM_ID"));
+                team.setId(teamId);
+                mercedes.setTeam(team);
 
                 cars.add(mercedes);
             }

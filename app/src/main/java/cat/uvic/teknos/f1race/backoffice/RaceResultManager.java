@@ -1,6 +1,8 @@
 package cat.uvic.teknos.f1race.backoffice;
 
+import cat.uvic.teknos.f1race.models.Driver;
 import cat.uvic.teknos.f1race.models.ModelFactory;
+import cat.uvic.teknos.f1race.models.Team;
 import cat.uvic.teknos.f1race.repositories.RaceResultRepository;
 import cat.uvic.teknos.f1race.repositories.TeamRepository;
 import de.vandermeer.asciitable.AsciiTable;
@@ -90,7 +92,10 @@ public class RaceResultManager {
             race.setRaceId(Integer.parseInt(readLine(in)));
 
             out.println("DriverID");
-            race.setDriverId(Integer.parseInt(readLine(in)));
+            int driverId = Integer.parseInt(readLine(in));
+            Driver driver = new cat.uvic.teknos.f1race.domain.jbdc.models.Driver();
+            driver.setId(driverId);
+            race.setDriver(driver);
 
             out.println("Position");
             race.setPosition(Integer.parseInt(readLine(in)));
@@ -115,7 +120,10 @@ public class RaceResultManager {
         raceResult.setRaceId(Integer.parseInt(readLine(in)));
 
         out.println("DriverID");
-        raceResult.setDriverId(Integer.parseInt(readLine(in)));
+        int driverId = Integer.parseInt(readLine(in));
+        Driver driver = new cat.uvic.teknos.f1race.domain.jbdc.models.Driver();
+        driver.setId(driverId);
+        raceResult.setDriver(driver);
 
         out.println("Position");
         raceResult.setPosition(Integer.parseInt(readLine(in)));

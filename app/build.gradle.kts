@@ -11,6 +11,7 @@ dependencies {
     implementation(project(":utilities"))
     implementation(project(":domain-implementations:jbdc"))
     implementation("de.vandermeer:asciitable:0.3.2")
+    implementation("com.github.freva:ascii-table:1.8.0")
 }
 
 application {
