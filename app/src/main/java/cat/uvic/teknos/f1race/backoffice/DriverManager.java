@@ -5,11 +5,13 @@ import cat.uvic.teknos.f1race.models.ModelFactory;
 import cat.uvic.teknos.f1race.models.Team;
 import cat.uvic.teknos.f1race.repositories.CarRepository;
 import cat.uvic.teknos.f1race.repositories.DriverRepository;
-import de.vandermeer.asciitable.AsciiTable;
+import com.github.freva.asciitable.AsciiTable;
+import com.github.freva.asciitable.Column;
 import de.vandermeer.skb.interfaces.transformers.textformat.TextAlignment;
 
 import java.io.BufferedReader;
 import java.io.PrintStream;
+import java.util.Arrays;
 
 import static cat.uvic.teknos.f1race.backoffice.IOUtilis.readLine;
 
@@ -53,20 +55,18 @@ public class DriverManager {
     private void getAll() {
         out.println("\n List of Driver \n");
 
-        var asciiTable = new AsciiTable();
-        asciiTable.addRule();
-        asciiTable.addRow("ID", "NAME", "NATIONALITY", "DATE", "NUMBER","TEAM_ID");
-        asciiTable.addRule();
+        var drivers = driverRepository.getAll();
 
-        for (var driver : driverRepository.getAll()) {
-            asciiTable.addRow(driver.getId(), driver.getName(), driver.getNationality(), driver.getDate(), driver.getNumber(), driver.getTeamId());
-            asciiTable.addRule();
-        }
+        String table = AsciiTable.getTable(drivers, Arrays.asList(
+                new Column().header("Id").with(driver -> String.valueOf(driver.getId())),
+                new Column().header("Name").with(driver -> driver.getName()),
+                new Column().header("Nationality").with(driver -> driver.getNationality()),
+                new Column().header("Date").with(driver -> String.valueOf(driver.getDate())),
+                new Column().header("Number").with(driver -> String.valueOf(driver.getNumber())),
+                new Column().header("Team ID").with(driver -> String.valueOf(driver.getTeam().getId())
+                )));
 
-        asciiTable.setTextAlignment(TextAlignment.CENTER);
-
-        String render = asciiTable.render();
-        out.println(render);
+        out.println(table);
     }
 
     private void delete() {

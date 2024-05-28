@@ -117,7 +117,10 @@ public class JbdcDriverRepository implements DriverRepository {
                 driver.setName(resultSet.getString("NAME"));
                 driver.setNationality(resultSet.getString("NATIONALITY"));
                 driver.setNumber(resultSet.getInt("NUMBER"));
-                driver.setTeamId(resultSet.getInt("TEAM_ID"));
+                int teamId = (resultSet.getInt("TEAM_ID"));
+                cat.uvic.teknos.f1race.models.Team team = new cat.uvic.teknos.f1race.domain.jbdc.models.Team();
+                team.setId(teamId);
+                driver.setTeam(team);
 
             }
             return driver;
@@ -140,7 +143,10 @@ public class JbdcDriverRepository implements DriverRepository {
                 driver.setNationality(resultSet.getString("NATIONALITY"));
                 driver.setDate(resultSet.getInt("DATE_OF_BIRTH"));
                 driver.setNumber(resultSet.getInt("NUMBER"));
-                driver.setTeamId(resultSet.getInt("TEAM_ID"));
+                int teamId = (resultSet.getInt("TEAM_ID"));
+                cat.uvic.teknos.f1race.models.Team team = new cat.uvic.teknos.f1race.domain.jbdc.models.Team();
+                team.setId(teamId);
+                driver.setTeam(team);
 
                 drivers.add(driver);
             }

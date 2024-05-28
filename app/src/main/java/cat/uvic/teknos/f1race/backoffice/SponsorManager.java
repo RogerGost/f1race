@@ -3,11 +3,13 @@ package cat.uvic.teknos.f1race.backoffice;
 import cat.uvic.teknos.f1race.models.ModelFactory;
 import cat.uvic.teknos.f1race.models.Sponsor;
 import cat.uvic.teknos.f1race.repositories.SponsorRepository;
-import de.vandermeer.asciitable.AsciiTable;
+import com.github.freva.asciitable.AsciiTable;
+import com.github.freva.asciitable.Column;
 import de.vandermeer.skb.interfaces.transformers.textformat.TextAlignment;
 
 import java.io.BufferedReader;
 import java.io.PrintStream;
+import java.util.Arrays;
 
 import static cat.uvic.teknos.f1race.backoffice.IOUtilis.readLine;
 
@@ -47,20 +49,17 @@ public class SponsorManager {
     private void getAll() {
         out.println("\n List of Sponsors \n");
 
-        var asciiTable = new AsciiTable();
-        asciiTable.addRule();
-        asciiTable.addRow("ID", "NAME", "COUNTRY", "PHONE", "TYPE");
-        asciiTable.addRule();
+        var sponsors = sponsorRepository.getAll();
 
-        for (var sponsor : sponsorRepository.getAll()) {
-            asciiTable.addRow(sponsor.getId(), sponsor.getName(), sponsor.getCountry(), sponsor.getPhone(), sponsor.getSponsorType());
-            asciiTable.addRule();
-        }
+        String table = AsciiTable.getTable(sponsors, Arrays.asList(
+                new Column().header("Id").with(sponsor -> String.valueOf(sponsor.getId())),
+                new Column().header("Name").with(sponsor -> sponsor.getName()),
+                new Column().header("Country").with(sponsor -> sponsor.getCountry()),
+                new Column().header("Phone").with(sponsor -> String.valueOf(sponsor.getPhone())),
+                new Column().header("Sponsor Type").with(sponsor -> sponsor.getSponsorType())
+        ));
 
-        asciiTable.setTextAlignment(TextAlignment.CENTER);
-
-        String render = asciiTable.render();
-        out.println(render);
+        out.println(table);
     }
 
     private void deleteSponsor() {

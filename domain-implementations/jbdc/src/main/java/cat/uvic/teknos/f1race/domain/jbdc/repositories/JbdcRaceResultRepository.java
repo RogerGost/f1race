@@ -52,14 +52,14 @@ public class JbdcRaceResultRepository implements RaceResultRepository {
     }
 
     private void update(RaceResult model) {
-        try (PreparedStatement statement = connection.prepareStatement("UPDATE RACE_RESULT SET RACE_ID=?, DRIVER_ID=?, POSITION=?, POINTS_EARNED=?  WHERE RESULT_ID=?", Statement.RETURN_GENERATED_KEYS)){
+        try (PreparedStatement statement = connection.prepareStatement("UPDATE RACE_RESULT SET RACE_ID=?, DRIVER_ID=?, POSITION=?,FASTEST_LAP_TIME=?, POINTS_EARNED=?  WHERE RESULT_ID=?", Statement.RETURN_GENERATED_KEYS)){
 
             statement.setInt(1, model.getRaceId());
-            statement.setInt(2, model.getDriverId());
+            statement.setInt(2, model.getDriver().getId());
             statement.setInt(3, model.getPosition());
-            //statement.setTime(4, model.getFastestLap());
-            statement.setInt(4, model.getPoints());
-            statement.setInt(5, model.getId());
+            statement.setString(4, model.getFastestLap());
+            statement.setInt(5, model.getPoints());
+            statement.setInt(6, model.getId());
 
             int rowsAffected = statement.executeUpdate();
             if (rowsAffected == 0) {
@@ -98,7 +98,10 @@ public class JbdcRaceResultRepository implements RaceResultRepository {
                 race = new cat.uvic.teknos.f1race.domain.jbdc.models.RaceResult();
                 race.setId(resultSet.getInt("RESULT_ID"));
                 race.setRaceId(resultSet.getInt("RACE_ID"));
-                race.setDriverId(resultSet.getInt("DRIVER_ID"));
+                int driverId = (resultSet.getInt("DRIVER_ID"));
+                cat.uvic.teknos.f1race.models.Driver driver = new cat.uvic.teknos.f1race.domain.jbdc.models.Driver();
+                driver.setId(driverId);
+                race.setDriver(driver);
                 race.setPosition(resultSet.getInt("POSITION"));
                 race.setFastestLap(resultSet.getString("FASTEST_LAP_TIME"));
                 race.setPoints(resultSet.getInt("POINTS_EARNED"));
@@ -122,7 +125,10 @@ public class JbdcRaceResultRepository implements RaceResultRepository {
                 var race = new cat.uvic.teknos.f1race.domain.jbdc.models.RaceResult();
                 race.setId(resultSet.getInt("RESULT_ID"));
                 race.setRaceId(resultSet.getInt("RACE_ID"));
-                race.setDriverId(resultSet.getInt("DRIVER_ID"));
+                int driverId = (resultSet.getInt("DRIVER_ID"));
+                cat.uvic.teknos.f1race.models.Driver driver = new cat.uvic.teknos.f1race.domain.jbdc.models.Driver();
+                driver.setId(driverId);
+                race.setDriver(driver);
                 race.setPosition(resultSet.getInt("POSITION"));
                 race.setFastestLap(resultSet.getString("FASTEST_LAP_TIME"));
                 race.setPoints(resultSet.getInt("POINTS_EARNED"));

@@ -10,9 +10,6 @@ public interface RaceResult {
     int getRaceId();
     void setRaceId(int raceId);
 
-    int getDriverId();
-    void setDriverId(int driverId);
-
     int getPosition();
     void setPosition(int position);
 

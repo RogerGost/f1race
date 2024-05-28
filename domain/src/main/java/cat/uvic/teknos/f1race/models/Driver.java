@@ -20,8 +20,6 @@ public interface Driver {
     int getNumber();
     void setNumber(int number);
 
-    int getTeamId(); // Este método puede ser removido si solo utilizas la relación ManyToOne
-    void setTeamId(int teamId); // Este método puede ser removido si solo utilizas la relación ManyToOne
 
     Team getTeam();
 

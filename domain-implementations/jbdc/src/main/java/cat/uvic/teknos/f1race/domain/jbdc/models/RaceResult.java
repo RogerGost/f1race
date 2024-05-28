@@ -6,7 +6,6 @@ public class RaceResult implements cat.uvic.teknos.f1race.models.RaceResult{
 
     private int id;
     private int raceId;
-    private int driverId;
     private int position;
     private String fastestlap;
     private int points;
@@ -30,17 +29,6 @@ public class RaceResult implements cat.uvic.teknos.f1race.models.RaceResult{
     @Override
     public void setRaceId(int raceId) {
         this.raceId=raceId;
-
-    }
-
-    @Override
-    public int getDriverId() {
-        return driverId;
-    }
-
-    @Override
-    public void setDriverId(int driverId) {
-        this.driverId=driverId;
 
     }
 

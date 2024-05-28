@@ -13,7 +13,6 @@ public class Driver implements cat.uvic.teknos.f1race.models.Driver, Serializabl
     private String nationality;
     private int date;
     private int number;
-    private int teamId;
     private Team team;
     @Override
     public int getId() {
@@ -70,16 +69,6 @@ public class Driver implements cat.uvic.teknos.f1race.models.Driver, Serializabl
 
     }
 
-    @Override
-    public int getTeamId() {
-        return teamId;
-    }
-
-    @Override
-    public void setTeamId(int teamId) {
-        this.teamId=teamId;
-
-    }
 
     @Override
     public Team getTeam() {

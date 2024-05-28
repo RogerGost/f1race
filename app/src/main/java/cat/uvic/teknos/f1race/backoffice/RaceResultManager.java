@@ -5,11 +5,13 @@ import cat.uvic.teknos.f1race.models.ModelFactory;
 import cat.uvic.teknos.f1race.models.Team;
 import cat.uvic.teknos.f1race.repositories.RaceResultRepository;
 import cat.uvic.teknos.f1race.repositories.TeamRepository;
-import de.vandermeer.asciitable.AsciiTable;
+import com.github.freva.asciitable.AsciiTable;
+import com.github.freva.asciitable.Column;
 import de.vandermeer.skb.interfaces.transformers.textformat.TextAlignment;
 
 import java.io.BufferedReader;
 import java.io.PrintStream;
+import java.util.Arrays;
 
 import static cat.uvic.teknos.f1race.backoffice.IOUtilis.readLine;
 
@@ -52,22 +54,20 @@ public class RaceResultManager {
     }
 
     private void getAll() {
-        out.println("\n List of Results \n");
+        out.println("\n List of Races \n");
 
-        var asciiTable = new AsciiTable();
-        asciiTable.addRule();
-        asciiTable.addRow("ID", "RACE_ID", "DRIVER_ID", "POSITION","FAST_LAP", "POINTS");
-        asciiTable.addRule();
+        var races = raceResultRepository.getAll();
 
-        for (var race : raceResultRepository.getAll()) {
-            asciiTable.addRow(race.getId(), race.getRaceId(), race.getDriverId(), race.getPosition(), race.getFastestLap(), race.getPoints());
-            asciiTable.addRule();
-        }
+        String table = AsciiTable.getTable(races, Arrays.asList(
+                new Column().header("Id").with(race -> String.valueOf(race.getId())),
+                new Column().header("RaceId").with(race -> String.valueOf(race.getRaceId())),
+                new Column().header("DriverId").with(race -> String.valueOf(race.getDriver().getId())),
+                new Column().header("Position").with(race -> String.valueOf(race.getPosition())),
+                new Column().header("Fastest Lap").with(race -> String.valueOf(race.getFastestLap())),
+                new Column().header("Points").with(race -> String.valueOf(race.getPoints()))
+        ));
 
-        asciiTable.setTextAlignment(TextAlignment.CENTER);
-
-        String render = asciiTable.render();
-        out.println(render);
+        out.println(table);
     }
 
     private void delete() {

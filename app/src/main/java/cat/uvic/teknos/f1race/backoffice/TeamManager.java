@@ -3,13 +3,15 @@ package cat.uvic.teknos.f1race.backoffice;
 import cat.uvic.teknos.f1race.models.ModelFactory;
 import cat.uvic.teknos.f1race.models.Team;
 import cat.uvic.teknos.f1race.repositories.TeamRepository;
-import de.vandermeer.asciitable.AsciiTable;
+import com.github.freva.asciitable.AsciiTable;
+import com.github.freva.asciitable.Column;
 import de.vandermeer.skb.interfaces.document.TableRowStyle;
 import de.vandermeer.skb.interfaces.transformers.textformat.TextAlignment;
 
 
 import java.io.BufferedReader;
 import java.io.PrintStream;
+import java.util.Arrays;
 import java.util.Set;
 
 import static cat.uvic.teknos.f1race.backoffice.IOUtilis.*;
@@ -56,20 +58,18 @@ public class TeamManager {
     private void getAll() {
         out.println("\n List of Teams \n");
 
-        var asciiTable = new AsciiTable();
-        asciiTable.addRule();
-        asciiTable.addRow("ID", "NAME", "PRINCIPAL", "HEADQUARTERS", "SPONSOR");
-        asciiTable.addRule();
+        var teams = teamRepository.getAll();
 
-        for (var team : teamRepository.getAll()) {
-            asciiTable.addRow(team.getId(), team.getTeamName(), team.getPrincipalName(), team.getHeadquarters(), team.getSponsor());
-            asciiTable.addRule();
-        }
+        String table = AsciiTable.getTable(teams, Arrays.asList(
+                new Column().header("Id").with(team -> String.valueOf(team.getId())),
+                new Column().header("Name").with(team -> team.getTeamName()),
+                new Column().header("Team Principal").with(team -> team.getPrincipalName()),
+                new Column().header("Headquarters").with(team -> team.getHeadquarters()),
+                new Column().header("Principal Sponsor").with(team -> team.getSponsorName())
+        ));
 
-        asciiTable.setTextAlignment(TextAlignment.CENTER);
+        out.println(table);
 
-        String render = asciiTable.render();
-        out.println(render);
     }
 
     private void delete() {

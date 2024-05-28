@@ -1,14 +1,15 @@
 package cat.uvic.teknos.f1race.backoffice;
 
 import cat.uvic.teknos.f1race.models.Car;
-import cat.uvic.teknos.f1race.models.Team;
 import cat.uvic.teknos.f1race.models.ModelFactory;
+import cat.uvic.teknos.f1race.models.Team;
 import cat.uvic.teknos.f1race.repositories.CarRepository;
-import de.vandermeer.asciitable.AsciiTable;
-import de.vandermeer.skb.interfaces.transformers.textformat.TextAlignment;
-
 import java.io.BufferedReader;
 import java.io.PrintStream;
+import com.github.freva.asciitable.AsciiTable;
+import com.github.freva.asciitable.Column;
+import java.util.Arrays;
+import java.util.List;
 
 import static cat.uvic.teknos.f1race.backoffice.IOUtilis.readLine;
 
@@ -49,20 +50,17 @@ public class CarManager {
     private void getAll() {
         out.println("\nList of Cars\n");
 
-        AsciiTable asciiTable = new AsciiTable();
-        asciiTable.addRule();
-        asciiTable.addRow("ID", "MODEL", "ENGINE", "CHASSIS", "TEAM_ID");
-        asciiTable.addRule();
+        var cars = carRepository.getAll();
 
-        for (var car : carRepository.getAll()) {
-            asciiTable.addRow(car.getId(), car.getModel(), car.getEngine(), car.getChassis(), car.getTeam().getId());
-            asciiTable.addRule();
-        }
+        String table = AsciiTable.getTable(cars, Arrays.asList(
+                new Column().header("Id").with(car -> String.valueOf(car.getId())),
+                new Column().header("Model").with(car -> car.getModel()),
+                new Column().header("Engine").with(car -> car.getEngine()),
+                new Column().header("Chassis").with(car -> car.getChassis()),
+                new Column().header("Team ID").with(car -> String.valueOf(car.getTeam().getId())
+        )));
 
-        asciiTable.setTextAlignment(TextAlignment.CENTER);
-
-        String render = asciiTable.render();
-        out.println(render);
+        out.println(table);
     }
 
     private void delete() {

@@ -29,7 +29,7 @@ public class JbdcTeamRepository implements TeamRepository {
     }
 
     private void insert(Team model) {
-        try (PreparedStatement statement = connection.prepareStatement("INSERT INTO TEAM ( TEAM_NAME, PRINCIPAL_NAME, HEADQUARTERS, SPONSOR) VALUES (?,?,?,?)", Statement.RETURN_GENERATED_KEYS)){
+        try (PreparedStatement statement = connection.prepareStatement("INSERT INTO TEAM ( TEAM_NAME, PRINCIPAL_NAME, HEADQUARTERS, SPONSOR_NAME) VALUES (?,?,?,?)", Statement.RETURN_GENERATED_KEYS)){
 
             statement.setString(1, model.getTeamName());
             statement.setString(2, model.getPrincipalName());
@@ -50,7 +50,7 @@ public class JbdcTeamRepository implements TeamRepository {
     }
 
     private void update(Team model) {
-        try (PreparedStatement statement = connection.prepareStatement("UPDATE TEAM SET TEAM_NAME=?, PRINCIPAL_NAME=?, HEADQUARTERS=?, SPONSOR=? WHERE TEAM_ID=?", Statement.RETURN_GENERATED_KEYS)){
+        try (PreparedStatement statement = connection.prepareStatement("UPDATE TEAM SET TEAM_NAME=?, PRINCIPAL_NAME=?, HEADQUARTERS=?, SPONSOR_NAME=? WHERE TEAM_ID=?", Statement.RETURN_GENERATED_KEYS)){
 
             statement.setString(1, model.getTeamName());
             statement.setString(2, model.getPrincipalName());
