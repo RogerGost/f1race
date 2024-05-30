@@ -93,7 +93,7 @@ public class RaceResultManager {
 
             out.println("DriverID");
             int driverId = Integer.parseInt(readLine(in));
-            Driver driver = new cat.uvic.teknos.f1race.domain.jbdc.models.Driver();
+            Driver driver = modelFactory.createDriver();
             driver.setId(driverId);
             race.setDriver(driver);
 
@@ -121,7 +121,7 @@ public class RaceResultManager {
 
         out.println("DriverID");
         int driverId = Integer.parseInt(readLine(in));
-        Driver driver = new cat.uvic.teknos.f1race.domain.jbdc.models.Driver();
+        Driver driver = modelFactory.createDriver();
         driver.setId(driverId);
         raceResult.setDriver(driver);
 

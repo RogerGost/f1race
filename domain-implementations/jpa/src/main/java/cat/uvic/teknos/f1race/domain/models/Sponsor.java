@@ -1,30 +1,34 @@
 package cat.uvic.teknos.f1race.domain.models;
 
 import cat.uvic.teknos.f1race.models.Team;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Transient;
-
+import jakarta.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
+
 @Entity
+@Table(name = "SPONSOR")
 public class Sponsor implements cat.uvic.teknos.f1race.models.Sponsor, Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
     private int id;
+
+    @Column(name = "NAME", nullable = false)
     private String name;
+
+    @Column(name = "COUNTRY")
     private String country;
+
+    @Column(name = "PHONE")
     private int phone;
+
+    @Column(name = "SPONSOR_TYPE")
     private String sponsorType;
-    @Transient
-    private Set <Team> teams = new HashSet();
 
-    @OneToMany(mappedBy = "sponsor")
-    private Set<SponsorShip> sponsorships;
-
-
+    @ManyToMany(mappedBy = "sponsors", targetEntity = cat.uvic.teknos.f1race.domain.models.Team.class)
+    private Set<Team> teams = new HashSet<>();
 
 
     @Override
@@ -32,11 +36,9 @@ public class Sponsor implements cat.uvic.teknos.f1race.models.Sponsor, Serializa
         return id;
     }
 
-
     @Override
     public void setId(int id) {
         this.id = id;
-
     }
 
     @Override
@@ -46,8 +48,7 @@ public class Sponsor implements cat.uvic.teknos.f1race.models.Sponsor, Serializa
 
     @Override
     public void setName(String name) {
-        this.name= name;
-
+        this.name = name;
     }
 
     @Override
@@ -57,8 +58,7 @@ public class Sponsor implements cat.uvic.teknos.f1race.models.Sponsor, Serializa
 
     @Override
     public void setCountry(String country) {
-        this.country=country;
-
+        this.country = country;
     }
 
     @Override
@@ -68,8 +68,7 @@ public class Sponsor implements cat.uvic.teknos.f1race.models.Sponsor, Serializa
 
     @Override
     public void setPhone(int phone) {
-        this.phone=phone;
-
+        this.phone = phone;
     }
 
     @Override
@@ -79,13 +78,7 @@ public class Sponsor implements cat.uvic.teknos.f1race.models.Sponsor, Serializa
 
     @Override
     public void setSponsorType(String sponsorType) {
-        this.sponsorType=sponsorType;
-
-    }
-
-    @Override
-    public void setTeam(Set<Team> teams) {
-        this.teams = teams;
+        this.sponsorType = sponsorType;
     }
 
     @Override
@@ -93,14 +86,8 @@ public class Sponsor implements cat.uvic.teknos.f1race.models.Sponsor, Serializa
         return teams;
     }
 
-    public void setSponsorships(Set<cat.uvic.teknos.f1race.models.SponsorShip> sponsorships) {
-        this.sponsorships.clear();
-        sponsorships.forEach(sponsorShip -> {this.sponsorships.add((SponsorShip)sponsorShip);});
-
-    }
-
-
-    public Set<cat.uvic.teknos.f1race.models.SponsorShip> getSponsorships() {
-        return new HashSet<>(sponsorships);
+    @Override
+    public void setTeam(Set<Team> teams) {
+        this.teams = teams;
     }
 }

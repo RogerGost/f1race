@@ -41,19 +41,21 @@ public class TeamWithCarTest {
             team.setTeamName("Williams");
             team.setPrincipalName("Albon");
             team.setHeadquarters("London");
-            team.setSponsor("Duracell");
+            team.setSponsorName("Duracell");
 
 
             teamRepository.save(team);
 
             assertTrue(team.getId() > 0);
 
+            Team team1 = new Team();
+            team1.setId(2);
 
             var car = new Car();
             car.setModel("AP19");
             car.setEngine("Honda");
             car.setChassis("AP19");
-            car.setTeamId(team.getId());
+            car.setTeam(team1);
 
 
             carRepository.save(car);

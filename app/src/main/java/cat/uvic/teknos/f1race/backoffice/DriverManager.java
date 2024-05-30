@@ -98,7 +98,7 @@ public class DriverManager {
 
             out.println("Team ID");
             int teamId = Integer.parseInt(readLine(in));
-            Team team = new cat.uvic.teknos.f1race.domain.jbdc.models.Team();
+            Team team =modelFactory.createTeam();
             team.setId(teamId);
             driver.setTeam(team);
 
@@ -126,7 +126,7 @@ public class DriverManager {
 
         out.println("TeamID");
         int teamId = Integer.parseInt(readLine(in));
-        Team team = new cat.uvic.teknos.f1race.domain.jbdc.models.Team();
+        Team team = modelFactory.createTeam();
         team.setId(teamId);
         driver.setTeam(team);
 

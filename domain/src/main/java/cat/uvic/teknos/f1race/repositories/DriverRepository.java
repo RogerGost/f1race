@@ -7,6 +7,6 @@ import java.util.Set;
 
 public interface DriverRepository  extends Repository<Integer, Driver>{
 
-
-    void save(Car model);
 }
+
+

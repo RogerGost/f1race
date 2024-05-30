@@ -1,14 +1,24 @@
 package cat.uvic.teknos.f1race.domain.repositories;
 
+import cat.uvic.teknos.f1race.exceptions.RepositoryException;
 import cat.uvic.teknos.f1race.repositories.*;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
+
+import java.io.IOException;
+import java.util.Properties;
 
 public class JpaRepositoryFactory implements RepositoryFactory {
     private EntityManagerFactory entityManagerFactory;
 
     public JpaRepositoryFactory() {
-        entityManagerFactory = Persistence.createEntityManagerFactory("formula1jpa");
+        var properties = new Properties();
+        try {
+            properties.load(JpaRepositoryFactory.class.getResourceAsStream("/jpa.properties"));
+        } catch (IOException e) {
+            throw new RepositoryException(e);
+        }
+        entityManagerFactory = Persistence.createEntityManagerFactory("formula1jpa", properties);
     }
     @Override
     public TeamRepository getTeamRepository() {

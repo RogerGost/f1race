@@ -19,12 +19,6 @@ public class JbdcDriverRepository implements DriverRepository {
     public JbdcDriverRepository(Connection connection){
         this.connection = connection;
     }
-    @Override
-
-    //Em fa un methode saave de car, pero quant el trec de CarRepository em dona error
-    public void save(Car model) {
-
-    }
 
     @Override
     public void save(Driver model) {

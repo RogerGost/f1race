@@ -30,7 +30,7 @@ class TeamTest {
             team.setTeamName("Williams");
             team.setPrincipalName("Albon");
             team.setHeadquarters("London");
-            team.setSponsor("Duracell");
+            team.setSponsorName("Duracell");
 
 
 

@@ -32,12 +32,14 @@ class CarTest {
             // Buscar un equipo existente en la base de datos
             var team = entityManager.find(Team.class, 1);
 
-            // Crear un nuevo automóvil
+            Team team1 = new Team();
+            team1.setId(2);
+
             Car car = new Car();
             car.setModel("AP19");
             car.setEngine("Honda");
             car.setChassis("AP19");
-            car.setTeamId(team.getId());
+            car.setTeam(team1);
 
 
 

@@ -1,44 +1,45 @@
 package cat.uvic.teknos.f1race.domain.models;
+
 import cat.uvic.teknos.f1race.models.Driver;
 import cat.uvic.teknos.f1race.models.Sponsor;
 import jakarta.persistence.*;
-
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "TEAM")
-public class  Team implements cat.uvic.teknos.f1race.models.Team, Serializable{
+public class Team implements cat.uvic.teknos.f1race.models.Team, Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     private int id;
 
-    @Column(name = "NAME")
+    @Column(name = "NAME", nullable = false)
     private String name;
+
     @Column(name = "PRINCIPAL_NAME")
     private String principalName;
+
     @Column(name = "HEADQUARTERS")
     private String headquarters;
 
-    @Column(name = "SPONSOR")
+    @Column(name = "SPONSOR_NAME")
     private String sponsorName;
 
-    @ManyToMany(mappedBy = "team")
-    private Set<Sponsor> sponsor;
+    @ManyToMany(targetEntity = cat.uvic.teknos.f1race.domain.models.Sponsor.class)
+    @JoinTable(
+            name = "TEAM_SPONSOR",
+            joinColumns = @JoinColumn(name = "TEAM_ID"),
+            inverseJoinColumns = @JoinColumn(name = "SPONSOR_ID")
+    )
+    private Set<Sponsor> sponsors = new HashSet<>();
 
+    @OneToMany(mappedBy = "team", targetEntity = cat.uvic.teknos.f1race.domain.models.Driver.class)
+    private Set<Driver> drivers = new HashSet<>();
 
-
-
-
-
-
-    //@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @Transient
-    private Set<Driver> drivers;
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "TEAM_ID")
+    @OneToMany(mappedBy = "team", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Car> cars = new HashSet<>();
 
     @Override
@@ -48,12 +49,7 @@ public class  Team implements cat.uvic.teknos.f1race.models.Team, Serializable{
 
     @Override
     public void setId(int id) {
-        this.id= id;
-
-    }
-    public Team() {
-        this.drivers = new HashSet<>();
-        this.cars = new HashSet<>();
+        this.id = id;
     }
 
     @Override
@@ -63,8 +59,7 @@ public class  Team implements cat.uvic.teknos.f1race.models.Team, Serializable{
 
     @Override
     public void setTeamName(String name) {
-        this.name= name;
-
+        this.name = name;
     }
 
     @Override
@@ -75,7 +70,6 @@ public class  Team implements cat.uvic.teknos.f1race.models.Team, Serializable{
     @Override
     public void setPrincipalName(String principalName) {
         this.principalName = principalName;
-
     }
 
     @Override
@@ -86,17 +80,17 @@ public class  Team implements cat.uvic.teknos.f1race.models.Team, Serializable{
     @Override
     public void setHeadquarters(String headquarters) {
         this.headquarters = headquarters;
-
     }
 
     @Override
     public String getSponsorName() {
         return sponsorName;
     }
-    public void setSponsorName(String sponsor) {
+
+    @Override
+    public void setSponsorName(String sponsorName) {
         this.sponsorName = sponsorName;
     }
-
 
     @Override
     public Set<Driver> getDriver() {
@@ -105,7 +99,7 @@ public class  Team implements cat.uvic.teknos.f1race.models.Team, Serializable{
 
     @Override
     public void setDriver(Driver driver) {
-
+        this.drivers.add(driver);
     }
 
     @Override
@@ -115,17 +109,16 @@ public class  Team implements cat.uvic.teknos.f1race.models.Team, Serializable{
 
     @Override
     public void setCars(Set<? extends cat.uvic.teknos.f1race.models.Car> cars) {
-        //falta codi
+        this.cars = (Set<Car>) cars;
     }
 
     @Override
     public Set<Sponsor> getSponsor() {
-        return sponsor;
+        return sponsors;
     }
 
     @Override
-    public void setSponsor(Set<Sponsor> sponsor) {
-
+    public void setSponsor(Set<Sponsor> sponsors) {
+        this.sponsors = sponsors;
     }
 }
-

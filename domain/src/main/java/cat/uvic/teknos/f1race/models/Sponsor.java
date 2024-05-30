@@ -19,11 +19,6 @@ public interface Sponsor {
     String getSponsorType();
     void setSponsorType(String sponsorType);
 
-    int getSponsorshipId();
-
-
-     void setSponsorshipId(int sponsorshipId);
-
     void setTeam(Set<Team> Team);
 
     Set<Team> getTeams();

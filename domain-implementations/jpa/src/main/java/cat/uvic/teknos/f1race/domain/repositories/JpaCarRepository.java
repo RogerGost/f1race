@@ -1,5 +1,6 @@
 package cat.uvic.teknos.f1race.domain.repositories;
 
+import cat.uvic.teknos.f1race.exceptions.RepositoryException;
 import cat.uvic.teknos.f1race.models.Car;
 import cat.uvic.teknos.f1race.repositories.CarRepository;
 import jakarta.persistence.EntityManager;
@@ -16,10 +17,19 @@ public class JpaCarRepository implements CarRepository {
     }
     @Override
     public void save(Car model) {
-        var entityManager= entitymanagerFactory.createEntityManager();
-        entityManager.getTransaction().begin();
-        entityManager.persist(model);
-        entityManager.getTransaction().commit();
+        EntityManager entityManager = entitymanagerFactory.createEntityManager();
+        try {
+            entityManager.getTransaction().begin();
+            var modelAttached = entityManager.merge(model);
+            model.setId(modelAttached.getId());
+            //entityManager.persist(model);
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            entityManager.getTransaction().rollback();
+            throw new RepositoryException(e);
+        } finally {
+            entityManager.close();
+        }
 
     }
 

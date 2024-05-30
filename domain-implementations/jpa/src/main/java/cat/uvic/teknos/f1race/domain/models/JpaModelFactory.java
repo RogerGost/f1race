@@ -35,8 +35,5 @@ public class JpaModelFactory implements ModelFactory {
         return new cat.uvic.teknos.f1race.domain.models.RaceResult();
     }
 
-    @Override
-    public cat.uvic.teknos.f1race.models.SponsorShip createSponsorShip() {
-        return new cat.uvic.teknos.f1race.domain.models.SponsorShip();
-    }
+
 }

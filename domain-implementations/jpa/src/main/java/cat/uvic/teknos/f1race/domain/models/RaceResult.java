@@ -2,38 +2,33 @@ package cat.uvic.teknos.f1race.domain.models;
 
 import jakarta.persistence.*;
 
-import java.sql.Time;
 @Entity
 @Table(name = "RACE_RESULT")
-public class RaceResult implements cat.uvic.teknos.f1race.models.RaceResult{
+public class RaceResult implements cat.uvic.teknos.f1race.models.RaceResult {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     private int id;
+
     @Column(name = "RACE_ID")
     private int raceId;
-    @Column(name = "DRIVER_ID", insertable = false, updatable = false)
-    private int driverId;
+
     @Column(name = "POSITION")
     private int position;
+
     @Column(name = "FASTEST_LAP")
-    private String fastestlap;
+    private String fastestLap;
+
     @Column(name = "POINTS")
     private int points;
 
     @ManyToOne
-    @JoinColumn(name = "DRIVER_ID")
+    @JoinColumn(name = "DRIVER_ID", nullable = false)
     private Driver driver;
 
+    // Getters y Setters
 
-    public Driver getDriver() {
-        return driver;
-    }
-
-    public void setDriver(Driver driver) {
-        this.driver = driver;
-    }
     @Override
     public int getId() {
         return id;
@@ -42,7 +37,6 @@ public class RaceResult implements cat.uvic.teknos.f1race.models.RaceResult{
     @Override
     public void setId(int id) {
         this.id = id;
-
     }
 
     @Override
@@ -52,19 +46,7 @@ public class RaceResult implements cat.uvic.teknos.f1race.models.RaceResult{
 
     @Override
     public void setRaceId(int raceId) {
-        this.raceId=raceId;
-
-    }
-
-    @Override
-    public int getDriverId() {
-        return driverId;
-    }
-
-    @Override
-    public void setDriverId(int driverId) {
-        this.driverId=driverId;
-
+        this.raceId = raceId;
     }
 
     @Override
@@ -74,19 +56,17 @@ public class RaceResult implements cat.uvic.teknos.f1race.models.RaceResult{
 
     @Override
     public void setPosition(int position) {
-        this.position=position;
-
+        this.position = position;
     }
 
     @Override
     public String getFastestLap() {
-        return fastestlap;
+        return fastestLap;
     }
 
     @Override
     public void setFastestLap(String fastestLap) {
-        this.fastestlap=fastestLap;
-
+        this.fastestLap = fastestLap;
     }
 
     @Override
@@ -96,7 +76,15 @@ public class RaceResult implements cat.uvic.teknos.f1race.models.RaceResult{
 
     @Override
     public void setPoints(int points) {
-        this.points=points;
+        this.points = points;
+    }
 
+    public Driver getDriver() {
+        return driver;
+    }
+
+    @Override
+    public void setDriver(cat.uvic.teknos.f1race.models.Driver driver) {
+        this.driver = (Driver) driver;
     }
 }

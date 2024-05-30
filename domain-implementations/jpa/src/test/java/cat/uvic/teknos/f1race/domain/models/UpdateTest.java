@@ -42,7 +42,7 @@ public class UpdateTest {
             assertEquals("Christian Horner", teamToUpdate.getTeamName());
 
             // Modificar los atributos del equipo
-            teamToUpdate.setSponsor("AMG");
+            teamToUpdate.setSponsorName("AMG");
 
             // Actualizar el equipo en la base de datos
             teamRepository.save(teamToUpdate);

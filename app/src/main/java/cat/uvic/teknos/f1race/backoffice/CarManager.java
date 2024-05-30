@@ -96,7 +96,7 @@ public class CarManager {
 
             out.println("Team ID");
             int teamId = Integer.parseInt(readLine(in));
-            Team team = new cat.uvic.teknos.f1race.domain.jbdc.models.Team();
+            Team team = modelFactory.createTeam();
             team.setId(teamId);
             car.setTeam(team);
 
@@ -125,7 +125,7 @@ public class CarManager {
 
             out.println("Team ID");
             int teamId = Integer.parseInt(readLine(in));
-            Team team = new cat.uvic.teknos.f1race.domain.jbdc.models.Team();
+            Team team = modelFactory.createTeam();
             team.setId(teamId);
             car.setTeam(team);
 

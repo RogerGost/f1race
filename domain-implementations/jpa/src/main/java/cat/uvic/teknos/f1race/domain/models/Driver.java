@@ -1,46 +1,38 @@
 package cat.uvic.teknos.f1race.domain.models;
 
 import jakarta.persistence.*;
-
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Set;
 
 @Entity
-public class Driver implements cat.uvic.teknos.f1race.models.Driver, Serializable{
+@Table(name = "DRIVER")
+public class Driver implements cat.uvic.teknos.f1race.models.Driver, Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     private int id;
 
-    @Column(name = "NAME")
+    @Column(name = "NAME", nullable = false)
     private String name;
 
     @Column(name = "NATIONALITY")
     private String nationality;
 
-    @Column(name = "DATE")
+    @Column(name = "DATE_OF_BIRTH")
     private int date;
 
     @Column(name = "NUMBER")
     private int number;
 
-
-
-
     @ManyToOne
     @JoinColumn(name = "TEAM_ID")
     private Team team;
-    @OneToMany( cascade = CascadeType.ALL)
+
+    @OneToMany(mappedBy = "driver", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<RaceResult> raceResults;
 
-    public Set<RaceResult> getRaceResults() {
-        return raceResults;
-    }
-
-    public void setRaceResults(Set<RaceResult> raceResults) {
-        this.raceResults = raceResults;
-    }
 
     @Override
     public int getId() {
@@ -49,8 +41,7 @@ public class Driver implements cat.uvic.teknos.f1race.models.Driver, Serializabl
 
     @Override
     public void setId(int id) {
-        this.id=id;
-
+        this.id = id;
     }
 
     @Override
@@ -60,8 +51,7 @@ public class Driver implements cat.uvic.teknos.f1race.models.Driver, Serializabl
 
     @Override
     public void setName(String name) {
-        this.name=name;
-
+        this.name = name;
     }
 
     @Override
@@ -71,8 +61,7 @@ public class Driver implements cat.uvic.teknos.f1race.models.Driver, Serializabl
 
     @Override
     public void setNationality(String nationality) {
-        this.nationality=nationality;
-
+        this.nationality = nationality;
     }
 
     @Override
@@ -82,8 +71,7 @@ public class Driver implements cat.uvic.teknos.f1race.models.Driver, Serializabl
 
     @Override
     public void setDate(int date) {
-        this.date=date;
-
+        this.date = date;
     }
 
     @Override
@@ -93,20 +81,24 @@ public class Driver implements cat.uvic.teknos.f1race.models.Driver, Serializabl
 
     @Override
     public void setNumber(int number) {
-        this.number=number;
-
+        this.number = number;
     }
 
     @Override
-    public int getTeamId() {
-        return team != null ? team.getId() : 0;
+    public cat.uvic.teknos.f1race.models.Team getTeam() {
+        return team;
     }
 
     @Override
-    public void setTeamId(int teamId) {
-        if (this.team == null) {
-            this.team = new Team();
-        }
-        this.team.setId(teamId);
+    public void setTeam(cat.uvic.teknos.f1race.models.Team team) {
+        this.team = (Team) team;
+    }
+
+    public Set<RaceResult> getRaceResults() {
+        return raceResults;
+    }
+
+    public void setRaceResults(Set<RaceResult> raceResults) {
+        this.raceResults = raceResults;
     }
 }

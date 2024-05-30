@@ -30,13 +30,16 @@ class RaceResultTest {
         try {
             entityManager.getTransaction().begin();
 
+            Team team1 = new Team();
+            team1.setId(2);
+
             // Crear y persistir un nuevo Driver
             Driver driver = new Driver();
             driver.setName("Lewis Hamilton");
             driver.setNationality("British");
             driver.setDate(1989);
             driver.setNumber(44);
-            driver.setTeamId(1);  // Asegúrate de que este equipo exista en la base de datos
+            driver.setTeam(team1);  // Asegúrate de que este equipo exista en la base de datos
             entityManager.persist(driver);
 
             // Crear un nuevo resultado de carrera
