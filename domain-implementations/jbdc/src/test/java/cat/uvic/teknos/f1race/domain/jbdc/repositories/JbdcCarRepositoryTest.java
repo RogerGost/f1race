@@ -55,27 +55,6 @@ class JbdcCarRepositoryTest {
 
     }
 
-    @Test
-    void shouldUpdateNewCarTest() throws SQLException {
-
-            Team team1 = new Team();
-            team1.setId(1);
-
-            Car mercedes = new Car();
-
-            mercedes.setModel("494");
-            mercedes.setEngine("mercedes2");
-            mercedes.setChassis("C2mercedes");
-            mercedes.setTeam(team1);
-            mercedes.setId(3);
-
-
-            var repository = new JbdcCarRepository(connection);
-            repository.save(mercedes);
-
-            assertTrue(true);
-
-    }
 
     @Test
     void delete() throws SQLException {

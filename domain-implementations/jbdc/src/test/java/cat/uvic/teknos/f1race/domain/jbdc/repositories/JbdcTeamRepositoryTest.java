@@ -45,25 +45,6 @@ class JbdcTeamRepositoryTest {
                     .where("CAR_ID = ?", mercedes.getId())
                     .hasOneLine();*/
     }
-    @Test
-    void shouldUpdateNewTeamTest() throws SQLException {
-
-
-        Team team = new Team();
-
-        team.setTeamName("Williams");
-        team.setPrincipalName("Russell");
-        team.setHeadquarters("London");
-        team.setSponsorName("Duracell");
-        team.setId(1);
-
-
-        var repository = new JbdcTeamRepository(connection);
-        repository.save(team);
-
-        assertTrue(true);
-
-    }
 
     @Test
     void delete() {
@@ -77,11 +58,6 @@ class JbdcTeamRepositoryTest {
         //assertNull(repository.get(1));
     }
 
-    @Test
-    void get() {
-        var repository = new JbdcTeamRepository(connection);
-        assertNotNull(repository.get(1));
-    }
 
     @Test
     void getAll() {

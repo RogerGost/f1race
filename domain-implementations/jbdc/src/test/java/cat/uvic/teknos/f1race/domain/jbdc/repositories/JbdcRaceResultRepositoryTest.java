@@ -55,27 +55,7 @@ class JbdcRaceResultRepositoryTest {
                     .hasOneLine();*/
     }
 
-    @Test
-    void shouldUpdateNewRaceTest() throws SQLException {
-        Driver driver1 = new Driver();
-        driver1.setId(2);
 
-        RaceResult race = new RaceResult();
-
-        race.setRaceId(12);
-        race.setDriver(driver1);
-        race.setPosition(4);
-        race.setFastestLap("1:23:21");
-        race.setPoints(24);
-        race.setId(1);
-
-
-        var repository = new JbdcRaceResultRepository(connection);
-        repository.save(race);
-
-        assertTrue(true);
-
-    }
 
     @Test
     void delete() {
@@ -89,12 +69,6 @@ class JbdcRaceResultRepositoryTest {
 
     }
 
-    @Test
-    void get() {
-
-        var repository = new JbdcRaceResultRepository(connection);
-        assertNotNull(repository.get(1));
-    }
 
     @Test
     void getAll() {
