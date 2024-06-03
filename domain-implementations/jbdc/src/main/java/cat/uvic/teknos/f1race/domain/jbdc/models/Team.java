@@ -5,6 +5,7 @@ import cat.uvic.teknos.f1race.models.Driver;
 import cat.uvic.teknos.f1race.models.Sponsor;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 
 public class  Team implements cat.uvic.teknos.f1race.models.Team, Serializable{
@@ -18,6 +19,7 @@ public class  Team implements cat.uvic.teknos.f1race.models.Team, Serializable{
     private Set<Sponsor> sponsors;
     private Set<Driver> drivers;
     private Set<Car> cars;
+    private List<Integer> sponsorIds;
     @Override
     public int getId() {
         return id;
@@ -111,5 +113,12 @@ public class  Team implements cat.uvic.teknos.f1race.models.Team, Serializable{
     public void setSponsor(Set<Sponsor> sponsor) {
         this.sponsors=sponsor;
 
+    }
+    public List<Integer> getSponsorIds() {
+        return sponsorIds;
+    }
+
+    public void setSponsorIds(List<Integer> sponsorIds) {
+        this.sponsorIds = sponsorIds;
     }
 }

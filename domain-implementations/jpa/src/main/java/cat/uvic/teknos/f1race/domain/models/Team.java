@@ -5,6 +5,7 @@ import cat.uvic.teknos.f1race.models.Sponsor;
 import jakarta.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -120,5 +121,15 @@ public class Team implements cat.uvic.teknos.f1race.models.Team, Serializable {
     @Override
     public void setSponsor(Set<Sponsor> sponsors) {
         this.sponsors = sponsors;
+    }
+
+    @Override
+    public List<Integer> getSponsorIds() {
+        return null;
+    }
+
+    @Override
+    public void setSponsorIds(List<Integer> sponsorIds) {
+
     }
 }

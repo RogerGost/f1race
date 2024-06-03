@@ -29,7 +29,6 @@ class CarTest {
         try {
             entityManager.getTransaction().begin();
 
-            // Buscar un equipo existente en la base de datos
             var team = entityManager.find(Team.class, 1);
 
             Team team1 = new Team();
@@ -43,10 +42,8 @@ class CarTest {
 
 
 
-            // Persistir el automóvil en la base de datos
             entityManager.persist(car);
 
-            // Verificar que se haya generado el ID del automóvil
             assertTrue(car.getId() > 0);
 
             entityManager.getTransaction().commit();

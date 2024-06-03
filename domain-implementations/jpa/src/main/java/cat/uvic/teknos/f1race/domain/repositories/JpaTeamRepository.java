@@ -6,27 +6,35 @@ import cat.uvic.teknos.f1race.repositories.TeamRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 
-import javax.swing.text.html.parser.Entity;
 import java.util.HashSet;
 import java.util.Set;
 
 public class JpaTeamRepository implements TeamRepository {
-    private final EntityManagerFactory entitymanagerFactory;
+    private final EntityManagerFactory entityManagerFactory;
 
-    public JpaTeamRepository(EntityManagerFactory entityManagerFactory){
-        this.entitymanagerFactory = entityManagerFactory;
+    public JpaTeamRepository(EntityManagerFactory entityManagerFactory) {
+        this.entityManagerFactory = entityManagerFactory;
     }
+
     @Override
     public void save(Team model) {
-        var entityManager= entitymanagerFactory.createEntityManager();
-        entityManager.getTransaction().begin();
-        entityManager.persist(model);
-        entityManager.getTransaction().commit();
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        try {
+            entityManager.getTransaction().begin();
+            var modelAttached = entityManager.merge(model);
+            model.setId(modelAttached.getId());
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            entityManager.getTransaction().rollback();
+            throw new RepositoryException(e);
+        } finally {
+            entityManager.close();
+        }
     }
 
     @Override
     public void delete(Team model) {
-        var entityManager = entitymanagerFactory.createEntityManager();
+        var entityManager = entityManagerFactory.createEntityManager();
         try {
             entityManager.getTransaction().begin();
             Team mergedModel = entityManager.merge(model);
@@ -40,16 +48,17 @@ public class JpaTeamRepository implements TeamRepository {
         } finally {
             entityManager.close();
         }
-
     }
 
-    public void update(Team model){
-        EntityManager entityManager = entitymanagerFactory.createEntityManager();
+    public void update(Team model) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
         try {
             entityManager.getTransaction().begin();
-            var modelAttached = entityManager.merge(model);
-            model.setId(modelAttached.getId());
-            //entityManager.persist(model);
+            Team existingTeam = entityManager.find(Team.class, model.getId());
+            if (existingTeam == null) {
+                throw new RepositoryException("El equipo con ID " + model.getId() + " no existe.");
+            }
+            entityManager.merge(model);
             entityManager.getTransaction().commit();
         } catch (Exception e) {
             entityManager.getTransaction().rollback();
@@ -57,12 +66,11 @@ public class JpaTeamRepository implements TeamRepository {
         } finally {
             entityManager.close();
         }
-
     }
 
     @Override
     public Team get(Integer id) {
-        var entityManager = entitymanagerFactory.createEntityManager();
+        var entityManager = entityManagerFactory.createEntityManager();
         try {
             return entityManager.find(Team.class, id);
         } finally {
@@ -72,7 +80,7 @@ public class JpaTeamRepository implements TeamRepository {
 
     @Override
     public Set<Team> getAll() {
-        var entityManager = entitymanagerFactory.createEntityManager();
+        var entityManager = entityManagerFactory.createEntityManager();
         try {
             var query = entityManager.createQuery("SELECT t FROM Team t", Team.class);
             return new HashSet<>(query.getResultList());

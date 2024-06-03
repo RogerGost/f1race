@@ -1,39 +1,53 @@
+INSERT INTO TEAM (ID, NAME, PRINCIPAL_NAME, HEADQUARTERS, SPONSOR_NAME)
+VALUES (1, 'RedBull', 'Christian Horner', 'Viena', 'Oracle');
 
-INSERT INTO TEAM (TEAM_NAME, PRINCIPAL_NAME, HEADQUARTERS, SPONSOR_NAME)
-VALUES
-    ('Mercedes-AMG Petronas Formula One Team', 'Toto Wolff', 'Brackley, United Kingdom', 'Petronas'),
-    ('Red Bull Racing Honda', 'Christian Horner', 'Milton Keynes, United Kingdom', 'Red Bull'),
-    ('Scuderia Ferrari', 'Mattia Binotto', 'Maranello, Italy', 'Mission Winnow');
+INSERT INTO TEAM (ID, NAME, PRINCIPAL_NAME, HEADQUARTERS, SPONSOR_NAME)
+VALUES (2, 'Ferrari', 'Frederic Vasseur', 'Maranello', 'Santander');
 
-
-INSERT INTO DRIVER (NAME, NATIONALITY, DATE_OF_BIRTH, NUMBER, TEAM_ID)
-VALUES
-    ('Lewis Hamilton', 'British', 19850107, 44, 1),
-    ('Max Verstappen', 'Dutch', 19970930, 33, 2),
-    ('Charles Leclerc', 'Monégasque', 19971016, 16, 3);
+INSERT INTO TEAM (ID, NAME, PRINCIPAL_NAME, HEADQUARTERS, SPONSOR_NAME)
+VALUES (3, 'Mercedes', 'Toto WOlff', 'Brackley', 'Petronas');
 
 
-INSERT INTO RACE_RESULT (RACE_ID, DRIVER_ID, POSITION, FASTEST_LAP_TIME, POINTS_EARNED)
-VALUES
-    (1, 1, 1, '1:32.123', 25),
-    (1, 2, 2, '1:32.567', 18),
-    (1, 3, 3, '1:33.045', 15);
+INSERT INTO DRIVER (ID, NAME, NATIONALITY, DATE_OF_BIRTH, NUMBER, TEAM_ID)
+VALUES (1, 'Max Verstappen', 'Dutch', 1997, 1, 1);
 
+INSERT INTO DRIVER (ID, NAME, NATIONALITY, DATE_OF_BIRTH, NUMBER, TEAM_ID)
+VALUES (2, 'Carlos Sainz', 'Spanish', 1994, 55, 2);
 
-INSERT INTO CAR (MODEL, ENGINE, CHASSIS, TEAM_ID)
-VALUES
-    ('Mercedes W12', 'Mercedes-AMG F1 M13 E Performance', 'Carbon-fibre', 1),
-    ('Red Bull RBPT2', 'Honda RA621H', 'Carbon-fibre', 2),
-    ('Ferrari SF21', 'Ferrari 065/6', 'Carbon-fibre', 3);
+INSERT INTO DRIVER (ID, NAME, NATIONALITY, DATE_OF_BIRTH, NUMBER, TEAM_ID)
+VALUES (3, 'Lewis Hamilton', 'British', 1985, 44, 3);
 
-INSERT INTO SPONSOR (SPONSOR_NAME, COUNTRY, NUMBER, SPONSOR_TYPE)
-VALUES
-    ('Petronas', 'Malaysia', 44, 'Title Sponsor'),
-    ('Red Bull', 'Austria', 33, 'Title Sponsor'),
-    ('Mission Winnow', 'Switzerland', 16, 'Principal Partner');
+INSERT INTO RACE_RESULT (ID, RACE_ID, DRIVER_ID, POSITION, FASTEST_LAP, POINTS)
+VALUES (1, 101, 1, 2, '00:01:30', 18);
+
+INSERT INTO RACE_RESULT (ID, RACE_ID, DRIVER_ID, POSITION, FASTEST_LAP, POINTS)
+VALUES (2, 102, 2, 1, '00:01:28', 25);
+
+INSERT INTO RACE_RESULT (ID, RACE_ID, DRIVER_ID, POSITION, FASTEST_LAP, POINTS)
+VALUES (3, 90, 3, 7, '00:01:10', 8);
+
+INSERT INTO CAR (ID, MODEL, ENGINE, CHASSIS, TEAM_ID)
+VALUES (1, 'RB19', 'Honda', 'RB16B', 1);
+
+INSERT INTO CAR (ID, MODEL, ENGINE, CHASSIS, TEAM_ID)
+VALUES (2, 'SF-24', 'ferrari', 'SF24A', 2);
+
+INSERT INTO CAR (ID, MODEL, ENGINE, CHASSIS, TEAM_ID)
+VALUES (3, 'W14', 'Mercedes', 'W14', 3);
+
+INSERT INTO SPONSOR (ID, NAME, COUNTRY, PHONE, SPONSOR_TYPE)
+VALUES (1, 'Oracle', 'USA', 123456789, 'Title Sponsor');
+
+INSERT INTO SPONSOR (ID, NAME, COUNTRY, PHONE, SPONSOR_TYPE)
+VALUES (2, 'Santander', 'Spain', 987654321, 'Official Partner');
+
+INSERT INTO SPONSOR (ID, NAME, COUNTRY, PHONE, SPONSOR_TYPE)
+VALUES (3, 'Petronas', 'Melaya', 11226789, 'Title Sponsor');
+
 
 INSERT INTO TEAM_SPONSOR (TEAM_ID, SPONSOR_ID)
-VALUES
-    (1, 1),
-    (2, 2),
-    (3, 3);
+VALUES(1, 1);
+INSERT INTO TEAM_SPONSOR (TEAM_ID, SPONSOR_ID)
+VALUES (2, 2);
+INSERT INTO TEAM_SPONSOR (TEAM_ID, SPONSOR_ID)
+VALUES (3, 3);

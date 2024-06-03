@@ -47,8 +47,8 @@ public class JbdcCarRepository implements CarRepository {
             throw new RuntimeException(e);
         }
     }
-
-    private void update(Car model) {
+    @Override
+    public void update(Car model) {
         try (PreparedStatement statement = connection.prepareStatement("UPDATE CAR SET MODEL=?, ENGINE=?, CHASSIS=?, TEAM_ID=? WHERE CAR_ID=?", Statement.RETURN_GENERATED_KEYS)){
 
             statement.setString(1, model.getModel());

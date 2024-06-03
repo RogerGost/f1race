@@ -1,5 +1,6 @@
 package cat.uvic.teknos.f1race.models;
 
+import java.util.List;
 import java.util.Set;
 
 public interface Team {
@@ -33,6 +34,9 @@ public interface Team {
     Set<Sponsor> getSponsor();
 
     void setSponsor(Set<Sponsor> sponsor);
+
+    public List<Integer> getSponsorIds();
+    public void setSponsorIds(List<Integer> sponsorIds);
 }
 
 

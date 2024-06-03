@@ -9,7 +9,6 @@ import java.io.PrintStream;
 import com.github.freva.asciitable.AsciiTable;
 import com.github.freva.asciitable.Column;
 import java.util.Arrays;
-import java.util.List;
 
 import static cat.uvic.teknos.f1race.backoffice.IOUtilis.readLine;
 
@@ -58,7 +57,7 @@ public class CarManager {
                 new Column().header("Engine").with(car -> car.getEngine()),
                 new Column().header("Chassis").with(car -> car.getChassis()),
                 new Column().header("Team ID").with(car -> String.valueOf(car.getTeam().getId())
-        )));
+                )));
 
         out.println(table);
     }
@@ -100,7 +99,7 @@ public class CarManager {
             team.setId(teamId);
             car.setTeam(team);
 
-            carRepository.save(car);
+            carRepository.update(car);
 
             out.println("Update successful");
         } catch (NumberFormatException e) {

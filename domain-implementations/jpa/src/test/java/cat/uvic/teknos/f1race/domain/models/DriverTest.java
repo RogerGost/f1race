@@ -109,7 +109,7 @@ class DriverTest {
 
             Driver driver = entityManager.find(Driver.class, 1);
             if (driver == null) {
-                System.out.println("El conductor con ID 1 no existe.");
+                System.out.println("Driver does not exist.");
                 return;
             }
 

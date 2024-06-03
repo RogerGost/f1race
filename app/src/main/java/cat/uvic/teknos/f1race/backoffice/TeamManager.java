@@ -5,16 +5,10 @@ import cat.uvic.teknos.f1race.models.Team;
 import cat.uvic.teknos.f1race.repositories.TeamRepository;
 import com.github.freva.asciitable.AsciiTable;
 import com.github.freva.asciitable.Column;
-import de.vandermeer.skb.interfaces.document.TableRowStyle;
-import de.vandermeer.skb.interfaces.transformers.textformat.TextAlignment;
-
 
 import java.io.BufferedReader;
 import java.io.PrintStream;
 import java.util.Arrays;
-import java.util.Set;
-
-import static cat.uvic.teknos.f1race.backoffice.IOUtilis.*;
 
 import static cat.uvic.teknos.f1race.backoffice.IOUtilis.readLine;
 
@@ -24,35 +18,31 @@ public class TeamManager {
     private final TeamRepository teamRepository;
     private final ModelFactory modelFactory;
 
-
     public TeamManager(BufferedReader in, PrintStream out, TeamRepository teamRepository, ModelFactory modelFactory) {
         this.out = out;
         this.in = in;
         this.teamRepository = teamRepository;
         this.modelFactory = modelFactory;
-
     }
 
-    public void start(){
+    public void start() {
         out.println("Team");
-
 
         var command = "";
         do {
             showTeamMenu();
             command = readLine(in);
 
-            switch (command){
+            switch (command) {
                 case "1" -> insert();
                 case "2" -> update();
                 case "3" -> delete();
                 case "4" -> getAll();
             }
 
-        }
-        while (!command.equals("exit"));
+        } while (!command.equals("exit"));
 
-        out.println("Fi del programa");
+        out.println("End of program");
     }
 
     private void getAll() {
@@ -69,7 +59,6 @@ public class TeamManager {
         ));
 
         out.println(table);
-
     }
 
     private void delete() {
@@ -102,7 +91,7 @@ public class TeamManager {
             out.println("Sponsor");
             team.setSponsorName(readLine(in));
 
-            teamRepository.save(team);
+            teamRepository.update(team);
 
             out.println("Update successful");
         } catch (NumberFormatException e) {

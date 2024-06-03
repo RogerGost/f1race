@@ -1,6 +1,7 @@
 package cat.uvic.teknos.f1race.domain.repositories;
 
 import cat.uvic.teknos.f1race.exceptions.RepositoryException;
+import cat.uvic.teknos.f1race.models.Driver;
 import cat.uvic.teknos.f1race.models.Sponsor;
 import cat.uvic.teknos.f1race.repositories.SponsorRepository;
 import jakarta.persistence.EntityManager;
@@ -29,6 +30,26 @@ public class JpaSponsorRepository implements SponsorRepository {
         } finally {
             entityManager.close();
         }
+    }
+
+    @Override
+    public void update(Sponsor model) {
+        EntityManager entityManager = entitymanagerFactory.createEntityManager();
+        try {
+            entityManager.getTransaction().begin();
+            Sponsor existingSponsor = entityManager.find(Sponsor.class, model.getId());
+            if (existingSponsor == null) {
+                throw new RepositoryException("El sponsor con ID " + model.getId() + " no existe.");
+            }
+            entityManager.merge(model);
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            entityManager.getTransaction().rollback();
+            throw new RepositoryException(e);
+        } finally {
+            entityManager.close();
+        }
+
     }
 
     @Override

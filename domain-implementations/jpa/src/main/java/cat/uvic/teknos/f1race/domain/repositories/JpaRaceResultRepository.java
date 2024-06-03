@@ -1,6 +1,7 @@
 package cat.uvic.teknos.f1race.domain.repositories;
 
 import cat.uvic.teknos.f1race.exceptions.RepositoryException;
+import cat.uvic.teknos.f1race.models.Driver;
 import cat.uvic.teknos.f1race.models.RaceResult;
 import cat.uvic.teknos.f1race.repositories.RaceResultRepository;
 import jakarta.persistence.EntityManager;
@@ -33,8 +34,42 @@ public class JpaRaceResultRepository implements RaceResultRepository {
     }
 
     @Override
+    public void update(RaceResult model) {
+        EntityManager entityManager = entitymanagerFactory.createEntityManager();
+        try {
+            entityManager.getTransaction().begin();
+            RaceResult existingRace = entityManager.find(RaceResult.class, model.getId());
+            if (existingRace == null) {
+                throw new RepositoryException("El driver con ID " + model.getId() + " no existe.");
+            }
+            // Realizar la actualización
+            entityManager.merge(model);
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            entityManager.getTransaction().rollback();
+            throw new RepositoryException(e);
+        } finally {
+            entityManager.close();
+        }
+
+    }
+
+    @Override
     public void delete(RaceResult model) {
-        // Implementación según necesidades específicas
+        EntityManager entityManager = entitymanagerFactory.createEntityManager();
+        try {
+            entityManager.getTransaction().begin();
+            RaceResult raceResult = entityManager.find(RaceResult.class, model.getId());
+            if (raceResult != null) {
+                entityManager.remove(raceResult);
+            }
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            entityManager.getTransaction().rollback();
+            e.printStackTrace();
+        } finally {
+            entityManager.close();
+        }
     }
 
     @Override

@@ -22,7 +22,6 @@ public class JpaCarRepository implements CarRepository {
             entityManager.getTransaction().begin();
             var modelAttached = entityManager.merge(model);
             model.setId(modelAttached.getId());
-            //entityManager.persist(model);
             entityManager.getTransaction().commit();
         } catch (Exception e) {
             entityManager.getTransaction().rollback();
@@ -30,34 +29,61 @@ public class JpaCarRepository implements CarRepository {
         } finally {
             entityManager.close();
         }
-
     }
 
+    @Override
+    public void update(Car model) {
+        EntityManager entityManager = entitymanagerFactory.createEntityManager();
+        try {
+            entityManager.getTransaction().begin();
+            Car existingCar = entityManager.find(Car.class, model.getId());
+            if (existingCar == null) {
+                throw new RepositoryException("El car con ID " + model.getId() + " no existe.");
+            }
+            entityManager.merge(model);
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            entityManager.getTransaction().rollback();
+            throw new RepositoryException(e);
+        } finally {
+            entityManager.close();
+        }
+    }
 
     @Override
     public void delete(Car model) {
         var entityManager = entitymanagerFactory.createEntityManager();
-        entityManager.getTransaction().begin();
-        entityManager.remove(entityManager.contains(model) ? model : entityManager.merge(model));
-        entityManager.getTransaction().commit();
+        try {
+            entityManager.getTransaction().begin();
+            Car mergedModel = entityManager.merge(model);
+            entityManager.remove(mergedModel);
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            entityManager.getTransaction().rollback();
+            throw new RepositoryException(e);
+        } finally {
+            entityManager.close();
+        }
     }
 
     @Override
     public Car get(Integer id) {
         EntityManager entityManager = entitymanagerFactory.createEntityManager();
-        Car cars = entityManager.find(Car.class, id);
-        entityManager.close();
-        return cars;
+        try {
+            return entityManager.find(Car.class, id);
+        } finally {
+            entityManager.close();
+        }
     }
 
     @Override
     public Set<Car> getAll() {
         EntityManager entityManager = entitymanagerFactory.createEntityManager();
-        entityManager.getTransaction().begin();
-        Set<Car> cars = new HashSet<>(entityManager.createQuery("SELECT a FROM Car a", Car.class).getResultList());
-        entityManager.getTransaction().commit();
-        entityManager.close();
-        return cars;
+        try {
+            var query = entityManager.createQuery("SELECT a FROM Car a", Car.class);
+            return new HashSet<>(query.getResultList());
+        } finally {
+            entityManager.close();
+        }
     }
-
 }

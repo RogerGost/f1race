@@ -31,32 +31,25 @@ public class GetAllTest {
 
 
         try {
-            // Iniciar la transacción
             entityManager.getTransaction().begin();
 
-            // Obtener todos los equipos
             Query query = entityManager.createQuery("SELECT t FROM Team t");
             List<Team> teams = query.getResultList();
 
-            // Comprobar que se obtienen resultados
             assertNotNull(teams);
             assertTrue(teams.size() > 0);
 
-            // Imprimir los equipos (solo como ejemplo)
             for (Team team : teams) {
                 System.out.println("Team Name: " + team.getTeamName());
             }
 
-            // Confirmar la transacción
             entityManager.getTransaction().commit();
         } catch (Exception e) {
-            // En caso de excepción, hacer rollback
             if (entityManager.getTransaction().isActive()) {
                 entityManager.getTransaction().rollback();
             }
             fail("Error occurred: " + e.getMessage());
         } finally {
-            // Cerrar el EntityManager y el EntityManagerFactory
             entityManager.close();
             entityManager.close();
         }

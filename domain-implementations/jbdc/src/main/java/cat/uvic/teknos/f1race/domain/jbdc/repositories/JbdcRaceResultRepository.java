@@ -51,7 +51,7 @@ public class JbdcRaceResultRepository implements RaceResultRepository {
         }
     }
 
-    private void update(RaceResult model) {
+    public void update(RaceResult model) {
         try (PreparedStatement statement = connection.prepareStatement("UPDATE RACE_RESULT SET RACE_ID=?, DRIVER_ID=?, POSITION=?,FASTEST_LAP_TIME=?, POINTS_EARNED=?  WHERE RESULT_ID=?", Statement.RETURN_GENERATED_KEYS)){
 
             statement.setInt(1, model.getRaceId());

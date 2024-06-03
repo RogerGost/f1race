@@ -5,10 +5,7 @@ import cat.uvic.teknos.f1race.models.Car;
 import cat.uvic.teknos.f1race.models.Team;
 import cat.uvic.teknos.f1race.repositories.TeamRepository;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -49,7 +46,9 @@ public class JbdcTeamRepository implements TeamRepository {
         }
     }
 
-    private void update(Team model) {
+
+
+    public void update(Team model) {
         try (PreparedStatement statement = connection.prepareStatement("UPDATE TEAM SET TEAM_NAME=?, PRINCIPAL_NAME=?, HEADQUARTERS=?, SPONSOR_NAME=? WHERE TEAM_ID=?", Statement.RETURN_GENERATED_KEYS)){
 
             statement.setString(1, model.getTeamName());
@@ -69,15 +68,15 @@ public class JbdcTeamRepository implements TeamRepository {
 
     @Override
     public void delete(Team model) {
-        try (PreparedStatement deleteSponsorStatement = connection.prepareStatement("DELETE FROM sponsor WHERE SPONSOR_ID IN (SELECT SPONSOR_ID FROM sponsorship WHERE TEAM_ID = ?)");
-             PreparedStatement deleteCarsStatement = connection.prepareStatement("DELETE FROM car WHERE TEAM_ID = ?");
-             PreparedStatement deleteRaceResultsStatement = connection.prepareStatement("DELETE FROM race_result WHERE DRIVER_ID IN (SELECT DRIVER_ID FROM driver WHERE TEAM_ID = ?)");
-             PreparedStatement deleteDriversStatement = connection.prepareStatement("DELETE FROM driver WHERE TEAM_ID = ?");
-             PreparedStatement deleteTeamStatement = connection.prepareStatement("DELETE FROM team WHERE TEAM_ID = ?")) {
-
-            deleteSponsorStatement.setInt(1, model.getId());
-            deleteSponsorStatement.executeUpdate();
-
+        try (
+                PreparedStatement deleteTeamSponsorStatement = connection.prepareStatement("DELETE FROM TEAM_SPONSOR WHERE TEAM_ID = ?");
+                PreparedStatement deleteCarsStatement = connection.prepareStatement("DELETE FROM CAR WHERE TEAM_ID = ?");
+                PreparedStatement deleteRaceResultsStatement = connection.prepareStatement("DELETE FROM RACE_RESULT WHERE DRIVER_ID IN (SELECT DRIVER_ID FROM DRIVER WHERE TEAM_ID = ?)");
+                PreparedStatement deleteDriversStatement = connection.prepareStatement("DELETE FROM DRIVER WHERE TEAM_ID = ?");
+                PreparedStatement deleteTeamStatement = connection.prepareStatement("DELETE FROM TEAM WHERE TEAM_ID = ?")
+        ) {
+            deleteTeamSponsorStatement.setInt(1, model.getId());
+            deleteTeamSponsorStatement.executeUpdate();
 
             deleteCarsStatement.setInt(1, model.getId());
             deleteCarsStatement.executeUpdate();
@@ -96,9 +95,10 @@ public class JbdcTeamRepository implements TeamRepository {
                 System.out.println("Correct delete");
             }
         } catch (SQLException e) {
-            throw new RuntimeException("Error al eliminar el equipo", e);
+            throw new RuntimeException("Error", e);
         }
     }
+
 
     @Override
     public Team get(Integer id) {

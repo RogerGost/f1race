@@ -54,7 +54,7 @@ public class JbdcDriverRepository implements DriverRepository {
 
     }
 
-    private void update(Driver model) {
+    public void update(Driver model) {
         try (PreparedStatement statement = connection.prepareStatement("UPDATE DRIVER SET NAME=?, NATIONALITY=?, NUMBER=?, TEAM_ID=? WHERE DRIVER_ID=?", Statement.RETURN_GENERATED_KEYS)){
 
             statement.setString(1, model.getName());

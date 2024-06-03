@@ -3,6 +3,7 @@ package cat.uvic.teknos.f1race.domain.repositories;
 import cat.uvic.teknos.f1race.exceptions.RepositoryException;
 import cat.uvic.teknos.f1race.models.Car;
 import cat.uvic.teknos.f1race.models.Driver;
+import cat.uvic.teknos.f1race.models.Team;
 import cat.uvic.teknos.f1race.repositories.DriverRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -34,6 +35,7 @@ public class JpaDriverRepository implements DriverRepository {
         }
     }
 
+
     @Override
     public void delete(Driver model) {
         EntityManager entityManager = entitymanagerFactory.createEntityManager();
@@ -50,6 +52,26 @@ public class JpaDriverRepository implements DriverRepository {
         } finally {
             entityManager.close();
         }
+    }
+
+    @Override
+    public void update(Driver model) {
+        EntityManager entityManager = entitymanagerFactory.createEntityManager();
+        try {
+            entityManager.getTransaction().begin();
+            Driver existingDriver = entityManager.find(Driver.class, model.getId());
+            if (existingDriver == null) {
+                throw new RepositoryException("El driver con ID " + model.getId() + " no existe.");
+            }
+            entityManager.merge(model);
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            entityManager.getTransaction().rollback();
+            throw new RepositoryException(e);
+        } finally {
+            entityManager.close();
+        }
+
     }
 
     @Override
