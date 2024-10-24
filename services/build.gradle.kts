@@ -9,10 +9,13 @@ plugins {
 dependencies {
     implementation(project(":domain"))
     implementation(project(":domain-implementations:jpa"))
-    implementation(project(":domain-implementations:jdbc"))
+    implementation(project(":domain-implementations:jbdc"))
+
+    implementation("com.athaydes.rawhttp:rawhttp-core:2.6.0")
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.17.2")
 }
 
 application {
     // Define the main class for the application.
-    mainClass = "cat.uvic.teknos.coursemanagement.services.Server"
+    mainClass = "cat.uvic.teknos.f1race.services.App"
 }

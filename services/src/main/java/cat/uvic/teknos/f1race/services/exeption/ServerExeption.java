@@ -1,24 +1,24 @@
 package cat.uvic.teknos.f1race.services.exeption;
 
-public class ServerErrorExeption extends RuntimeException{
+public class ServerExeption extends RuntimeException{
     private static final long serialVersionUID = 1L;
 
-    public ServerErrorExeption() {
+    public ServerExeption() {
     }
 
-    public ServerErrorExeption(String message) {
+    public ServerExeption(String message) {
         super(message);
     }
 
-    public ServerErrorExeption(String message, Throwable cause) {
+    public ServerExeption(String message, Throwable cause) {
         super(message, cause);
     }
 
-    public ServerErrorExeption(Throwable cause) {
+    public ServerExeption(Throwable cause) {
         super(cause);
     }
 
-    public ServerErrorExeption(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+    public ServerExeption(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
     }
 }

@@ -1,24 +1,24 @@
 package cat.uvic.teknos.f1race.services.exeption;
 
-public class ResourceNotFoundExeption extends RuntimeException{
+public class ServerErrorExeption extends RuntimeException{
     private static final long serialVersionUID = 1L;
 
-    public ResourceNotFoundExeption() {
+    public ServerErrorExeption() {
     }
 
-    public ResourceNotFoundExeption(String message) {
+    public ServerErrorExeption(String message) {
         super(message);
     }
 
-    public ResourceNotFoundExeption(String message, Throwable cause) {
+    public ServerErrorExeption(String message, Throwable cause) {
         super(message, cause);
     }
 
-    public ResourceNotFoundExeption(Throwable cause) {
+    public ServerErrorExeption(Throwable cause) {
         super(cause);
     }
 
-    public ResourceNotFoundExeption(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+    public ServerErrorExeption(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
     }
 }

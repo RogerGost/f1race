@@ -20,6 +20,9 @@ public class  Team implements cat.uvic.teknos.f1race.models.Team, Serializable{
     private Set<Driver> drivers;
     private Set<Car> cars;
     private List<Integer> sponsorIds;
+
+    public Team() {}
+
     @Override
     public int getId() {
         return id;
