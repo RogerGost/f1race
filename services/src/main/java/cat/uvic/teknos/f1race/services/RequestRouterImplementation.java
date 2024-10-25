@@ -8,10 +8,7 @@ import rawhttp.core.RawHttp;
 import rawhttp.core.RawHttpRequest;
 import rawhttp.core.RawHttpResponse;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.Map;
 
 public class RequestRouterImplementation implements RequestRouter {
@@ -43,28 +40,16 @@ public class RequestRouterImplementation implements RequestRouter {
             }
 
             if ("POST".equals(method)) {
-                // Convertir el byte[] en un InputStream
                 var bodyBytes = request.getBody().get().decodeBody();
-                var bodyStream = new ByteArrayInputStream(bodyBytes);
-                var bodyReader = new BufferedReader(new InputStreamReader(bodyStream));
+                var bodyString = new String(bodyBytes);
+                System.out.println("Received JSON body: " + bodyString);
 
-                StringBuilder jsonBodyBuilder = new StringBuilder();
-                String line;
-                while ((line = bodyReader.readLine()) != null) {
-                    jsonBodyBuilder.append(line);
-                }
-
-                var jsonBody = jsonBodyBuilder.toString();
-                System.out.println("Received JSON body: " + jsonBody);  // Verifica que el JSON se recibe correctamente
-
-                // Llamada al método POST del controlador
-                controller.post(jsonBody);
-
+                controller.post(bodyString);
             } else if ("GET".equals(method)) {
                 if (pathParts.length == 4) {
                     var personId = Integer.parseInt(pathParts[3]);
                     responseJsonBody = controller.get(personId);
-                } else {  // GET /api/people
+                } else {
                     responseJsonBody = controller.get();
                 }
 
@@ -74,22 +59,7 @@ public class RequestRouterImplementation implements RequestRouter {
 
             } else if ("PUT".equals(method)) {
                 var personId = Integer.parseInt(pathParts[3]);
-
-                // Convertir el byte[] en un InputStream
-                var bodyBytes = request.getBody().get().decodeBody();
-                var bodyStream = new ByteArrayInputStream(bodyBytes);
-                var bodyReader = new BufferedReader(new InputStreamReader(bodyStream));
-
-                StringBuilder jsonBodyBuilder = new StringBuilder();
-                String line;
-                while ((line = bodyReader.readLine()) != null) {
-                    jsonBodyBuilder.append(line);
-                }
-
-                var jsonBody = jsonBodyBuilder.toString();
-                System.out.println("Received JSON body for PUT: " + jsonBody);
-
-                // Llamada al método PUT del controlador
+                var jsonBody = request.getBody().get().toString();
                 controller.put(personId, jsonBody);
             }
 

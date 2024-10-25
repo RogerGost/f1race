@@ -2,10 +2,7 @@ package cat.uvic.teknos.f1race.services;
 
 import cat.uvic.teknos.f1race.models.ModelFactory;
 import cat.uvic.teknos.f1race.repositories.RepositoryFactory;
-import cat.uvic.teknos.f1race.services.controllers.CarController;
-import cat.uvic.teknos.f1race.services.controllers.Controller;
-import cat.uvic.teknos.f1race.services.controllers.DriverController;
-import cat.uvic.teknos.f1race.services.controllers.TeamController;
+import cat.uvic.teknos.f1race.services.controllers.*;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -24,6 +21,8 @@ public class App {
         controllers.put("teams", new TeamController(repositoryFactory, modelFactory));
         controllers.put("drivers", new DriverController(repositoryFactory, modelFactory));
         controllers.put("cars", new CarController(repositoryFactory, modelFactory));
+        controllers.put("racesResults", new RaceResultController(repositoryFactory, modelFactory));
+        controllers.put("sponsors", new SponsorController(repositoryFactory, modelFactory));
         var requestRouter = new RequestRouterImplementation(controllers);
         new Server(requestRouter).start();
     }

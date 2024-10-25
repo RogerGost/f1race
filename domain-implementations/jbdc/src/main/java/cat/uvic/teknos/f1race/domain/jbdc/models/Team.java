@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
 
+
 public class  Team implements cat.uvic.teknos.f1race.models.Team, Serializable{
 
     private int id;

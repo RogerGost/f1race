@@ -22,27 +22,27 @@ public class DriverController implements Controller {
 
     @Override
     public String get(int id) {
-        Driver driver = repositoryFactory.getDriverRepository().get(id);  // Acceso por ID
+        Driver driver = repositoryFactory.getDriverRepository().get(id);
 
         if (driver == null) {
-            throw new ResourceNotFoundExeption("Driver not found with id: " + id);  // Manejo de error
+            throw new ResourceNotFoundExeption("Driver not found with id: " + id);
         }
 
         ObjectMapper mapper = new ObjectMapper();
         try {
-            return mapper.writeValueAsString(driver);  // Serialización a JSON
+            return mapper.writeValueAsString(driver);
         } catch (JsonProcessingException e) {
-            throw new RuntimeException("Error serializing driver: " + e.getMessage(), e);  // Error en serialización
+            throw new RuntimeException("Error serializing driver: " + e.getMessage(), e);
         }
     }
 
     @Override
     public String get() {
-        var drivers = repositoryFactory.getDriverRepository().getAll();  // Obtener todos los conductores
+        var drivers = repositoryFactory.getDriverRepository().getAll();
 
         ObjectMapper mapper = new ObjectMapper();
         try {
-            return mapper.writeValueAsString(drivers);  // Serialización de la lista de conductores
+            return mapper.writeValueAsString(drivers);
         } catch (JsonProcessingException e) {
             throw new RuntimeException("Error serializing drivers: " + e.getMessage(), e);
         }
@@ -67,15 +67,15 @@ public class DriverController implements Controller {
     @Override
     public void put(int id, String json) {
         DriverRepository repository = repositoryFactory.getDriverRepository();
-        Driver existingDriver = repository.get(id);  // Busca el conductor existente
+        Driver existingDriver = repository.get(id);
 
         if (existingDriver == null) {
-            throw new ResourceNotFoundExeption("Cannot update. Driver not found with id: " + id);  // Si no se encuentra
+            throw new ResourceNotFoundExeption("Cannot update. Driver not found with id: " + id);
         }
 
         ObjectMapper mapper = new ObjectMapper();
         try {
-            Driver updatedDriver = mapper.readValue(json, Driver.class);  // Deserialización del JSON
+            Driver updatedDriver = mapper.readValue(json, Driver.class);
 
             // Actualiza solo los campos que no son nulos
             if (updatedDriver.getName() != null) {
@@ -91,7 +91,7 @@ public class DriverController implements Controller {
             existingDriver.setDate(updatedDriver.getDate());
 
 
-            repository.save(existingDriver);  // Guardar los cambios en el conductor
+            repository.save(existingDriver);
         } catch (JsonProcessingException e) {
             throw new RuntimeException("Error deserializing driver: " + e.getMessage(), e);
         }
@@ -100,12 +100,12 @@ public class DriverController implements Controller {
     @Override
     public void delete(int id) {
         DriverRepository repository = repositoryFactory.getDriverRepository();
-        Driver driver = repository.get(id);  // Buscar el conductor por ID
+        Driver driver = repository.get(id);
 
         if (driver == null) {
-            throw new ResourceNotFoundExeption("Cannot delete. Driver not found with id: " + id);  // Error si no existe
+            throw new ResourceNotFoundExeption("Cannot delete. Driver not found with id: " + id);
         }
 
-        repository.delete(driver);  // Eliminar el conductor
+        repository.delete(driver);
     }
 }

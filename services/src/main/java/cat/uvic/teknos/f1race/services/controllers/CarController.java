@@ -64,7 +64,7 @@ public class CarController implements Controller {
     @Override
     public void put(int id, String json) {
         CarRepository repository = repositoryFactory.getCarRepository();
-        Car existingCar = repository.get(id);  // Busca el coche existente
+        Car existingCar = repository.get(id);
 
         if (existingCar == null) {
             throw new ResourceNotFoundExeption("Cannot update. Car not found with id: " + id);
@@ -75,7 +75,6 @@ public class CarController implements Controller {
         try {
             Car updatedCar = mapper.readValue(json, Car.class);
 
-            // Solo actualiza los campos que no son null en updatedCar
             if (updatedCar.getChassis() != null) {
                 existingCar.setChassis(updatedCar.getChassis());
             }
@@ -104,6 +103,6 @@ public class CarController implements Controller {
             throw new ResourceNotFoundExeption("Cannot delete. Car not found with id: " + id);
         }
 
-        repository.delete(car);  // Elimina el coche
+        repository.delete(car);
     }
 }
