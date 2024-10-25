@@ -1,0 +1,38 @@
+GET http://localhost:8080/api/teams
+
+###
+
+GET http://localhost:8080/api/teams/2
+
+###
+
+DELETE http://localhost:8080/api/teams/1
+
+###
+POST http://localhost:8080/api/teams
+Content-Type: application/json
+
+{
+  "teamName": "Haas F1 Team",
+  "headquarters": "Kannapolis, NC",
+  "sponsorName": "MoneyGram",
+  "principalName": "Guenther Steiner"
+}
+
+###
+
+PUT http://localhost:8080/api/teams/2
+Content-Type: application/json
+
+{
+  "teamName": "Haas F1 Team",
+  "principalName": "Guenther Steiner",
+  "headquarters": "Kannapolis, NC",
+  "sponsorName": "MoneyGram"
+}
+
+
+
+
+
+

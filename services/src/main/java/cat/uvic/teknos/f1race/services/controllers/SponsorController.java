@@ -7,6 +7,7 @@ import cat.uvic.teknos.f1race.repositories.RepositoryFactory;
 import cat.uvic.teknos.f1race.repositories.SponsorRepository;
 import cat.uvic.teknos.f1race.repositories.TeamRepository;
 import cat.uvic.teknos.f1race.services.exeption.ResourceNotFoundExeption;
+import cat.uvic.teknos.f1race.services.utils.Mappers;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -53,11 +54,11 @@ public class SponsorController implements Controller{
     public void post(String json) {
         SponsorRepository repository = repositoryFactory.getSponsorRepository();
 
-        ObjectMapper mapper = new ObjectMapper();
+        ObjectMapper mapper = Mappers.get();
         mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         System.out.println("Received JSON: " + json);
         try {
-            Sponsor sponsor = mapper.readValue(json, Sponsor.class);
+            Sponsor sponsor = mapper.readValue(json, cat.uvic.teknos.f1race.domain.jbdc.models.Sponsor.class);
             repository.save(sponsor);
         } catch (JsonProcessingException e) {
             throw new RuntimeException("Error deserializing sponsor: " + e.getMessage(), e);
@@ -73,10 +74,10 @@ public class SponsorController implements Controller{
             throw new ResourceNotFoundExeption("Cannot update. Sponsor not found with id: " + id);
         }
 
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);  // Omitir campos nulos
+        ObjectMapper mapper = Mappers.get();
+        mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         try {
-            Sponsor updatedSponsor = mapper.readValue(json, Sponsor.class);
+            Sponsor updatedSponsor = mapper.readValue(json, cat.uvic.teknos.f1race.domain.jbdc.models.Sponsor.class);
 
             if (updatedSponsor.getSponsorType() != null) {
                 existingSponsor.setSponsorType(updatedSponsor.getSponsorType());

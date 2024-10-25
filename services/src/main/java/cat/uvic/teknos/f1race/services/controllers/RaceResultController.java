@@ -7,6 +7,7 @@ import cat.uvic.teknos.f1race.repositories.RaceResultRepository;
 import cat.uvic.teknos.f1race.repositories.RepositoryFactory;
 import cat.uvic.teknos.f1race.repositories.TeamRepository;
 import cat.uvic.teknos.f1race.services.exeption.ResourceNotFoundExeption;
+import cat.uvic.teknos.f1race.services.utils.Mappers;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -53,11 +54,11 @@ public class RaceResultController implements Controller{
     public void post(String json) {
         RaceResultRepository repository = repositoryFactory.getRaceResultRepository();
 
-        ObjectMapper mapper = new ObjectMapper();
+        ObjectMapper mapper = Mappers.get();
         mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         System.out.println("Received JSON: " + json);
         try {
-            RaceResult raceResult = mapper.readValue(json, RaceResult.class);
+            RaceResult raceResult = mapper.readValue(json, cat.uvic.teknos.f1race.domain.jbdc.models.RaceResult.class);
             repository.save(raceResult);
         } catch (JsonProcessingException e) {
             throw new RuntimeException("Error deserializing race result: " + e.getMessage(), e);
@@ -73,10 +74,10 @@ public class RaceResultController implements Controller{
             throw new ResourceNotFoundExeption("Cannot update. RaceResult not found with id: " + id);
         }
 
-        ObjectMapper mapper = new ObjectMapper();
+        ObjectMapper mapper = Mappers.get();
         mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         try {
-            RaceResult updatedRaceResult = mapper.readValue(json, RaceResult.class);
+            RaceResult updatedRaceResult = mapper.readValue(json, cat.uvic.teknos.f1race.domain.jbdc.models.RaceResult.class);
 
             if (updatedRaceResult.getFastestLap() != null) {
                 existingRaceResult.setFastestLap(updatedRaceResult.getFastestLap());

@@ -7,6 +7,7 @@ import cat.uvic.teknos.f1race.repositories.DriverRepository;
 import cat.uvic.teknos.f1race.repositories.RepositoryFactory;
 import cat.uvic.teknos.f1race.repositories.TeamRepository;
 import cat.uvic.teknos.f1race.services.exeption.ResourceNotFoundExeption;
+import cat.uvic.teknos.f1race.services.utils.Mappers;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -51,11 +52,11 @@ public class DriverController implements Controller {
     @Override
     public void post(String json) {
         DriverRepository repository = repositoryFactory.getDriverRepository();
-        ObjectMapper mapper = new ObjectMapper();
+        ObjectMapper mapper = Mappers.get();
         mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
 
         try {
-            Driver driver = mapper.readValue(json, Driver.class);
+            Driver driver = mapper.readValue(json,cat.uvic.teknos.f1race.domain.jbdc.models.Driver.class);
             repository.save(driver);
             System.out.println("Driver added: " + driver.getName());
         } catch (JsonProcessingException e) {
@@ -73,11 +74,10 @@ public class DriverController implements Controller {
             throw new ResourceNotFoundExeption("Cannot update. Driver not found with id: " + id);
         }
 
-        ObjectMapper mapper = new ObjectMapper();
+        ObjectMapper mapper = Mappers.get();
         try {
-            Driver updatedDriver = mapper.readValue(json, Driver.class);
+            Driver updatedDriver = mapper.readValue(json, cat.uvic.teknos.f1race.domain.jbdc.models.Driver.class);
 
-            // Actualiza solo los campos que no son nulos
             if (updatedDriver.getName() != null) {
                 existingDriver.setName(updatedDriver.getName());
             }
@@ -87,6 +87,14 @@ public class DriverController implements Controller {
             if (updatedDriver.getNationality() != null) {
                 existingDriver.setNationality(updatedDriver.getNationality());
             }
+            if (updatedDriver.getDate() != existingDriver.getDate()) {
+                existingDriver.setDate(updatedDriver.getDate());
+            }
+
+            if (updatedDriver.getTeam() != null && updatedDriver.getTeam().getId() != 0) {
+                existingDriver.setTeam(updatedDriver.getTeam());
+            }
+
 
             existingDriver.setDate(updatedDriver.getDate());
 

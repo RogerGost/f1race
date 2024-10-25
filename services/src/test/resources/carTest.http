@@ -1,0 +1,37 @@
+GET http://localhost:8080/api/cars
+
+###
+
+GET http://localhost:8080/api/cars/1
+
+###
+
+DELETE http://localhost:8080/api/cars/4
+
+###
+
+POST http://localhost:8080/api/cars
+Content-Type: application/json
+
+{
+  "model": "RB20",
+  "engine": "Ford",
+  "chassis": "RB20s",
+  "team": {
+    "id": 1
+  }
+}
+
+###
+
+PUT http://localhost:8080/api/cars/2
+Content-Type: application/json
+
+{
+  "model": "RB20",
+  "engine": "mustang",
+  "chassis": "RB20s",
+  "team": {
+    "id": 1
+  }
+}

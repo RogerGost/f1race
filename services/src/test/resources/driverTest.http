@@ -1,0 +1,47 @@
+GET http://localhost:8080/api/drivers
+
+###
+
+GET http://localhost:8080/api/drivers/1
+
+###
+
+DELETE http://localhost:8080/api/drivers/1
+
+###
+
+POST http://localhost:8080/api/drivers
+Content-Type: application/json
+
+{
+  "name": "Fernando Alonso",
+  "nationality": "Spain",
+  "date": "1985",
+  "number": "14",
+  "team": {
+    "id": 2
+  }
+}
+
+###
+
+PUT http://localhost:8080/api/drivers/2
+Content-Type: application/json
+
+{
+  "name": "Yuki Tsunoda",
+  "nationality": "Japan",
+  "date": 1999,
+  "number": 22,
+  "team": {
+    "id": 3
+  }
+}
+
+
+
+
+
+
+
+

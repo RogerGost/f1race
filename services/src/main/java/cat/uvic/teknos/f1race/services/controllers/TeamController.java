@@ -5,6 +5,7 @@ import cat.uvic.teknos.f1race.models.Team;
 import cat.uvic.teknos.f1race.repositories.RepositoryFactory;
 import cat.uvic.teknos.f1race.repositories.TeamRepository;
 import cat.uvic.teknos.f1race.services.exeption.ResourceNotFoundExeption;
+import cat.uvic.teknos.f1race.services.utils.Mappers;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -51,11 +52,11 @@ public class TeamController implements Controller {
     public void post(String json) {
         TeamRepository repository = repositoryFactory.getTeamRepository();
 
-        ObjectMapper mapper = new ObjectMapper();
+        ObjectMapper mapper = Mappers.get();
         mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         System.out.println("Received JSON: " + json);
         try {
-            Team team = mapper.readValue(json, Team.class);
+            Team team = mapper.readValue(json, cat.uvic.teknos.f1race.domain.jbdc.models.Team.class);
             repository.save(team);
         } catch (JsonProcessingException e) {
             throw new RuntimeException("Error deserializing team: " + e.getMessage(), e);
@@ -72,10 +73,10 @@ public class TeamController implements Controller {
             throw new ResourceNotFoundExeption("Cannot update. Team not found with id: " + id);
         }
 
-        ObjectMapper mapper = new ObjectMapper();
+        ObjectMapper mapper = Mappers.get();
         mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         try {
-            Team updatedTeam = mapper.readValue(json, Team.class);
+            Team updatedTeam = mapper.readValue(json,cat.uvic.teknos.f1race.domain.jbdc.models.Team.class);
 
             if (updatedTeam.getTeamName() != null) {
                 existingTeam.setTeamName(updatedTeam.getTeamName());

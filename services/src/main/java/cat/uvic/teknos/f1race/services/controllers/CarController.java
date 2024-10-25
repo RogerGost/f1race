@@ -5,6 +5,7 @@ import cat.uvic.teknos.f1race.models.ModelFactory;
 import cat.uvic.teknos.f1race.repositories.CarRepository;
 import cat.uvic.teknos.f1race.repositories.RepositoryFactory;
 import cat.uvic.teknos.f1race.services.exeption.ResourceNotFoundExeption;
+import cat.uvic.teknos.f1race.services.utils.Mappers;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -51,10 +52,10 @@ public class CarController implements Controller {
     public void post(String json) {
         CarRepository repository = repositoryFactory.getCarRepository();
 
-        ObjectMapper mapper = new ObjectMapper();
+        ObjectMapper mapper = Mappers.get();
         mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         try {
-            Car car = mapper.readValue(json, Car.class);
+            Car car = mapper.readValue(json, cat.uvic.teknos.f1race.domain.jbdc.models.Car.class);
             repository.save(car);
         } catch (JsonProcessingException e) {
             throw new RuntimeException("Error deserializing car: " + e.getMessage(), e);
@@ -70,10 +71,10 @@ public class CarController implements Controller {
             throw new ResourceNotFoundExeption("Cannot update. Car not found with id: " + id);
         }
 
-        ObjectMapper mapper = new ObjectMapper();
+        ObjectMapper mapper = Mappers.get();
         mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         try {
-            Car updatedCar = mapper.readValue(json, Car.class);
+            Car updatedCar = mapper.readValue(json,cat.uvic.teknos.f1race.domain.jbdc.models.Car.class);
 
             if (updatedCar.getChassis() != null) {
                 existingCar.setChassis(updatedCar.getChassis());

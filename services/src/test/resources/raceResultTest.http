@@ -1,0 +1,44 @@
+GET http://localhost:8080/api/racesResults
+
+###
+
+GET http://localhost:8080/api/racesResults/2
+
+###
+
+DELETE http://localhost:8080/api/racesResults/1
+
+###
+POST http://localhost:8080/api/racesResults
+Content-Type: application/json
+
+{
+  "raceId": 999,
+  "position": 1,
+  "points": 25,
+  "driver": {
+    "id": 4
+  },
+  "fastestLap": "00:01:08"
+}
+
+###
+
+PUT http://localhost:8080/api/racesResults/2
+Content-Type: application/json
+
+{
+  "raceId": 999,
+  "position": 1,
+  "points": 25,
+  "driver": {
+    "id": 4
+  },
+  "fastestLap": "00:01:08"
+}
+
+
+
+
+
+

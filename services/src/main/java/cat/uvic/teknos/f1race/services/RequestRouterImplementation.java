@@ -59,8 +59,9 @@ public class RequestRouterImplementation implements RequestRouter {
 
             } else if ("PUT".equals(method)) {
                 var personId = Integer.parseInt(pathParts[3]);
-                var jsonBody = request.getBody().get().toString();
-                controller.put(personId, jsonBody);
+                var bodyBytes = request.getBody().get().decodeBody();
+                var bodyString = new String(bodyBytes);
+                controller.put(personId, bodyString);
             }
 
             response = rawHttp.parseResponse("HTTP/1.1 200 OK\r\n" +
