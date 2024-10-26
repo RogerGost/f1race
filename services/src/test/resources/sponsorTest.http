@@ -1,0 +1,36 @@
+GET http://localhost:8080/api/sponsors
+
+###
+
+GET http://localhost:8080/api/sponsors/1
+
+###
+
+DELETE http://localhost:8080/api/sponsors/4
+
+###
+
+POST http://localhost:8080/api/sponsors
+Content-Type: application/json
+
+{
+  "name": "New Sponsor",
+  "country": "Japan",
+  "phone": 5,
+  "sponsorType": "Marketing"
+}
+
+
+
+###
+
+PUT http://localhost:8080/api/sponsors/4
+Content-Type: application/json
+
+{
+  "name": "Updated Sponsor Name",
+  "country": "Japan",
+  "sponsorType": "Marketing",
+  "phone": "123456789"
+}
+
