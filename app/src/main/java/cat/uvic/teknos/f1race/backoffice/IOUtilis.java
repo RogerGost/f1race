@@ -6,7 +6,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 
 public class IOUtilis {
-    static String readLine(BufferedReader in ){
+    public static String readLine(BufferedReader in){
         String command;
         try {
             command = in.readLine();
