@@ -47,6 +47,8 @@ public class TeamManager {
                     var teamId = readLine(in);
                     var team = restClient.get("/teams/" + teamId, TeamDto.class);
                     System.out.println("Detalles de team: " + team.getTeamName());
+
+                    showTeamTable(team);
                 }
                 case "3" -> {
 
@@ -63,12 +65,32 @@ public class TeamManager {
                     System.out.println("team agregat.");
                 }
                 case "4" -> {
-                    System.out.println("Exit...");
+                    System.out.println("Selecciona team per eliminar");
+                    var teamId = readLine(in);
+                    restClient.delete("/teams/" + teamId, null);
+                    System.out.println("Equip eliminat.");
                 }
+                case "5" -> {
+                    System.out.println("Selecciona un team per editar");
+                    var teamId = readLine(in);
+                    var team = new TeamDto();
+                    System.out.print("Introdueix el nom de team: ");
+                    team.setTeamName(readLine(in));
+                    System.out.print("Introdueix el pais de team: ");
+                    team.setHeadquarters(readLine(in));
+                    System.out.print("Introdueix el principal de team: ");
+                    team.setPrincipalName(readLine(in));
+                    System.out.print("Introdueix sponsor de team: ");
+                    team.setSponsorName(readLine(in));
+
+                    restClient.put("/teams/"+teamId, Mappers.get().writeValueAsString(team));
+                    System.out.println("Team editat correcte");
+                }
+
                 default -> System.out.println("Comand no valid.");
             }
 
-        } while (!command.equals("4"));
+        } while (!command.equals("exit"));
     }
 
     private String readLine(BufferedReader in) {
@@ -85,11 +107,22 @@ public class TeamManager {
         System.out.println("1. Lista tots els equips");
         System.out.println("2. Ver detalls de un equip");
         System.out.println("3. Agregar un nou equip");
-        System.out.println("4. Exit");
+        System.out.println("4. Eliminar equip");
+        System.out.println("5. Editar equip");
     }
     private void showTeamsTable(TeamDto[] teams) {
         String table = AsciiTable.getTable(Arrays.asList(teams), Arrays.asList(
                 new Column().header("Id").with(team -> String.valueOf(team.getId())),
+                new Column().header("Name").with(TeamDto::getTeamName),
+                new Column().header("Team Principal").with(TeamDto::getPrincipalName),
+                new Column().header("Headquarters").with(TeamDto::getHeadquarters),
+                new Column().header("Principal Sponsor").with(TeamDto::getSponsorName)
+        ));
+        System.out.println(table);
+    }
+    private void showTeamTable(TeamDto team) {
+        String table = AsciiTable.getTable(Arrays.asList(team), Arrays.asList(
+                new Column().header("Id").with(t -> String.valueOf(t.getId())),
                 new Column().header("Name").with(TeamDto::getTeamName),
                 new Column().header("Team Principal").with(TeamDto::getPrincipalName),
                 new Column().header("Headquarters").with(TeamDto::getHeadquarters),

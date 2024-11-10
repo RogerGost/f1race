@@ -26,6 +26,10 @@ public class App {
 
             switch (command){
                 case "1" -> managerTeam();
+                case "2" -> managerCar();
+                case "3" -> managerDriver();
+                case "4" -> managerRace();
+                case "5" -> managerSponsor();
 
 
             }
@@ -42,8 +46,8 @@ public class App {
         out.println("1. Team");
         out.println("2. Car");
         out.println("3. Driver");
-        out.println("4. Sponsor");
-        out.println("5. RaceResult");
+        out.println("4. RaceResult");
+        out.println("5. Sponsor");
     }
 
     static String readLine(BufferedReader in ){
@@ -56,37 +60,30 @@ public class App {
         return command;
     }
 
-    private static void manageTeam() throws JsonProcessingException, RequestException {
-        String command;
-        do {
-            command = readLine(in);
 
-            switch (command) {
-                case "1" -> {
-                    var teams = restClient.getAll("/teams", TeamDto[].class);
-                }
-                case "2" -> {
-                    var teamId = readLine(in);
-                    try {
-                        var client = restClient.get("/teams/" + teamId, TeamDto.class);
-                    } finally {
-
-                    }
-                }
-                case "3" -> {
-                    var teams = new TeamDto();
-                    teams.setTeamName(readLine(in));
-
-                    restClient.post("/teams", Mappers.get().writeValueAsString(teams));
-                }
-            }
-
-        } while (!command.equals("exit"));
-    }
 
     private static void managerTeam() throws RequestException, JsonProcessingException {
         TeamManager teamManager = new TeamManager(restClient, in);
         teamManager.start();
+    }
+
+    private static void managerCar() throws RequestException, JsonProcessingException {
+        CarManager carManager = new CarManager(restClient, in);
+        carManager.start();
+    }
+    private static void managerDriver() throws RequestException, JsonProcessingException {
+        DriverManager driverManager = new DriverManager(restClient, in);
+        driverManager.start();
+    }
+
+    private static void managerRace() throws RequestException, JsonProcessingException {
+        RaceResultManager raceResultManager = new RaceResultManager(restClient, in);
+        raceResultManager.start();
+    }
+
+    private static void managerSponsor() throws RequestException, JsonProcessingException {
+        SponsorManager sponsorManager = new SponsorManager(restClient, in);
+        sponsorManager.start();
     }
 
 
