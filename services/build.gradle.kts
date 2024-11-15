@@ -10,6 +10,7 @@ dependencies {
     implementation(project(":domain"))
     implementation(project(":domain-implementations:jpa"))
     implementation(project(":domain-implementations:jbdc"))
+    implementation(project(":cryptoutils"))
 
     implementation("com.athaydes.rawhttp:rawhttp-core:2.6.0")
     implementation("com.fasterxml.jackson.core:jackson-databind:2.17.2")

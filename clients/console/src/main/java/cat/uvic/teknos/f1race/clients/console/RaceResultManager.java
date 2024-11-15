@@ -38,7 +38,7 @@ public class RaceResultManager {
             switch (command) {
                 case "1" -> {
                     var races = restClient.getAll("/racesResults", RaceResultDto[].class);
-                    System.out.println("Lista races':");
+                    System.out.println("Llista races':");
 
                     showRacesTable(races);
 

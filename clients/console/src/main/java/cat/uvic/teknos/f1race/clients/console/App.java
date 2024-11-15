@@ -11,6 +11,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
+import java.util.stream.Collectors;
 
 public class App {
     private static BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
@@ -21,6 +22,7 @@ public class App {
 
         var command = "";
         do {
+            showBanner();
             showMainMenu();
             command = readLine(in);
 
@@ -84,6 +86,15 @@ public class App {
     private static void managerSponsor() throws RequestException, JsonProcessingException {
         SponsorManager sponsorManager = new SponsorManager(restClient, in);
         sponsorManager.start();
+    }
+
+    private static void showBanner() {
+        var bannerStream = App.class.getResourceAsStream("/banner.txt");
+
+        var banner = new BufferedReader(new InputStreamReader(bannerStream))
+                .lines().collect(Collectors.joining("\n"));
+
+        out.println(banner);
     }
 
 

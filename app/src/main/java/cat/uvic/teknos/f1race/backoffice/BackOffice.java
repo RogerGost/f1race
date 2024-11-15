@@ -4,6 +4,8 @@ import cat.uvic.teknos.f1race.models.ModelFactory;
 import cat.uvic.teknos.f1race.repositories.RepositoryFactory;
 
 import java.io.*;
+import java.util.stream.Collectors;
+
 import static cat.uvic.teknos.f1race.backoffice.IOUtilis.*;
 
 public class BackOffice {
@@ -21,6 +23,7 @@ public class BackOffice {
     }
 
     public void start(){
+        showBanner();
         showWelcomeMessage();
 
         var command = "";
@@ -85,4 +88,14 @@ public class BackOffice {
         out.println("4. Sponsor");
         out.println("5. RaceResult");
     }
+
+    private void showBanner() {
+        var bannerStream = BackOffice.class.getResourceAsStream("/banner.txt");
+
+        var banner = new BufferedReader(new InputStreamReader(bannerStream))
+                .lines().collect(Collectors.joining("\n"));
+
+        out.println(banner);
+    }
+
 }
