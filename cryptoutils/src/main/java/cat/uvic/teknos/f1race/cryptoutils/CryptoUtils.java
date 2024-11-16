@@ -40,7 +40,7 @@ public class CryptoUtils {
         return new SecretKeySpec(bytes, 0, bytes.length, "AES");
     }
 
-    public String encrypt(String plaintext, SecretKey key) {
+    public static String encrypt(String plaintext, SecretKey key) {
         try {
             var cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
             var iv = new byte[16];
@@ -61,7 +61,7 @@ public class CryptoUtils {
         }
     }
 
-    public String decrypt(String ciphertextBase64, SecretKey key) {
+    public static String decrypt(String ciphertextBase64, SecretKey key) {
         try {
             var combined = fromBase64(ciphertextBase64);
             var iv = new byte[16];
@@ -81,7 +81,7 @@ public class CryptoUtils {
         }
     }
 
-    public String asymmetricEncrypt(String plaintextBase64, Key key) {
+    public static String asymmetricEncrypt(String plaintextBase64, Key key) {
         try {
             var cipher = Cipher.getInstance("RSA");
             cipher.init(Cipher.ENCRYPT_MODE, key);
@@ -92,7 +92,7 @@ public class CryptoUtils {
         }
     }
 
-    public String asymmetricDecrypt(String ciphertextBase64, Key key) {
+    public static String asymmetricDecrypt(String ciphertextBase64, Key key) {
         try {
             var cipher = Cipher.getInstance("RSA");
             cipher.init(Cipher.DECRYPT_MODE, key);

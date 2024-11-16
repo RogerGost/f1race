@@ -1,4 +1,5 @@
 
+import cat.uvic.teknos.f1race.cryptoutils.CryptoUtils;
 import org.junit.jupiter.api.Test;
 
 import javax.crypto.SecretKey;
@@ -45,18 +46,10 @@ class CryptoUtilsTest {
     }
 
     @Test
-    void testHashing() {
-        String text = "Password123!";
-        String hash1 = CryptoUtils.getHash(text);
-        String hash2 = CryptoUtils.getHash(text);
+    void getHash() {
+        var text = "Some text...";
+        var base64Text = "quonJ6BjRSC1DBOGuBWNdqixj8z20nuP+QH7cVvp7PI=";
 
-        // Ensure hash values are consistent
-        assertNotNull(hash1, "Hash should not be null");
-        assertEquals(hash1, hash2, "Hashes for the same input should be identical");
-
-        // Ensure different inputs produce different hashes
-        String differentText = "DifferentPassword!";
-        String differentHash = CryptoUtils.getHash(differentText);
-        assertNotEquals(hash1, differentHash, "Hashes for different inputs should not be identical");
+        assertEquals(base64Text, CryptoUtils.getHash(text));
     }
 }

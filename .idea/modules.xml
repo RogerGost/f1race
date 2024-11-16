@@ -4,7 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/clients/console/f1race.clients.console.main.iml" filepath="$PROJECT_DIR$/.idea/modules/clients/console/f1race.clients.console.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/clients/console/f1race.clients.console.test.iml" filepath="$PROJECT_DIR$/.idea/modules/clients/console/f1race.clients.console.test.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/cryptoutils/f1race.cryptoutils.iml" filepath="$PROJECT_DIR$/.idea/modules/cryptoutils/f1race.cryptoutils.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/cryptoutils/f1race.cryptoutils.main.iml" filepath="$PROJECT_DIR$/.idea/modules/cryptoutils/f1race.cryptoutils.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/domain-implementations/jpa/f1race.domain-implementations.jpa.test.iml" filepath="$PROJECT_DIR$/.idea/modules/domain-implementations/jpa/f1race.domain-implementations.jpa.test.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/services/f1race.services.main.iml" filepath="$PROJECT_DIR$/.idea/modules/services/f1race.services.main.iml" />
