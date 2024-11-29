@@ -24,9 +24,6 @@ public class CarManager {
     }
 
 
-
-
-
     public void start() throws RequestException, JsonProcessingException {
         String command;
         do {
@@ -133,6 +130,4 @@ public class CarManager {
         ));
         System.out.println(table);
     }
-
-
 }

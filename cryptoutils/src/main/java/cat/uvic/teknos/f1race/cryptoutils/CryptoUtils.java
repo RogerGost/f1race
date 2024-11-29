@@ -1,14 +1,9 @@
 package cat.uvic.teknos.f1race.cryptoutils;
 
-import javax.crypto.Cipher;
-import javax.crypto.KeyGenerator;
-import javax.crypto.SecretKey;
+import javax.crypto.*;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
-import java.security.Key;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
+import java.security.*;
 import java.util.Base64;
 
 public class CryptoUtils {
@@ -21,12 +16,12 @@ public class CryptoUtils {
             var hash = digest.digest(text.getBytes());
 
             return toBase64(hash);
-        }catch (NoSuchAlgorithmException e) {
-            throw new CryptoException("Error while generating hash", e);
+        } catch (NoSuchAlgorithmException e) {
+            throw new CryptoException();
         }
     }
 
-    public static SecretKey createSecretKey() throws NoSuchAlgorithmException {
+    public static SecretKey createSecretKey() {
         try {
             return KeyGenerator.getInstance("AES").generateKey();
         } catch (NoSuchAlgorithmException e) {
@@ -34,79 +29,84 @@ public class CryptoUtils {
         }
     }
 
-    public static SecretKey decodeSecreteKey(String base64SecretKey) {
+    public static SecretKey decodeSecretKey(String base64SecretKey) {
         var bytes = decoder.decode(base64SecretKey);
 
         return new SecretKeySpec(bytes, 0, bytes.length, "AES");
     }
 
-    public static String encrypt(String plaintext, SecretKey key) {
+    public static String encrypt(String plainText, SecretKey key) {
         try {
-            var cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-            var iv = new byte[16];
+            byte[] iv = new byte[16];
             new SecureRandom().nextBytes(iv);
-            var ivSpec = new IvParameterSpec(iv);
+            IvParameterSpec ivSpec = new IvParameterSpec(iv);
 
+            var cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
             cipher.init(Cipher.ENCRYPT_MODE, key, ivSpec);
-            var encryptedBytes = cipher.doFinal(plaintext.getBytes());
 
-            // Combine IV and ciphertext to ensure decryption
-            var combined = new byte[iv.length + encryptedBytes.length];
-            System.arraycopy(iv, 0, combined, 0, iv.length);
-            System.arraycopy(encryptedBytes, 0, combined, iv.length, encryptedBytes.length);
+            byte[] encryptedData = cipher.doFinal(plainText.getBytes());
 
-            return toBase64(combined);
-        } catch (Exception e) {
-            throw new CryptoException("Error during encryption", e);
+            byte[] encryptedWithIv = new byte[iv.length + encryptedData.length];
+            System.arraycopy(iv, 0, encryptedWithIv, 0, iv.length);
+            System.arraycopy(encryptedData, 0, encryptedWithIv, iv.length, encryptedData.length);
+
+            return toBase64(encryptedWithIv);
+        } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IllegalBlockSizeException |
+                 BadPaddingException | InvalidAlgorithmParameterException e) {
+            throw new CryptoException(e);
         }
     }
 
-    public static String decrypt(String ciphertextBase64, SecretKey key) {
+    public static String decrypt(String encryptedTextBase64, SecretKey key) {
         try {
-            var combined = fromBase64(ciphertextBase64);
-            var iv = new byte[16];
-            System.arraycopy(combined, 0, iv, 0, 16);
-            var ivSpec = new IvParameterSpec(iv);
+            byte[] encryptedDataWithIv = fromBase64(encryptedTextBase64);
 
-            var encryptedBytes = new byte[combined.length - 16];
-            System.arraycopy(combined, 16, encryptedBytes, 0, encryptedBytes.length);
+            byte[] iv = new byte[16];
+            System.arraycopy(encryptedDataWithIv, 0, iv, 0, iv.length);
+
+            byte[] encryptedData = new byte[encryptedDataWithIv.length - iv.length];
+            System.arraycopy(encryptedDataWithIv, iv.length, encryptedData, 0, encryptedData.length);
+
+            IvParameterSpec ivSpec = new IvParameterSpec(iv);
 
             var cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
             cipher.init(Cipher.DECRYPT_MODE, key, ivSpec);
-            var decryptedBytes = cipher.doFinal(encryptedBytes);
 
-            return new String(decryptedBytes);
-        } catch (Exception e) {
-            throw new CryptoException("Error during decryption", e);
+            byte[] decryptedData = cipher.doFinal(encryptedData);
+            return new String(decryptedData);
+        } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IllegalBlockSizeException |
+                 BadPaddingException | InvalidAlgorithmParameterException e) {
+            throw new CryptoException(e);
         }
     }
 
-    public static String asymmetricEncrypt(String plaintextBase64, Key key) {
+    public static String asymmetricEncrypt(String plainTextBase64, Key key) {
         try {
             var cipher = Cipher.getInstance("RSA");
             cipher.init(Cipher.ENCRYPT_MODE, key);
-            var encryptedBytes = cipher.doFinal(plaintextBase64.getBytes());
-            return toBase64(encryptedBytes);
-        } catch (Exception e) {
-            throw new CryptoException("Error during asymmetric encryption", e);
+            return toBase64(cipher.doFinal(fromBase64(plainTextBase64)));
+        } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IllegalBlockSizeException |
+                 BadPaddingException e) {
+            throw new CryptoException(e);
         }
     }
 
-    public static String asymmetricDecrypt(String ciphertextBase64, Key key) {
+    public static String asymmetricDecrypt(String encryptedTextBase64, Key key) {
         try {
             var cipher = Cipher.getInstance("RSA");
             cipher.init(Cipher.DECRYPT_MODE, key);
-            var decryptedBytes = cipher.doFinal(fromBase64(ciphertextBase64));
-            return new String(decryptedBytes);
-        } catch (Exception e) {
-            throw new CryptoException("Error during asymmetric decryption", e);
+            return toBase64(cipher.doFinal(fromBase64(encryptedTextBase64)));
+        } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IllegalBlockSizeException |
+                 BadPaddingException e) {
+            throw new CryptoException(e);
         }
     }
-    private static String toBase64(byte[] bytes) {
+
+    public static String toBase64(byte[] bytes) {
         return encoder.encodeToString(bytes);
     }
 
-    private static byte[] fromBase64(String base64) {
+    public static byte[] fromBase64(String base64) {
         return decoder.decode(base64);
     }
 }

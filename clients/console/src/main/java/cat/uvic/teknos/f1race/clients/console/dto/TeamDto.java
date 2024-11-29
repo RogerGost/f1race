@@ -3,6 +3,7 @@ package cat.uvic.teknos.f1race.clients.console.dto;
 import cat.uvic.teknos.f1race.models.Car;
 import cat.uvic.teknos.f1race.models.Driver;
 import cat.uvic.teknos.f1race.models.Sponsor;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.io.Serializable;
 import java.util.List;

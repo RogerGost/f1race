@@ -36,12 +36,16 @@ public class TeamManager {
 
             switch (command) {
                 case "1" -> {
-                    var teams = restClient.getAll("/teams", TeamDto[].class);
-                    System.out.println("Lista d'equips':");
-
-                    showTeamsTable(teams);
-
+                    try {
+                        System.out.println("Arriba al numero 1");
+                        var teams = restClient.getAll("/teams", TeamDto[].class);
+                        System.out.println("Lista d'equips':");
+                        showTeamsTable(teams);
+                    } catch (RequestException e) {
+                        System.out.println("Error al obtener los equipos: " + e.getMessage());
+                    }
                 }
+
                 case "2" -> {
                     System.out.print("introdueix ID del team ");
                     var teamId = readLine(in);
